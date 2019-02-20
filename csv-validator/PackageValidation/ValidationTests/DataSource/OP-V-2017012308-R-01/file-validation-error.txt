@@ -1,0 +1,198 @@
+2019-01-21 09:33:43,677 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 09:33:43,696 [1] DEBUG: Start validate misto.csv
+2019-01-21 09:33:43,810 [1] INFO : The file misto.csv is valid.
+2019-01-21 09:33:43,811 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 09:34:36,292 [1] ERROR: The field IDProvozovatel, line 1 has invalid value 223454T333
+2019-01-21 09:34:36,295 [1] ERROR: The field IDProvozovatel, line 2 has invalid value 223454T333
+2019-01-21 09:34:36,299 [1] ERROR: The field IDProvozovatel, line 3 has invalid value 223454T333
+2019-01-21 09:34:36,299 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 09:34:36,333 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:02:19,790 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:02:19,808 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:02:19,945 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:02:19,946 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:02:19,950 [1] ERROR: File: C:\test\DataSource\OP-V-2017012308-R-01\provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:02:19,954 [1] ERROR: File: C:\test\DataSource\OP-V-2017012308-R-01\provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:02:19,957 [1] ERROR: File: C:\test\DataSource\OP-V-2017012308-R-01\provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:02:19,958 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:02:19,985 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:03:18,127 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:03:18,181 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:03:18,336 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:03:18,337 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:03:18,342 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:03:18,346 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:03:18,349 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:03:18,349 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:03:18,381 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:06:28,681 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:06:28,703 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:07:04,298 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:07:04,299 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:07:04,499 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:08:30,689 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:08:30,694 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:08:30,695 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:08:30,727 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:09:58,579 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:09:58,600 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:09:58,731 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:09:58,732 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:12:57,884 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:13:01,399 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:13:55,666 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:13:55,666 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:13:55,694 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:14:03,956 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:14:03,968 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:14:04,084 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:14:04,085 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:14:06,138 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:14:10,904 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:14:14,441 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:14:14,441 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:14:14,469 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:14:24,207 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:14:24,221 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:14:24,345 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:14:24,346 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:17:03,066 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:17:03,097 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:17:03,251 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:17:03,253 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:21:18,757 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:21:24,588 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:21:28,920 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message: 223454T333
+2019-01-21 10:21:28,920 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:21:28,949 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:43:19,643 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:43:19,660 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:43:19,782 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:43:19,782 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:43:44,902 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel - The Field's {0}, Line {1} value must be equals {2}, Error message: 223454T333
+2019-01-21 10:43:47,645 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel - The Field's {0}, Line {1} value must be equals {2}, Error message: 223454T333
+2019-01-21 10:43:47,649 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel - The Field's {0}, Line {1} value must be equals {2}, Error message: 223454T333
+2019-01-21 10:43:47,649 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:43:47,677 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:54:48,857 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:54:48,895 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:54:49,055 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:54:49,057 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:54:49,063 [1] ERROR: File: provozovatel.csv, Line: 1, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 10:54:49,067 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 10:54:49,072 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 10:54:49,072 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:54:49,109 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 10:57:31,004 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 10:57:31,029 [1] DEBUG: Start validate misto.csv
+2019-01-21 10:57:31,164 [1] INFO : The file misto.csv is valid.
+2019-01-21 10:57:31,165 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 10:57:31,174 [1] ERROR: File: provozovatel.csv, Line: 2, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 10:57:31,178 [1] ERROR: File: provozovatel.csv, Line: 3, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 10:57:31,178 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 10:57:31,216 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 11:33:25,143 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 11:33:25,171 [1] DEBUG: Start validate misto.csv
+2019-01-21 11:33:25,327 [1] INFO : The file misto.csv is valid.
+2019-01-21 11:33:25,328 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 11:33:25,337 [1] ERROR: File: , Line: 2, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 11:33:25,344 [1] ERROR: File: , Line: 3, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 11:33:25,344 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 11:33:25,345 [1] WARN : The file doba_ucasti.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file evidence_her.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file herni_pozice.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file hra_toky.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file hra_toky_kursova.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file hra_toky_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file jedna_hra.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file konto.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file konto_zmeny.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file kursova_toto_rozpad.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file mena_kurs.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file ostatni_plneni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file ostatni_plneni_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file preruseni_omezeni_kursova_toto.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file prihlaseni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file prilezitost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,345 [1] WARN : The file prilezitost_kurs.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file sdileni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file sdileni_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file sebeomezeni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file sebeomezeni_hra_druh.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file seznam_sazek.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file tiket.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file toto_udalost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file turnaj_detaily.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file ucet.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,346 [1] WARN : The file udalost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 11:33:25,407 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 14:02:41,819 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 14:02:41,836 [1] DEBUG: Start validate misto.csv
+2019-01-21 14:02:41,951 [1] INFO : The file misto.csv is valid.
+2019-01-21 14:02:41,954 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 14:02:41,968 [1] ERROR: File: , Line: 2, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 14:02:41,972 [1] ERROR: File: , Line: 3, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 14:02:41,972 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 14:02:41,973 [1] WARN : The file doba_ucasti.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file evidence_her.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file herni_pozice.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file hra_toky.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file hra_toky_kursova.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file hra_toky_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file jedna_hra.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file konto.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file konto_zmeny.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file kursova_toto_rozpad.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file mena_kurs.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file ostatni_plneni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file ostatni_plneni_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file preruseni_omezeni_kursova_toto.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file prihlaseni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file prilezitost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file prilezitost_kurs.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file sdileni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file sdileni_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file sebeomezeni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file sebeomezeni_hra_druh.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file seznam_sazek.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file tiket.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file toto_udalost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file turnaj_detaily.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file ucet.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:41,973 [1] WARN : The file udalost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:02:42,005 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.
+2019-01-21 14:06:52,311 [1] INFO : Start processing package OP-V-2017012308-R-01
+2019-01-21 14:06:52,332 [1] DEBUG: Start validate misto.csv
+2019-01-21 14:06:52,491 [1] INFO : The file misto.csv is valid.
+2019-01-21 14:06:52,492 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 14:06:52,502 [1] ERROR: File: , Line: 2, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 14:06:52,506 [1] ERROR: File: , Line: 3, Field: IDProvozovatel, Error message:  The value 223454T333 must be equals OP
+2019-01-21 14:06:52,506 [1] ERROR: The file provozovatel.csv is invalid.
+2019-01-21 14:06:52,507 [1] WARN : The file doba_ucasti.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file evidence_her.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file herni_pozice.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file hra_toky.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file hra_toky_kursova.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file hra_toky_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file jedna_hra.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file konto.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file konto_zmeny.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file kursova_toto_rozpad.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file mena_kurs.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file ostatni_plneni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file ostatni_plneni_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file preruseni_omezeni_kursova_toto.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file prihlaseni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file prilezitost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file prilezitost_kurs.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file sdileni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file sdileni_oprava.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file sebeomezeni.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file sebeomezeni_hra_druh.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file seznam_sazek.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file tiket.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file toto_udalost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file turnaj_detaily.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file ucet.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,507 [1] WARN : The file udalost.csv is not included to package OP-V-2017012308-R-01.
+2019-01-21 14:06:52,545 [1] INFO : The Package OP-V-2017012308-R-01 validation is completed.

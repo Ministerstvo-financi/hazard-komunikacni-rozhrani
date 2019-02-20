@@ -1,0 +1,56 @@
+2019-01-21 16:10:20,444 [1] INFO : Start processing package 30030030-M-201901-P-01
+2019-01-21 16:10:20,475 [1] DEBUG: Start validate misto.csv
+2019-01-21 16:10:20,580 [1] INFO : The file misto.csv is valid.
+2019-01-21 16:10:20,584 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 16:10:20,584 [1] INFO : The file provozovatel.csv is valid.
+2019-01-21 16:10:20,627 [1] INFO : The Package 30030030-M-201901-P-01 validation is completed.
+2019-01-21 16:33:52,920 [1] INFO : Start processing package 30030030-M-201901-P-01
+2019-01-21 16:33:52,935 [1] DEBUG: Start validate misto.csv
+2019-01-21 16:35:40,690 [1] INFO : The file misto.csv is valid.
+2019-01-21 16:35:40,691 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 16:35:40,691 [1] INFO : The file provozovatel.csv is valid.
+2019-01-21 16:35:40,719 [1] INFO : The Package 30030030-M-201901-P-01 validation is completed.
+2019-01-21 16:38:56,657 [1] INFO : Start processing package 30030030-M-201901-P-01
+2019-01-21 16:38:56,672 [1] DEBUG: Start validate misto.csv
+2019-01-21 16:38:56,682 [1] INFO : Start Line.
+2019-01-21 16:38:56,682 [1] INFO : Header is red.
+2019-01-21 16:38:56,682 [1] INFO : Read Line 1
+2019-01-21 16:38:56,748 [1] INFO : Start Line.
+2019-01-21 16:38:56,748 [1] INFO : Header is red.
+2019-01-21 16:38:56,748 [1] INFO : Read Line 2
+2019-01-21 16:38:56,749 [1] INFO : The file misto.csv is valid.
+2019-01-21 16:38:56,750 [1] DEBUG: Start validate provozovatel.csv
+2019-01-21 16:38:56,750 [1] INFO : Start Line.
+2019-01-21 16:38:56,750 [1] INFO : Header is red.
+2019-01-21 16:38:56,750 [1] INFO : Read Line 1
+2019-01-21 16:38:56,750 [1] INFO : Start Line.
+2019-01-21 16:38:56,750 [1] INFO : Header is red.
+2019-01-21 16:38:56,750 [1] INFO : Read Line 2
+2019-01-21 16:38:56,750 [1] INFO : The file provozovatel.csv is valid.
+2019-01-21 16:38:56,790 [1] INFO : The Package 30030030-M-201901-P-01 validation is completed.
+2019-01-21 16:40:08,667 [1] INFO : Start processing package 30030030-M-201901-P-01
+2019-01-21 16:40:08,695 [1] DEBUG: Start validate misto.csv
+2019-01-21 16:40:08,704 [1] INFO : Start Line.
+2019-01-21 16:40:08,704 [1] INFO : Header is red.
+2019-01-21 16:40:47,122 [1] INFO : Read Line 1
+2019-01-21 16:41:34,046 [1] INFO : Start Line.
+2019-01-21 16:41:34,047 [1] INFO : Header is red.
+2019-01-21 16:41:41,639 [1] INFO : Read Line 2
+2019-01-22 17:01:47,370 [1] INFO : Start processing package 30030030-M-201901-P-01
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file evidence_her.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file pokladna_stul_turnaj_bingo.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file prostredek.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file PSTB_transakce.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file hra_turnaj_bingo.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file mozna_vyhra_stul_bingo.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file mozna_vyhra_pro_hru.csv is not presented in the package folder.
+2019-01-22 17:01:47,390 [1] ERROR: The Package's mandatory file mena_kurs.csv is not presented in the package folder.
+2019-01-22 17:04:11,538 [1] INFO : Start processing package 30030030-M-201901-P-01
+2019-01-22 17:04:43,002 [1] ERROR: The Package's mandatory file evidence_her.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file pokladna_stul_turnaj_bingo.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file prostredek.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file PSTB_transakce.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file hra_turnaj_bingo.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file mozna_vyhra_stul_bingo.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file mozna_vyhra_pro_hru.csv is not presented in the package folder.
+2019-01-22 17:04:52,333 [1] ERROR: The Package's mandatory file mena_kurs.csv is not presented in the package folder.

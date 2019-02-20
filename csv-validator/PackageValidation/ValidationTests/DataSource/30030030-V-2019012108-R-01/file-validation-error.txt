@@ -1,0 +1,31 @@
+2019-01-28 15:53:30,944 [1] INFO : Start processing package 30030030-V-2019012108-R-01
+2019-01-28 15:53:30,970 [1] DEBUG: Start validate misto.csv
+2019-01-28 15:53:30,982 [1] ERROR: File: misto.csv, Line: 0, Field: Header Validation, Error message: ERR_LINE_BAD_HEADER -  The field TypMisto is not presented in the file received; The field MistoNazev of the file received is not presented in the structure; 
+2019-01-28 15:53:30,982 [1] ERROR: The file misto.csv is invalid.
+2019-01-28 15:53:30,983 [1] ERROR: ERR_LINE_INVALID_HASH provozovatel.csv (1) The file metadata has not a hash tag.
+2019-01-28 15:53:31,015 [1] INFO : The Package 30030030-V-2019012108-R-01 validation is completed.
+2019-01-31 11:45:00,869 [1] INFO : Start processing package 30030030-V-2019012108-R-01
+2019-01-31 11:45:00,899 [1] DEBUG: Start validate misto.csv
+2019-01-31 11:45:00,909 [1] ERROR: File: misto.csv, Line: 0, Field: Header Validation, Error message: ERR_LINE_BAD_HEADER -  The field TypMisto is not presented in the file received; The field MistoNazev of the file received is not presented in the structure; 
+2019-01-31 11:45:00,909 [1] ERROR: The file misto.csv is invalid.
+2019-01-31 11:45:00,911 [1] DEBUG: Start validate provozovatel.csv
+2019-01-31 11:45:01,004 [1] INFO : The file provozovatel.csv is valid.
+2019-01-31 11:45:01,055 [1] INFO : The Package 30030030-V-2019012108-R-01 validation is completed.
+2019-01-31 11:45:47,382 [1] INFO : Start processing package 30030030-V-2019012108-R-01
+2019-01-31 11:45:47,401 [1] DEBUG: Start validate misto.csv
+2019-01-31 11:45:47,412 [1] ERROR: File: misto.csv, Line: 0, Field: Header Validation, Error message: ERR_LINE_BAD_HEADER -  The field TypMisto is not presented in the file received; The field MistoNazev of the file received is not presented in the structure; 
+2019-01-31 11:45:47,412 [1] ERROR: The file misto.csv is invalid.
+2019-01-31 11:45:47,413 [1] DEBUG: Start validate provozovatel.csv
+2019-01-31 11:45:47,489 [1] INFO : The file provozovatel.csv is valid.
+2019-01-31 11:45:47,522 [1] INFO : The Package 30030030-V-2019012108-R-01 validation is completed.
+2019-01-31 11:48:38,254 [1] INFO : Start processing package 30030030-V-2019012108-R-01
+2019-01-31 11:48:38,275 [1] DEBUG: Start validate misto.csv
+2019-01-31 11:48:38,287 [1] ERROR: File: misto.csv, Line: 0, Field: Header Validation, Error message: ERR_LINE_BAD_HEADER -  The field TypMisto is not presented in the file received; The field MistoNazev of the file received is not presented in the structure; 
+2019-01-31 11:48:38,287 [1] ERROR: The file misto.csv is invalid.
+2019-01-31 11:48:38,287 [1] DEBUG: Start validate provozovatel.csv
+2019-01-31 11:48:38,354 [1] INFO : The file provozovatel.csv is valid.
+2019-01-31 11:48:38,392 [1] INFO : The Package 30030030-V-2019012108-R-01 validation is completed.
+2019-01-31 14:00:13,177 [1] INFO : Start processing package 30030030-V-2019012108-R-01
+2019-01-31 14:00:13,212 [1] DEBUG: Start validate misto.csv
+2019-01-31 14:04:00,738 [1] INFO : Start processing package 30030030-V-2019012108-R-01
+2019-01-31 14:04:00,759 [1] DEBUG: Start validate misto.csv

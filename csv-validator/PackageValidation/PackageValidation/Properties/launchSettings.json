@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PackageValidation": {
+      "commandName": "Project",
+      "commandLineArgs": "\\test\\DataSource\\30030030-V-2019012108-R-01"
+    }
+  }
+}

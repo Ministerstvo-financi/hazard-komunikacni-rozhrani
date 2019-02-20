@@ -1,0 +1,46 @@
+{
+  "SourceLocation": {
+    "Folder": "SchemaSource",
+    "SchemaStructure": {
+      "FileName": "fields_structure.csv",
+      "ModelColumn": "Model",
+      "FileNameColumn": "FileName",
+      "OrderColumn": "ColumnId",
+      "FieldNameColumn": "FieldNameEn",
+      "FieldNameKeyColumn": "FieldNameCz",
+      "FieldDataTypeColumn": "FieldType",
+      "GameTypeColumn": "GameType",
+      "DomainTypeColumn": "DomainType",
+      "NullableColumn": "Nullable",
+      "PresenceColumn": "Presence",
+      "ConditionColumn": "Condition",
+      "MinLengthColumn": "MinLength",
+      "MaxLengthColumn": "MaxLength",
+      "RegExpColumn": "RegExp",
+      "ContextColumn": "Context",
+      "NoteColumn": "Note"
+    },
+    "CodeBooks": {
+      "FileName": "codebook.csv",
+      "FieldNameColumn": "FieldName",
+      "ValueColumn": "Value",
+      "DescriptionColumn": "DescriptionEn",
+      "DescriptionLocalizedColumn": "DescriptionCz"
+    },
+    "SpecialCodeBook": {
+      "GameTypeFileName": "game_type_ref.csv",
+      "FileCompositionCollection": "model_file_mandatory.csv",
+      "ModelGameFile":"model_game_file.csv",
+      "KeyColumn": "Key",
+      "DescriptionColumn": "Description"
+    },
+    "FilesToProvideValidation": "game_type_ref.csv;fields_structure.csv;codebook.csv;model_file_mandatory.csv;model_game_file.csv",
+    "LogFilesInOperationFolder": "file-validation-error.txt;validation-report.csv",
+    "CheckFileComposition": "0",
+    "FieldsSeparator":  ";" 
+  },
+  "SpecificationVersion":"1.0",
+  "MaximalLineLength": 64000,
+  "MaximalErrorsPerFile": 300,
+  "GlobalLogDir": "/tmp/aisg-logs" 
+}

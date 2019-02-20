@@ -1,0 +1,3 @@
+PackageName,FileName,ValidationResult,LineCount,Hash
+30030030-V-2019012108-R-01,misto.csv,ERROR_INVALID,1,sha256:342af388ac02c357ddb71071d00dc76a57b5d2ad446c70ec981afec6a25eb565
+30030030-V-2019012108-R-01,provozovatel.csv,VALID,2,sha256:fcb98693652cd1d4275de14bbf7faea46da441957cbf72be027a101a19caf31f
