@@ -29,3 +29,26 @@ Nástroje jsou k dispozici již zkompilované pro spuštění na platformách Wi
 
 
 
+
+
+
+
+
+
+# Licence
+The referenční implementace tam, kde je vytvářen nový kód je licencována pod Apache License v2.0.
+Referenční implementace obsahuje nebo využívá další komponenty, které jsou licencovány odpovídajícími 
+licencemi:
+* OpenSSL - [vlastní licence](https://www.openssl.org/source/license.html)
+* Apache HTTPD - [Apache License v2.0](https://www.apache.org/licenses/LICENSE-2.0)
+* DSS - [LGPL](https://github.com/esig/dss/blob/master/LICENSE) 
+* .NET Core - [MIT](https://github.com/dotnet/core/blob/master/LICENSE.TXT)
+* OpenJDK - [GPL](https://openjdk.java.net/legal/OCTLA-JDK9+.pdf)
+
+
+
+
+
+
+
+
