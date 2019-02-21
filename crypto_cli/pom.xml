@@ -35,8 +35,6 @@
                     <executable>${JAVA_11_HOME}</executable>
                 </configuration>
             </plugin>
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -44,6 +42,11 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <archive>
+                      <manifest>
+                        <mainClass>com.cgi.spcss.Main</mainClass>
+                      </manifest>
+                    </archive>
                 </configuration>
                 <executions>
                     <execution>
@@ -55,7 +58,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>

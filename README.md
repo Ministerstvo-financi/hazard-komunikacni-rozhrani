@@ -24,16 +24,84 @@ Nástroje jsou k dispozici již zkompilované pro spuštění na platformách Wi
     * v prostředí Linuxu je typicky standardní součástí distribucí
     * v prostředí Windows je možné získat z některého z komunitních serverů [doporučovaných na stránkách Apache](https://httpd.apache.org/docs/current/platform/windows.html#down)
 
+## Instalace 
 
 
 
+## Postup přípravy balíčku
+Předpoklady pro přípravu balíčku:
+* Data datového balíčku ve formě CSV souborů ve složce jako např na následujícím výpisu
+```
+28934929-V-2019061208-B-01
+├── evidence_her.csv
+├── hra_toky.csv
+├── hra_toky_oprava.csv
+├── jedna_hra.csv
+├── konto.csv
+├── konto_zmeny.csv
+├── mena_kurs.csv
+├── ostatni_plneni.csv
+├── ostatni_plneni_oprava.csv
+├── prihlaseni.csv
+├── provozovatel.csv
+├── sebeomezeni.csv
+├── sebeomezeni_hra_druh.csv
+├── ucet.csv
+└── vazba_hra_sazka.csv
+```
+* Funkční podporu Java 11
+* Certifikát pro vytváření uznávané elektronické pečetě
+    * ve formě PKCS12 souboru (přípona `pfx` nebo `p12`)
+    * certifikát vydá některá z akreditovaných certifikačních autorit (eIdentity, I.CA, Postsignum) nebo libovolná zahraniční, 
+      která splňuje požadavky nařízení eIDAS
+    * Heslo k souboru s certifikátem pro uznávanou pečeť
+* Šifrovací certifikát komunikačního rozhraní získaný z parametrů komunikace, které publikuje MF a CS
+* Nástroj `zip` pro vytváření ZIP archivů (je například součástí Java 11 - `jar`)
 
 
 
+## Sestavení
+Sestavení je podporováno pouze na platfomě Linux. Výsledkem jsou binární výstupy pro všechny podporované platformy.
+Pro sestavení musí stroj splňovat následující předpoklady:
+* platforma OS Linux - testováno na Fedora Workstation 29, Ubuntu 18.04
+* Docker Community Edition v18.06 
+    * instalace dle postupu na [stránkách společnosti Docker](https://docs.docker.com/install/linux/docker-ce/)
+* git - instalace standardní cestou balíčků distribuce
+* konektivita do internetu, odkud se stahuje
+    * docker obrazy, které slouží ke kompilaci komponent
+    * baličky NuGet pro sestavení .NET Core komponent
+    * balíčky Maven pro sestavení Java komponent
 
+Jakmile jsou všechny předpoklady naplněny, je postup sestavení následující:
+```
+git clone https://github.com/Ministerstvo-financi/hazard-komunikacni-rozhrani.git
+cd hazard-komunikacni-rozhrani
+./build-docker.sh
+```
 
+Po dokončení sestavení jsou výsledné balíky ve složce `build`:
+* crypto_utils.zip - JAR soubory obsahují knihovny a spustitelné modul, soubory typu BAT obsahují příklady, jak spouštět jednotlivé operace
+  ```
+	.
+	├── crypto_cli-1.0.jar
+	├── crypto_cli-1.0-jar-with-dependencies.jar
+	├── crypto_utils-1.0.jar
+	├── crypto_utils-1.0-jar-with-dependencies.jar
+	├── decryptFile.bat
+	├── encryptFile.bat
+	├── signFile.bat
+	├── validateCertificate.bat
+	└── validateFile.bat
 
+  ```
+* CSV validátor - každá balík obsahuje všechny nezbytné soubory pro spuštění na dané platformě Validátor se spouští pomocí příkazu 
+  `PackageValidation` (PackageValidation.exe pro windows apod.). Distribuční balíky pro jednotlivé platformy
+	* `csv-validator-linux.zip` 
+	* `csv-validator-macosx.zip`
+	* `csv-validator-win.zip`
 
+Postup instalace a použití takto sestavených komponent je shodný, jako postup pro komponenty distribuované v binárním tvaru,
+které vznikají stejným způsbem.
 
 # Licence
 The referenční implementace tam, kde je vytvářen nový kód je licencována pod Apache License v2.0.
