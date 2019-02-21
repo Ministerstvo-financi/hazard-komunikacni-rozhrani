@@ -72,8 +72,9 @@ public class FileCryptor {
             properties.load(propertiesStream);
             propertiesStream.close();
             for (Map.Entry<Object, Object> property : properties.entrySet()) {
-                if (System.getenv().containsKey("AISG_" + property.getKey())) {
-                    property.setValue(System.getenv().get(property.getKey()));
+                String envName="AISG_" + property.getKey();
+                if (System.getenv().containsKey(envName)) {
+                    property.setValue(System.getenv().get(envName));
                 }
             }
         } catch (FileNotFoundException e) {

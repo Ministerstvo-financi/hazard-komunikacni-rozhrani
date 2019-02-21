@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <profiles>
+    <profile>
+      <id>compiler</id>
+        <properties>
+          <JAVA_11_HOME>/usr/lib/jvm/java-11-openjdk-11.0.2.7-0.fc29.x86_64</JAVA_1_4_HOME>
+        </properties>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>compiler</activeProfile>
+  </activeProfiles>
+</settings>

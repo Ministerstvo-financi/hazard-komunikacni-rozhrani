@@ -63,16 +63,6 @@
             <version>3.8.1</version>
         </dependency>
         <dependency>
-            <groupId>com.cgi.spcss</groupId>
-            <artifactId>jna</artifactId>
-            <version>4.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cgi.spcss</groupId>
-            <artifactId>jrsec</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>13.0</version>
@@ -133,40 +123,28 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
-                    <executable>C:\Program Files\Java\jdk-11.0.1</executable>
+                    <executable>${JAVA_11_HOME}</executable>
                 </configuration>
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>ica_exclude</id>
+                        <id>assemble-all</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/resources/jar-with-deps-with-ica-exclude.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>only_ica</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/resources/jar-with-ica-deps-only.xml</descriptor>
-                            </descriptors>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
