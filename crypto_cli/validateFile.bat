@@ -1,4 +1,16 @@
-set JAVA_HOME=C:\Program Files\Java\jdk-11.0.1
-set PATH=%JAVA_HOME%\bin;%PATH%
-java -Dlog4j.configuration=file:C:/testFiles/log4j.properties -jar target/crypto_cli-1.0.jar -f validateFile -i C:/testFiles/signedFiles/dss-test-signed-cades-baseline-b.pkcs7 -o C:/testFiles/target/result.txt -cert C:/testFiles/keystore/ec.europa.eu.1.cer -cert C:/testFiles/keystore/ec.europa.eu.2.cer
-pause
+@echo off
+
+call %~dp0config.bat
+
+set INPUT_FILE=%1
+set OUTPUT_FILE=%2
+set EXPECTED_CERT1=%3
+set EXPECTED_CERT2=%4
+
+java -jar %~dp0crypto_cli-1.0-jar-with-dependencies.jar ^
+     -f validateFile ^
+     -i %INPUT_FILE% ^
+     -o %OUTPUT_FILE% ^
+     -cert %EXPECTED_CERT1% ^
+     -cert %EXPECTED_CERT2%
+

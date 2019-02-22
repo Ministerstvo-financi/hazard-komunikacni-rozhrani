@@ -1,4 +1,15 @@
-set JAVA_HOME=C:\Program Files\Java\jdk-11.0.1
-set PATH=%JAVA_HOME%\bin;%PATH%
-java -Dlog4j.configuration=file:C:/testFiles/log4j.properties -jar target/crypto_cli-1.0.jar -f signFile -i C:/testFiles/test.txt -o C:/testFiles/target/testdoc.p7m -spks C:/testFiles/user_a_rsa.p12 -pass password
-pause
+@echo off
+
+call %~dp0config.bat
+
+set INPUT_FILE=%1
+set OUTPUT_FILE=%2
+set PKCS12_FILE=%3
+set PKCS12_PWD=%4
+
+java  -jar %~dp0crypto_cli-1.0-jar-with-dependencies.jar ^
+      -f signFile ^
+      -i %INPUT_FILE% ^
+      -o %OUTPUT_FILE% ^
+      -spks %PKCS12_FILE% ^
+      -pass %PKCS12_PWD%

@@ -13,4 +13,4 @@ export AISG_CacheTSL=$TEMP/cacheTSL
 
 rm -rf $TMPDIR 
 
-mvn clean install
+mvn  -DskipTests clean install

@@ -45,6 +45,8 @@ function buildCsvValidator {
 	mkdir -p ${DIR}/build
 	#rm -rf ${DIR}/build/*
 
+
+    rm -rf ${DIR}/build/csv-validator-linux ${DIR}/build/csv-validator-win ${DIR}/build/csv-validator-macosx
 	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/linux-x64/publish ${DIR}/build/csv-validator-linux
 	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/win-x64/publish ${DIR}/build/csv-validator-win
 	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/osx-x64/publish ${DIR}/build/csv-validator-macosx
@@ -67,7 +69,7 @@ function buildCryptoUtil {
 	mkdir -p ${DIR}/build/repo 
 
 	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_utils:/work -w /work maven:3.6.0-jdk-11-slim /work/build-linux.sh
-	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_cli:/work -w /work maven:3.6.0-jdk-11-slim mvn package
+	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_cli:/work -w /work maven:3.6.0-jdk-11-slim mvn -DskipTests package
 
 	# fix ownership
 	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_utils:/work -w /work maven:3.6.0-jdk-11-slim chown -R $(id -u):$(id -g) /work
@@ -76,6 +78,7 @@ function buildCryptoUtil {
 
 	mkdir -p ${DIR}/build/crypto_utils 
 
+	rm -f ${DIR}/build/crypto_utils/*
 	cp ${DIR}/crypto_cli/target/crypto_cli-1.0-jar-with-dependencies.jar \
 	   ${DIR}/crypto_cli/target/crypto_cli-1.0.jar \
 	   ${DIR}/crypto_cli/*.bat \
@@ -88,6 +91,7 @@ function buildCryptoUtil {
 	)
 }
 
-rm -rf {DIR}/build
+#rm -rf {DIR}/build
+
 buildCryptoUtil
-buildCsvValidator
+#buildCsvValidator

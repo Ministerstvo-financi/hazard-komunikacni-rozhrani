@@ -4,7 +4,12 @@ import cz.com.spcss.model.ResultCodes;
 import cz.com.spcss.model.SignResult;
 import eu.europa.esig.dss.DSSException;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
@@ -17,25 +22,69 @@ import static org.junit.Assert.assertThat;
 
 
 public class DssValidatorTest {
-    private final String inputFile1 = "src/test/resources/signedFiles/dss-test-signed-cades-baseline-b.pkcs7";
-    private final String inputFile2 = "src/test/resources/signedFiles/testdoc.p7m";
-    private final String inputFile3 = "src/test/resources/signedFiles/2A35D77823E3EA4EB41F6FC620A95FE6.pdf";
-    private final String inputFile4 = "src/test/resources/signedFiles/vypis-0.pdf";
+    private String inputFile1 = "src/test/resources/signedFiles/dss-test-signed-cades-baseline-b.pkcs7";
+    private String inputFile2 = "src/test/resources/signedFiles/testdoc.p7m";
+    private String inputFile3 = "src/test/resources/signedFiles/2A35D77823E3EA4EB41F6FC620A95FE6.pdf";
+    private String inputFile4 = "src/test/resources/signedFiles/vypis-0.pdf";
 
-    private final String certPath1 = "src/test/resources/keystore/ec.europa.eu.1.cer";
-    private final String certPath2 = "src/test/resources/keystore/ec.europa.eu.2.cer";
-    private final String certPath3 = "src/test/resources/keystore/2A35D77823E3EA4EB41F6FC620A95FE6.cer";
+    private String certPath1 = "src/test/resources/keystore/ec.europa.eu.1.cer";
+    private String certPath2 = "src/test/resources/keystore/ec.europa.eu.2.cer";
+    private String certPath3 = "src/test/resources/keystore/2A35D77823E3EA4EB41F6FC620A95FE6.cer";
 
     private final String outputFile = "target/result.txt";
     private List<String> certificateFiles = new ArrayList<>();;
     private List<String> certificateFilesForDoc = new ArrayList<>();;
 
+
     @Before
-    public void setPaths() {
+    public void setPaths() throws Exception {
+        Path tempDir = Files.createTempDirectory("tempfiles");
+        Path dstPath;
+        Path inpPath;
+
+        inpPath = Paths.get(inputFile1);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        inputFile1 = dstPath.toString(); 
+
+        inpPath = Paths.get(inputFile2);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        inputFile2 = dstPath.toString(); 
+
+        inpPath = Paths.get(inputFile3);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        inputFile3 = dstPath.toString(); 
+
+        inpPath = Paths.get(inputFile4);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        inputFile4 = dstPath.toString(); 
+
+        inpPath = Paths.get(certPath1);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        certPath1 = dstPath.toString(); 
+
+        inpPath = Paths.get(certPath2);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        certPath2 = dstPath.toString(); 
+
+        inpPath = Paths.get(certPath3);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        certPath3 = dstPath.toString(); 
+
         certificateFiles.add(certPath1);
         certificateFiles.add(certPath2);
 
         certificateFilesForDoc.add(certPath3);
+    }
+
+    public void cleanup() {
+        //TODO
     }
 
     @Test

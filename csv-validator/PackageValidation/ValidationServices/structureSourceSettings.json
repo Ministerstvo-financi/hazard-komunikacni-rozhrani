@@ -42,5 +42,5 @@
   "SpecificationVersion":"1.0",
   "MaximalLineLength": 64000,
   "MaximalErrorsPerFile": 300,
-  "GlobalLogDir": "/tmp/aisg-logs" 
+  "GlobalLogDir": "." 
 }

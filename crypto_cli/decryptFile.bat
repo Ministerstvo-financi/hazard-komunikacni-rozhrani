@@ -1,4 +1,15 @@
-set JAVA_HOME=C:\Program Files\Java\jdk-11.0.1
-set PATH=%JAVA_HOME%\bin;%PATH%
-java -Dlog4j.configuration=file:C:/testFiles/log4j.properties -jar target/crypto_cli-1.0.jar -f decryptFile -i C:/testFiles/testFiles/encrypted-rsa.p7e -o C:/testFiles/myDoc-rsa-dec.txt -k C:/testFiles/testFiles/rsa.key -cert C:/testFiles/testFiles/rsa.pem
-pause
+@echo off
+
+call %~dp0config.bat
+
+set INPUT_FILE=%1
+set OUTPUT_FILE=%2
+set PRIVATE_KEY=%3
+set RECIP_CERT=%4
+
+java -jar %~dp0crypto_cli-1.0-jar-with-dependencies.jar ^
+     -f decryptFile ^
+     -i %INPUT_FILE% ^
+     -o %OUTPUT_FILE% ^
+     -k %PRIVATE_KEY% ^
+     -cert %RECIP_CERT%

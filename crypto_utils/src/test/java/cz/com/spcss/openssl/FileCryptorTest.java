@@ -3,7 +3,12 @@ package cz.com.spcss.openssl;
 import cz.com.spcss.model.ResultCodes;
 import cz.com.spcss.model.SignResult;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Files;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,22 +20,41 @@ import static org.junit.Assert.assertThat;
 public class FileCryptorTest {
 
     private final String inputEncryptPath = "src/test/resources/testFiles/myDoc.txt";
-    private final String outputEncryptPath = "encrypted-rsa.p7e";
+    private String outputEncryptPath = "encrypted-rsa.p7e";
 
     private final String inputDecryptPath = "src/test/resources/testFiles/encrypted-rsa.p7e";
-    private final String outputDecryptPath = "myDoc-rsa-dec.txt";
+    private String outputDecryptPath = "myDoc-rsa-dec.txt";
     private final String keyPath = "src/test/resources/testFiles/rsa.key";
 
     private List<String> certificateFiles;
 
+    private Path tempDir;
+
     @Before
-    public void setPaths() {
+    public void setPaths() throws Exception {
         String certPath1 = "src/test/resources/testFiles/rsa.pem";
         String certPath2 = "src/test/resources/testFiles/rsa2.pem";
 
         certificateFiles = new ArrayList<>();
         certificateFiles.add(certPath1);
         certificateFiles.add(certPath2);
+
+        Path tempDir = Files.createTempDirectory("tempfiles");
+        outputEncryptPath = tempDir.resolve(outputEncryptPath).toAbsolutePath().toString();
+        outputDecryptPath = tempDir.resolve(outputDecryptPath).toAbsolutePath().toString();
+    }
+
+    @After
+    public void cleanup() throws Exception {
+        if (outputEncryptPath!=null){
+            new File(outputEncryptPath).delete();
+        }
+        if (outputDecryptPath!=null){
+            new File(outputDecryptPath).delete();
+        }
+        if ( tempDir!=null ) {
+            tempDir.toFile().delete();
+        }
     }
 
     @Test

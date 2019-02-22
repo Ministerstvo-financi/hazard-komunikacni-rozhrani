@@ -29,7 +29,7 @@ Nástroje jsou k dispozici již zkompilované pro spuštění na platformách Wi
 
 
 ## Postup přípravy balíčku
-Předpoklady pro přípravu balíčku:
+### Předpoklady pro přípravu balíčku
 * Data datového balíčku ve formě CSV souborů ve složce jako např na následujícím výpisu
 ```
 28934929-V-2019061208-B-01
@@ -58,9 +58,169 @@ Předpoklady pro přípravu balíčku:
 * Šifrovací certifikát komunikačního rozhraní získaný z parametrů komunikace, které publikuje MF a CS
 * Nástroj `zip` pro vytváření ZIP archivů (je například součástí Java 11 - `jar`)
 
+Po rozbalení dritibučního balíku vznikne následující struktura - pro následující postupy předpokládáme, že tato struktura je umístena ve složce `C:\hazard`, na linuxu pak složka `/hazard`:
+```
+C:\hazard
+├── crypto_utils
+│   ├── config.bat
+│   ├── crypto_cli-1.0.jar
+│   ├── crypto_cli-1.0-jar-with-dependencies.jar
+│   ├── crypto_utils-1.0.jar
+│   ├── crypto_utils-1.0-jar-with-dependencies.jar
+│   ├── decryptFile.bat
+│   ├── encryptFile.bat
+│   ├── signFile.bat
+│   ├── validateCertificate.bat
+│   └── validateFile.bat
+├── csv-validator-win
+│   ├── api-ms-win-core-console-l1-1-0.dll
+│   ├── .... dalsi ...dll
+│   ├── api-ms-win-crt-utility-l1-1-0.dll
+│   ├── App.config
+│   ├── README.md
+│   ├── RELEASE-NOTES.md
+│   ├── SchemaSource
+│   │   ├── codebook.csv
+│   │   ├── fields_structure.csv
+│   │   ├── game_type_ref.csv
+│   │   ├── model_file_mandatory.csv
+│   │   ├── model_game_file.csv
+│   │   ├── structured-schema-description.xlsx
+│   │   ├── Validace-balicku.docx
+│   │   └── Validace-balicku-EN.docx
+│   ├── PackageValidation.exe
+│   └── structureSourceSettings.json
+└── data
+    ├── 28934929-V-2019061208-B-01
+    │   ├── evidence_her.csv
+    │   ├── hra_toky.csv
+    │   ├── hra_toky_oprava.csv
+    │   ├── jedna_hra.csv
+    │   ├── konto.csv
+    │   ├── konto_zmeny.csv
+    │   ├── mena_kurs.csv
+    │   ├── ostatni_plneni.csv
+    │   ├── ostatni_plneni_oprava.csv
+    │   ├── prihlaseni.csv
+    │   ├── provozovatel.csv
+    │   ├── sebeomezeni.csv
+    │   ├── sebeomezeni_hra_druh.csv
+    │   ├── ucet.csv
+    │   └── vazba_hra_sazka.csv
+    ├── mf
+    │   ├── ca.crt
+    │   ├── mf-aisg-sifrovaci.crt
+    │   ├── mf-aisg-sifrovaci.key
+    │   ├── mf-system-aisg.crt
+    │   ├── mf-system-aisg.key
+    │   └── mf-system-aisg.p12
+    └── test-hazard
+        ├── ca.crt
+        ├── test-hazard-simulace-pecet.p12
+        ├── test-hazard-simulace-pecet.crt
+        ├── test-hazard-simulace-pecet.key
+        ├── test-hazard-sifrovani.crt
+        ├── test-hazard-sifrovani.key
+        └── test-hazard-sifrovani.p12
+```
 
 
-## Sestavení
+### Postup vytvoření datového balíčku
+
+#### Validace datového obsahu balíčku 
+**Windows:**
+Spustit příkazovou řádku `cmd.exe`. Validátor se spustí pomocí následujících příkazů:
+```
+C:
+cd c:\hazard
+csv-validator-win\PackageValidation.exe  data\28934929-V-2019061208-B-01
+```
+V průběhu validace vznikají následující soubory:
+* `data\28934929-V-2019061208-B-01\validation-results.csv` - celkový výsledek validace jednotlivých CSV
+* `data\28934929-V-2019061208-B-01\validation-processing.txt` - záznam průběhu zpracování validaci
+* `data\28934929-V-2019061208-B-01\validation-errors.csv` - seznam chyb nalezených ve všech CSV souborech
+* `global.log` - globální log, který obsahuje především informace mimo samotné zpracování balíčku. Umístění tohoto souboru 
+  je určeno hodnotou `GlobalLog` v souboru  `csv-validator-win\structureSourceSettings.json`
+
+Pokud je balíček bez chyb, jsou všechny řádky v souboru `validation-results.csv` označeny jako `VALID` 
+a soubor `validation-errors.csv` je prázdný.
+
+**Linux:**
+Spustit příkazový řádek 
+```
+TBD
+```
+
+#### Vytvořní ZIPu
+**Windows:**
+Spustit Powershell a zadat následující příkazy
+```
+C:
+cd c:\hazard
+cd data\28934929-V-2019061208-B-01
+Compress-Archive -Path *.csv -DestinationPath ..\28934929-V-2019061208-B-01
+```
+Ve složce `c:\hazard\data` vznikne soubor `28934929-V-2019061208-B-01.zip`
+
+**Linux:**
+Spustit příkazový řádek 
+```
+TBD
+```
+
+#### Šifrování
+**Windows**
+Soubor `crypto_utils\config.bat` změnit tak, aby byla správně nastavena proměnná JAVA_HOME (testováno jen s umístěním bez mezer v názvech složek).
+Demonstrační data obsahují soubory:
+* `mf-aisg-sifrovaci.crt` - šifrovací certifikát MF, který provozvatel získá z publikovaných údajů pro zabezpečení komunikace 
+   z JSON položky `certifikatySifrovani`
+* `test-hazard-sifrovani.crt` - šifrovací certifikát jehož privátní klíč je ve vlastnictví provozovatele - certifikát provozovatel registruje 
+   jako součást svých údajů pro technické zabezpečení komunikace prostředictvím formuláře na stránkých Celní správy jako Šifrovací certifikát
+
+Spustit příkazovou řádku `cmd.exe`. Šifrování dat na Windows probíhá pomocí následujících příkazů:
+```
+C:
+cd C:\hazard
+crypto_utils\encryptFile.bat data\28934929-V-2019061208-B-01.zip data\28934929-V-2019061208-B-01.zip.p7e data\mf\mf-aisg-sifrovaci.crt data\test-hazard\test-hazard-sifrovani.crt
+```
+Vznikne soubor `data\28934929-V-2019061208-B-01.zip.p7e`, který je možné dešifrovat klíči náležejícími k certifikátům `mf-aisg-sifrovaci.crt` a `test-hazard-sifrovani.crt` - tedy certifikátem MF a také certifikátem provozvatele. Certifikát provozovatele není nezbytné při šifrování použít. Je to však obvyklá praxe, kdy je odesílatel schopen data dešifrovat. 
+
+**Linux:**
+Spustit příkazový řádek 
+```
+TBD
+```
+
+
+#### Vytvoření elektornické pečeti
+**Windows**
+Demonstrační data obsahují soubory:
+* `test-hazard\test-hazard-simulace-pecet.p12` - jedna se o certifikát, kterým v následujicím postupu simulováno použití 
+  kvalifikovaného certifikátu pro tvorbu uznávané pečeti. Tento certifikát musí být pro použití v prostředí playground 
+  nahrazen certifikátem, který vydá akreditovaná certifikační autorita (nikoli testovací certifikát)  
+Spustit příkazovou řádku `cmd.exe`. Pečetění dat na Windows probíhá pomocí následujících příkazů (POZOR - poslední cesta musí používat 
+dopředná lomítka in na windows):
+```
+C:
+cd C:\hazard
+crypto_utils\signFile.bat data\28934929-V-2019061208-B-01.zip.p7e data\28934929-V-2019061208-B-01.zip.p7e.p7s data/test-hazard/test-hazard-simulace-pecet.p12 12345678
+```
+Vznikne soubor `data\28934929-V-2019061208-B-01.zip.p7e.p7s`. Tento soubor je již výsledným datovým balíčkem, který provozovatel vystaví ke stažení.
+
+**Linux:**
+Spustit příkazový řádek 
+```
+TBD
+```
+
+### Postup zpracování potvrzovacího balíčku
+
+
+
+
+
+
+## Sestavení modulů
 Sestavení je podporováno pouze na platfomě Linux. Výsledkem jsou binární výstupy pro všechny podporované platformy.
 Pro sestavení musí stroj splňovat následující předpoklady:
 * platforma OS Linux - testováno na Fedora Workstation 29, Ubuntu 18.04
@@ -102,6 +262,11 @@ Po dokončení sestavení jsou výsledné balíky ve složce `build`:
 
 Postup instalace a použití takto sestavených komponent je shodný, jako postup pro komponenty distribuované v binárním tvaru,
 které vznikají stejným způsbem.
+
+### OpenSSL Windows binární
+Binární verze OpenSSL, která je součástí distribučního balíčku, je stažena z https://kb.firedaemon.com/support/solutions/articles/4000121705-openssl-binaries
+
+
 
 # Licence
 The referenční implementace tam, kde je vytvářen nový kód je licencována pod Apache License v2.0.
