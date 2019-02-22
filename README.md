@@ -24,12 +24,12 @@ Nástroje jsou k dispozici již zkompilované pro spuštění na platformách Wi
     * v prostředí Linuxu je typicky standardní součástí distribucí
     * v prostředí Windows je možné získat z některého z komunitních serverů [doporučovaných na stránkách Apache](https://httpd.apache.org/docs/current/platform/windows.html#down)
 
-## Instalace 
+# Instalace 
 Distribuční soubor stahněte z [GitHub](https://github.com/Ministerstvo-financi/hazard-komunikacni-rozhrani/releases). 
 Distribuční soubor ZIP rozbalte na svém počítači. Následně je možné využít postupu níže k vytvářoření datového balíčku. 
 
-## Postup přípravy balíčku
-### Předpoklady pro přípravu balíčku
+# Postup přípravy balíčku
+## Předpoklady pro přípravu balíčku
 * Data datového balíčku ve formě CSV souborů ve složce jako např na následujícím výpisu
 ```
 28934929-V-2019061208-B-01
@@ -125,12 +125,13 @@ C:\hazard
 ```
 
 
-### Postup vytvoření datového balíčku
+## Postup vytvoření datového balíčku
 
-#### Validace datového obsahu balíčku 
+### Validace datového obsahu balíčku 
 **Windows:**
+
 Spustit příkazovou řádku `cmd.exe`. Validátor se spustí pomocí následujících příkazů:
-```
+```bat
 C:
 cd c:\hazard
 csv-validator-win\PackageValidation.exe  data\28934929-V-2019061208-B-01
@@ -146,15 +147,17 @@ Pokud je balíček bez chyb, jsou všechny řádky v souboru `validation-results
 a soubor `validation-errors.csv` je prázdný.
 
 **Linux:**
+
 Spustit příkazový řádek 
 ```
 TBD
 ```
 
-#### Vytvořní ZIPu
+### Vytvořní ZIPu
 **Windows:**
+
 Spustit Powershell a zadat následující příkazy
-```
+```bat
 C:
 cd c:\hazard
 cd data\28934929-V-2019061208-B-01
@@ -163,13 +166,15 @@ Compress-Archive -Path *.csv -DestinationPath ..\28934929-V-2019061208-B-01
 Ve složce `c:\hazard\data` vznikne soubor `28934929-V-2019061208-B-01.zip`
 
 **Linux:**
+
 Spustit příkazový řádek 
 ```
 TBD
 ```
 
-#### Šifrování
+### Šifrování
 **Windows**
+
 Soubor `crypto_utils\config.bat` změnit tak, aby byla správně nastavena proměnná JAVA_HOME (testováno jen s umístěním bez mezer v názvech složek).
 Demonstrační data obsahují soubory:
 * `mf-aisg-sifrovaci.crt` - šifrovací certifikát MF, který provozvatel získá z publikovaných údajů pro zabezpečení komunikace 
@@ -178,7 +183,7 @@ Demonstrační data obsahují soubory:
    jako součást svých údajů pro technické zabezpečení komunikace prostředictvím formuláře na stránkých Celní správy jako Šifrovací certifikát
 
 Spustit příkazovou řádku `cmd.exe`. Šifrování dat na Windows probíhá pomocí následujících příkazů:
-```
+```bat
 C:
 cd C:\hazard
 crypto_utils\encryptFile.bat data\28934929-V-2019061208-B-01.zip data\28934929-V-2019061208-B-01.zip.p7e data\mf\mf-aisg-sifrovaci.crt data\test-hazard\test-hazard-sifrovani.crt
@@ -186,21 +191,23 @@ crypto_utils\encryptFile.bat data\28934929-V-2019061208-B-01.zip data\28934929-V
 Vznikne soubor `data\28934929-V-2019061208-B-01.zip.p7e`, který je možné dešifrovat klíči náležejícími k certifikátům `mf-aisg-sifrovaci.crt` a `test-hazard-sifrovani.crt` - tedy certifikátem MF a také certifikátem provozvatele. Certifikát provozovatele není nezbytné při šifrování použít. Je to však obvyklá praxe, kdy je odesílatel schopen data dešifrovat. 
 
 **Linux:**
+
 Spustit příkazový řádek 
 ```
 TBD
 ```
 
 
-#### Vytvoření elektornické pečeti
+### Vytvoření elektronické pečeti
 **Windows**
+
 Demonstrační data obsahují soubory:
 * `test-hazard\test-hazard-simulace-pecet.p12` - jedna se o certifikát, kterým v následujicím postupu simulováno použití 
   kvalifikovaného certifikátu pro tvorbu uznávané pečeti. Tento certifikát musí být pro použití v prostředí playground 
   nahrazen certifikátem, který vydá akreditovaná certifikační autorita (nikoli testovací certifikát)  
 Spustit příkazovou řádku `cmd.exe`. Pečetění dat na Windows probíhá pomocí následujících příkazů (POZOR - poslední cesta musí používat 
 dopředná lomítka in na windows):
-```
+```bat
 C:
 cd C:\hazard
 crypto_utils\signFile.bat data\28934929-V-2019061208-B-01.zip.p7e data\28934929-V-2019061208-B-01.zip.p7e.p7s data/test-hazard/test-hazard-simulace-pecet.p12 12345678
@@ -208,17 +215,14 @@ crypto_utils\signFile.bat data\28934929-V-2019061208-B-01.zip.p7e data\28934929-
 Vznikne soubor `data\28934929-V-2019061208-B-01.zip.p7e.p7s`. Tento soubor je již výsledným datovým balíčkem, který provozovatel vystaví ke stažení.
 
 **Linux:**
+
 Spustit příkazový řádek 
 ```
 TBD
 ```
 
 ### Postup zpracování potvrzovacího balíčku
-
-
-
-
-
+TBD
 
 ## Sestavení modulů
 Sestavení je podporováno pouze na platfomě Linux. Výsledkem jsou binární výstupy pro všechny podporované platformy.
@@ -233,7 +237,7 @@ Pro sestavení musí stroj splňovat následující předpoklady:
     * balíčky Maven pro sestavení Java komponent
 
 Jakmile jsou všechny předpoklady naplněny, je postup sestavení následující:
-```
+```shell
 git clone https://github.com/Ministerstvo-financi/hazard-komunikacni-rozhrani.git
 cd hazard-komunikacni-rozhrani
 ./build-docker.sh
@@ -255,18 +259,13 @@ Po dokončení sestavení jsou výsledné balíky ve složce `build`:
 
   ```
 * CSV validátor - každá balík obsahuje všechny nezbytné soubory pro spuštění na dané platformě Validátor se spouští pomocí příkazu 
-  `PackageValidation` (PackageValidation.exe pro windows apod.). Distribuční balíky pro jednotlivé platformy
-	* `csv-validator-linux.zip` 
-	* `csv-validator-macosx.zip`
-	* `csv-validator-win.zip`
+  `PackageValidation` (PackageValidation.exe pro windows apod.). 
 
 Postup instalace a použití takto sestavených komponent je shodný, jako postup pro komponenty distribuované v binárním tvaru,
 které vznikají stejným způsbem.
 
 ### OpenSSL Windows binární
 Binární verze OpenSSL, která je součástí distribučního balíčku, je stažena z https://kb.firedaemon.com/support/solutions/articles/4000121705-openssl-binaries
-
-
 
 # Licence
 The referenční implementace tam, kde je vytvářen nový kód je licencována pod Apache License v2.0.
