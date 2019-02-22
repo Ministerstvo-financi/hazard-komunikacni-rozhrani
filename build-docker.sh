@@ -100,6 +100,6 @@ function packAll {
 	)
 }
 
-#buildCryptoUtil
-#buildCsvValidator
+buildCryptoUtil
+buildCsvValidator
 packAll
