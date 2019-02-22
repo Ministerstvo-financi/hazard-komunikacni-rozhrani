@@ -25,8 +25,8 @@ Nástroje jsou k dispozici již zkompilované pro spuštění na platformách Wi
     * v prostředí Windows je možné získat z některého z komunitních serverů [doporučovaných na stránkách Apache](https://httpd.apache.org/docs/current/platform/windows.html#down)
 
 ## Instalace 
-
-
+Distribuční soubor stahněte z [GitHub](https://github.com/Ministerstvo-financi/hazard-komunikacni-rozhrani/releases). 
+Distribuční soubor ZIP rozbalte na svém počítači. Následně je možné využít postupu níže k vytvářoření datového balíčku. 
 
 ## Postup přípravy balíčku
 ### Předpoklady pro přípravu balíčku

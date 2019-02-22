@@ -42,22 +42,6 @@ function buildCsvValidator {
 	       chown -R $(id -u):$(id -g) /work
 	       
 
-	mkdir -p ${DIR}/build
-	#rm -rf ${DIR}/build/*
-
-
-    rm -rf ${DIR}/build/csv-validator-linux ${DIR}/build/csv-validator-win ${DIR}/build/csv-validator-macosx
-	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/linux-x64/publish ${DIR}/build/csv-validator-linux
-	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/win-x64/publish ${DIR}/build/csv-validator-win
-	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/osx-x64/publish ${DIR}/build/csv-validator-macosx
-
-
-	(
-		cd ${DIR}/build/
-		zip  -r csv-validator-linux.zip  csv-validator-linux
-		zip  -r csv-validator-win.zip  csv-validator-win
-		zip  -r csv-validator-macosx.zip  csv-validator-macosx
-	)
 
 }
 
@@ -76,7 +60,22 @@ function buildCryptoUtil {
 	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_cli:/work -w /work maven:3.6.0-jdk-11-slim chown -R $(id -u):$(id -g) /work
 	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_utils:/work -w /work maven:3.6.0-jdk-11-slim chown -R $(id -u):$(id -g) /root/.m2 
 
-	mkdir -p ${DIR}/build/crypto_utils 
+}
+
+function packAll {
+
+	#build csv validator
+
+	rm -rf ${DIR}/build/dist
+	mkdir -p ${DIR}/build/dist
+
+	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/linux-x64/publish ${DIR}/build/dist/csv-validator-linux
+	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/win-x64/publish ${DIR}/build/dist/csv-validator-win
+	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/osx-x64/publish ${DIR}/build/dist/csv-validator-macosx
+
+	# build crypto utils
+
+	mkdir -p ${DIR}/build/dist/crypto_utils 
 
 	rm -f ${DIR}/build/crypto_utils/*
 	cp ${DIR}/crypto_cli/target/crypto_cli-1.0-jar-with-dependencies.jar \
@@ -84,14 +83,23 @@ function buildCryptoUtil {
 	   ${DIR}/crypto_cli/*.bat \
 	   ${DIR}/crypto_utils/target/crypto_utils-1.0-jar-with-dependencies.jar \
 	   ${DIR}/crypto_utils/target/crypto_utils-1.0.jar \
-	   ${DIR}/build/crypto_utils 
+	   ${DIR}/build/dist/crypto_utils 
+
+	cp -R ${DIR}/data  \
+	    ${DIR}/openssl1.1.0 \
+	    ${DIR}/build/dist/ 
+
+	HAZARD=hazard
+
+	echo  "BUILDVER=${BUILDVER}" > ${DIR}/build/dist/version
+	echo  "GITID=${GITID}" >> ${DIR}/build/dist/version
+	mv ${DIR}/build/dist "${DIR}/build/${HAZARD}-${BUILDVER}"
 	(
-		cd ${DIR}/build/
-		zip  -r crypto_utils.zip crypto_utils
+		cd "${DIR}/build/"
+		zip -r "${HAZARD}-${BUILDVER}.zip" "${HAZARD}-${BUILDVER}" 
 	)
 }
 
-#rm -rf {DIR}/build
-
-buildCryptoUtil
+#buildCryptoUtil
 #buildCsvValidator
+packAll
