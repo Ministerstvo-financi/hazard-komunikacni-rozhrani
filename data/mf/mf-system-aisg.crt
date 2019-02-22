@@ -1,0 +1,97 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=CZ, ST=OVM, L=Praha, O=MinFin, OU=MinFinCA, CN=MinFinHazardCA/name=EasyRSA/emailAddress=hazard@myhost.mydomain
+        Validity
+            Not Before: Feb  4 14:25:11 2019 GMT
+            Not After : Feb  1 14:25:11 2029 GMT
+        Subject: C=CZ, ST=OVM, L=Praha, O=MinFin, OU=MinFinCA, CN=mf-system-aisg/name=EasyRSA/emailAddress=hazard@myhost.mydomain
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:fd:53:7c:a7:b3:80:b2:fb:ec:78:e3:e8:97:ee:
+                    b3:56:01:a5:bb:7f:ec:15:1f:30:5d:b5:9f:31:e6:
+                    de:d2:c8:aa:52:b1:04:44:37:00:5f:49:05:1b:bb:
+                    f1:a6:0b:c7:a5:3f:88:69:a7:43:fd:d1:9b:d4:60:
+                    f6:c6:a0:1f:bf:df:7c:47:f0:82:d4:4c:56:2a:7b:
+                    77:c4:0f:c2:6e:1e:c3:f5:9b:a0:3d:07:4c:5f:db:
+                    b3:13:db:03:7f:22:81:43:28:6d:e5:4f:60:5b:d9:
+                    5f:5f:fd:7f:f8:8b:55:fd:63:a1:7f:5e:f8:58:4e:
+                    be:10:c1:2a:35:d9:a8:46:7c:64:e4:1a:e4:01:d1:
+                    e5:ec:a0:3b:1e:fb:e4:d5:23:24:c4:63:df:7d:5e:
+                    9b:e7:6d:28:8c:03:1f:9e:29:89:08:49:4e:f6:54:
+                    ff:e7:55:95:91:11:48:14:4e:87:de:5b:41:34:1d:
+                    76:0b:f5:9a:d6:c4:bd:a3:1e:69:14:38:a7:ce:9a:
+                    e0:c5:a7:2c:c3:f2:70:e7:78:f6:55:ab:8f:28:2c:
+                    5b:10:f4:9d:57:32:d8:12:c7:50:80:22:d6:3e:84:
+                    bc:11:92:d8:2e:ea:fa:84:32:9b:46:71:a7:56:16:
+                    06:a0:50:d8:3b:7b:d0:d9:cc:2b:8a:34:2d:a5:a2:
+                    03:f7
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                55:49:DF:1C:9B:E1:3A:6C:CD:C8:E3:EA:CB:B0:36:21:FC:DD:D6:F1
+            X509v3 Authority Key Identifier: 
+                keyid:AB:97:8A:2A:D9:9B:C1:44:61:47:0E:49:49:57:D9:5F:B5:8F:47:98
+                DirName:/C=CZ/ST=OVM/L=Praha/O=MinFin/OU=MinFinCA/CN=MinFinHazardCA/name=EasyRSA/emailAddress=hazard@myhost.mydomain
+                serial:D5:55:8B:A2:B3:E3:95:C6
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+            X509v3 Subject Alternative Name: 
+                DNS:mf-system-aisg
+    Signature Algorithm: sha256WithRSAEncryption
+         4b:5f:bf:98:b3:d4:f6:60:fd:41:14:cf:ce:2a:e4:c4:e1:fa:
+         79:bb:61:2e:7a:b6:61:95:2a:f5:bc:cc:56:31:ec:01:cc:fa:
+         57:a4:21:f1:77:0f:93:e0:77:38:0a:89:62:35:3b:57:ce:64:
+         63:08:e4:df:56:d3:07:3c:29:b5:b3:2e:4f:72:2b:9b:63:94:
+         79:a7:e9:f1:88:a3:c2:ce:04:eb:82:c3:57:56:79:aa:25:e8:
+         81:b9:86:fc:87:63:31:da:d6:e0:a7:f1:7a:44:3e:4f:05:ed:
+         4d:c9:bc:ce:69:98:d7:21:e6:f4:6c:52:a7:f5:51:9a:38:e8:
+         5a:03:5d:90:85:34:05:57:bc:e5:cd:7a:25:ae:86:46:84:05:
+         38:c3:70:3c:8f:72:4e:06:eb:db:11:93:35:18:36:d3:60:8a:
+         85:1c:1d:74:7a:fa:2f:83:39:6e:31:fc:55:42:45:15:56:fd:
+         2d:e7:81:4d:ce:ab:96:a8:b9:09:cf:77:0b:26:23:4e:2d:d8:
+         d2:c9:8b:ef:33:9f:0e:fd:97:91:e8:e4:55:e6:5a:66:3a:01:
+         cd:f0:84:3f:39:c2:05:4f:2c:d1:4b:36:84:88:95:90:c9:2c:
+         fa:45:a8:1e:27:d6:4e:ff:5a:2e:bc:31:5f:2c:c2:76:ef:5a:
+         5f:1a:f0:44
+-----BEGIN CERTIFICATE-----
+MIIFNDCCBBygAwIBAgIBAjANBgkqhkiG9w0BAQsFADCBoTELMAkGA1UEBhMCQ1ox
+DDAKBgNVBAgTA09WTTEOMAwGA1UEBxMFUHJhaGExDzANBgNVBAoTBk1pbkZpbjER
+MA8GA1UECxMITWluRmluQ0ExFzAVBgNVBAMTDk1pbkZpbkhhemFyZENBMRAwDgYD
+VQQpEwdFYXN5UlNBMSUwIwYJKoZIhvcNAQkBFhZoYXphcmRAbXlob3N0Lm15ZG9t
+YWluMB4XDTE5MDIwNDE0MjUxMVoXDTI5MDIwMTE0MjUxMVowgaExCzAJBgNVBAYT
+AkNaMQwwCgYDVQQIEwNPVk0xDjAMBgNVBAcTBVByYWhhMQ8wDQYDVQQKEwZNaW5G
+aW4xETAPBgNVBAsTCE1pbkZpbkNBMRcwFQYDVQQDEw5tZi1zeXN0ZW0tYWlzZzEQ
+MA4GA1UEKRMHRWFzeVJTQTElMCMGCSqGSIb3DQEJARYWaGF6YXJkQG15aG9zdC5t
+eWRvbWFpbjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAP1TfKezgLL7
+7Hjj6Jfus1YBpbt/7BUfMF21nzHm3tLIqlKxBEQ3AF9JBRu78aYLx6U/iGmnQ/3R
+m9Rg9sagH7/ffEfwgtRMVip7d8QPwm4ew/WboD0HTF/bsxPbA38igUMobeVPYFvZ
+X1/9f/iLVf1joX9e+FhOvhDBKjXZqEZ8ZOQa5AHR5eygOx775NUjJMRj331em+dt
+KIwDH54piQhJTvZU/+dVlZERSBROh95bQTQddgv1mtbEvaMeaRQ4p86a4MWnLMPy
+cOd49lWrjygsWxD0nVcy2BLHUIAi1j6EvBGS2C7q+oQym0Zxp1YWBqBQ2Dt70NnM
+K4o0LaWiA/cCAwEAAaOCAXMwggFvMAkGA1UdEwQCMAAwLQYJYIZIAYb4QgENBCAW
+HkVhc3ktUlNBIEdlbmVyYXRlZCBDZXJ0aWZpY2F0ZTAdBgNVHQ4EFgQUVUnfHJvh
+OmzNyOPqy7A2Ifzd1vEwgdYGA1UdIwSBzjCBy4AUq5eKKtmbwURhRw5JSVfZX7WP
+R5ihgaekgaQwgaExCzAJBgNVBAYTAkNaMQwwCgYDVQQIEwNPVk0xDjAMBgNVBAcT
+BVByYWhhMQ8wDQYDVQQKEwZNaW5GaW4xETAPBgNVBAsTCE1pbkZpbkNBMRcwFQYD
+VQQDEw5NaW5GaW5IYXphcmRDQTEQMA4GA1UEKRMHRWFzeVJTQTElMCMGCSqGSIb3
+DQEJARYWaGF6YXJkQG15aG9zdC5teWRvbWFpboIJANVVi6Kz45XGMBMGA1UdJQQM
+MAoGCCsGAQUFBwMCMAsGA1UdDwQEAwIHgDAZBgNVHREEEjAQgg5tZi1zeXN0ZW0t
+YWlzZzANBgkqhkiG9w0BAQsFAAOCAQEAS1+/mLPU9mD9QRTPzirkxOH6ebthLnq2
+YZUq9bzMVjHsAcz6V6Qh8XcPk+B3OAqJYjU7V85kYwjk31bTBzwptbMuT3Irm2OU
+eafp8Yijws4E64LDV1Z5qiXogbmG/IdjMdrW4KfxekQ+TwXtTcm8zmmY1yHm9GxS
+p/VRmjjoWgNdkIU0BVe85c16Ja6GRoQFOMNwPI9yTgbr2xGTNRg202CKhRwddHr6
+L4M5bjH8VUJFFVb9LeeBTc6rlqi5Cc93CyYjTi3Y0smL7zOfDv2XkejkVeZaZjoB
+zfCEPznCBU8s0Us2hIiVkMks+kWoHifWTv9aLrwxXyzCdu9aXxrwRA==
+-----END CERTIFICATE-----
