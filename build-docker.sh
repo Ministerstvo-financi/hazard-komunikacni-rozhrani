@@ -67,7 +67,7 @@ function buildCryptoUtil {
 	mkdir -p ${DIR}/build/repo 
 
 	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_utils:/work -w /work maven:3.6.0-jdk-11-slim /work/build-linux.sh
-	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_cli:/work -w /work maven:3.6.0-jdk-11-slim mvn clean install
+	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_cli:/work -w /work maven:3.6.0-jdk-11-slim mvn package
 
 	# fix ownership
 	docker run -it --rm  -v ${DIR}/build/repo:/root/.m2 -v ${DIR}/crypto_utils:/work -w /work maven:3.6.0-jdk-11-slim chown -R $(id -u):$(id -g) /work
