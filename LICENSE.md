@@ -1,4 +1,4 @@
-Copyright [2019] [CGI IT Czech Republic s.r.o., Ministerstvo financí České republiky, Státní pokladna centrum sdílených služeb]
+Copyright [2019] [CGI IT Czech Republic s.r.o., Ministerstvo financí České republiky, Státní pokladna Centrum sdílených služeb, s. p.]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

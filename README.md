@@ -1,9 +1,9 @@
-# Referenční implementace Komunikačního rozhraní pro dohled nad Hazardem
-V tomto repoziráři jsou shromážděny nástroje, které implementují funkce potřebné pro napojení 
-provozovatelů hazardních her na Komunikační rozhraní za účelem poskytování automatizovaných výstupů 
-podle [vyhlášky č.10/2019](https://www.zakonyprolidi.cz/cs/2019-10) o způsobu oznamování a zasílání informací 
-a přenosu dat provozovatelem hazardních her, rozsahu přenášených dat a jiných technických parametrech přenosu dat.
+# Referenční klient komunikačního rozhraní dle vyhlášky č. 10/2019
+V tomto repozitáři jsou shromážděny vzorové nástroje, které implementují funkce potřebné pro napojení provozovatelů hazardních her za účelem poskytování automatizovaných výstupů podle [vyhlášky č.10/2019](https://www.zakonyprolidi.cz/cs/2019-10) o způsobu oznamování a zasílání informací a přenosu dat provozovatelem hazardních her, rozsahu přenášených dat a jiných technických parametrech přenosu dat.
 
+Nástroje, dokumentace a další materiály v tomto repozitáři jsou poskytovány jako pomocný nástroj pro provozovatele hazardních her pro usnadnění implementace rozhraní, bez záruky funkčnosti a nenahrazují normativní znění vyhlášky. Opravy případných chyb a odlišností od normativního znění vyhlášky budou opraveny a publikovány stejným způsobem.
+
+# Přehled
 Nástroje zveřejněné v tomto repozitáři umožňují naplnit požadavky vyhlášky následovně:
 * `csv-validator` - ověření formální správnosti datového balíčku před zabalením, zašifrováním a zapečetěním
 * `crypto_utils` a `crypto_cli` - Java knihovna a nástroj pro spuštění jednotlivých funkcí z příkazové řádky
@@ -242,24 +242,7 @@ git clone https://github.com/Ministerstvo-financi/hazard-komunikacni-rozhrani.gi
 cd hazard-komunikacni-rozhrani
 ./build-docker.sh
 ```
-
-Po dokončení sestavení jsou výsledné balíky ve složce `build`:
-* crypto_utils.zip - JAR soubory obsahují knihovny a spustitelné modul, soubory typu BAT obsahují příklady, jak spouštět jednotlivé operace
-  ```
-	.
-	├── crypto_cli-1.0.jar
-	├── crypto_cli-1.0-jar-with-dependencies.jar
-	├── crypto_utils-1.0.jar
-	├── crypto_utils-1.0-jar-with-dependencies.jar
-	├── decryptFile.bat
-	├── encryptFile.bat
-	├── signFile.bat
-	├── validateCertificate.bat
-	└── validateFile.bat
-
-  ```
-* CSV validátor - každá balík obsahuje všechny nezbytné soubory pro spuštění na dané platformě Validátor se spouští pomocí příkazu 
-  `PackageValidation` (PackageValidation.exe pro windows apod.). 
+Po dokončení sestavení jsou výsledné balíky ve složce `build` ve strukture, jak je uvedeno výše. 
 
 Postup instalace a použití takto sestavených komponent je shodný, jako postup pro komponenty distribuované v binárním tvaru,
 které vznikají stejným způsbem.
