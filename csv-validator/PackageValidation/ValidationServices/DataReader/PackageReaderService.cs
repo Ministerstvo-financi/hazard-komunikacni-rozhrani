@@ -145,7 +145,7 @@ namespace ValidationPilotServices.DataReader
             if ( remote.Match(package_number).Success ){
                 this._packageType = EnumPackageTypeReport.REMOTE;
             } else if ( daily.Match(package_number).Success ){
-                this._packageType = EnumPackageTypeReport.REMOTE;
+                this._packageType = EnumPackageTypeReport.DAILY;
             } else {
                  LoggerService.LoggerService.GetGlobalLog().Warn($"The Package name {this.package_number} has invalid name.");
                  throw new ArgumentException($"The Package name {this.package_number} has invalid name.");

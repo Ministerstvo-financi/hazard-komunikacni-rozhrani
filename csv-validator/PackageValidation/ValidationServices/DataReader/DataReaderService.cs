@@ -93,7 +93,7 @@ namespace ValidationPilotServices.DataReader
             this.LogError(string.Format(this.error_message_template,
                 this._package.package_number,
                 this.CurrentFileToValidate,
-                rowId>=0?rowId.ToString():"",
+                rowId >= 0 ? rowId.ToString() : "",
                 currentField,
                 errorType,
                 errorMsg));
@@ -142,7 +142,7 @@ namespace ValidationPilotServices.DataReader
                fieldName,
                errorType,
                msg));
-       }
+        }
 
 
         /// <summary>
@@ -240,29 +240,34 @@ namespace ValidationPilotServices.DataReader
 
         private bool ValidateByContextCondition(FieldItem item, string sourceValue, int rowId)
         {
-            if (string.IsNullOrEmpty(item.ContextConditionParameter)) {
+            if (string.IsNullOrEmpty(item.ContextConditionParameter))
+            {
                 return true;
             }
-            
-            if (sourceValue==null) {
+
+            if (sourceValue == null)
+            {
                 return true;
             }
 
             switch (item.ContextConditionParameter.ToUpper())
             {
                 case "EQUALSGAMETYPE":
-                    if (_package.GameType.ToUpper().Equals(sourceValue.ToUpper())){
-                        return true;    
+                    if (_package.GameType.ToUpper().Equals(sourceValue.ToUpper()))
+                    {
+                        return true;
                     }
                     return false;
                 case "EQUALSOPERATORID":
-                    if (_package.OperatorId.ToUpper().Equals(sourceValue.ToUpper())){
-                        return true;    
+                    if (_package.OperatorId.ToUpper().Equals(sourceValue.ToUpper()))
+                    {
+                        return true;
                     }
                     return false;
                 case "STARTSWITHOPERATORID":
-                    if (sourceValue.ToUpper().StartsWith(_package.OperatorId.ToUpper())) {
-                        return true;    
+                    if (sourceValue.ToUpper().StartsWith(_package.OperatorId.ToUpper()))
+                    {
+                        return true;
                     }
                     return false;
                 case "WITHINPACKAGETIMESPAN":
@@ -316,8 +321,8 @@ namespace ValidationPilotServices.DataReader
             {
                 csv.Configuration.Delimiter = this.FieldsSeparator;
                 csv.Configuration.IgnoreBlankLines = true;
-                csv.Configuration.LineBreakInQuotedFieldIsBadData=true;
-                csv.Configuration.AllowComments=false;
+                csv.Configuration.LineBreakInQuotedFieldIsBadData = true;
+                csv.Configuration.AllowComments = false;
                 // csv.Configuration.BadDataFound = (c)=>{
                 //     this.ValidationErrorMessage(EnumValidationResult.ERR_LINE_INVALID_CSV, "", -1, "invalid CSV form");
                 // };
@@ -326,16 +331,18 @@ namespace ValidationPilotServices.DataReader
                 bool moreRecords = true;
                 while (true)
                 {
-                    if (ErrorsCounter>MaximalErrorsPerFile){
-                            this.LineErrorMessage(EnumValidationResult.ERR_FILE_TOO_MANY_ERRORS, linesNumber, "Too many errors detected. Aborting further processing of the file");
-                            this.FileErrorMessage(EnumValidationResult.ERR_FILE_TOO_MANY_ERRORS, "Too many errors");
-                            break;
+                    if (ErrorsCounter > MaximalErrorsPerFile)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_FILE_TOO_MANY_ERRORS, linesNumber, "Too many errors detected. Aborting further processing of the file");
+                        this.FileErrorMessage(EnumValidationResult.ERR_FILE_TOO_MANY_ERRORS, "Too many errors");
+                        break;
                     }
 
                     try
                     {
                         moreRecords = csv.Read();
-                        if (!moreRecords) {
+                        if (!moreRecords)
+                        {
                             break;
                         }
                         // Check the line size
@@ -368,10 +375,11 @@ namespace ValidationPilotServices.DataReader
                             continue;
                         }
 
-                        if ( csv.Context==null || csv.Context.Record==null ){
+                        if (csv.Context == null || csv.Context.Record == null)
+                        {
                             this.ValidationErrorMessage(EnumValidationResult.ERR_LINE_INVALID_FIELDS, "", linesNumber, $"Failed to extract fields from line");
                             linesNumber++;
-                            continue; 
+                            continue;
                         }
 
                         //ERR_LINE_BAD_FIELD_COUNT - validation type
@@ -424,21 +432,30 @@ namespace ValidationPilotServices.DataReader
                     catch (BadDataException ex)
                     {
                         string detailMsg = "Other error.";
-                        if (ex.ReadingContext.Record!=null){
-                            if (ex.ReadingContext.Record.Contains("\"")){
+                        if (ex.ReadingContext.Record != null)
+                        {
+                            if (ex.ReadingContext.Record.Contains("\""))
+                            {
                                 detailMsg = "Field contains invalid character: >>\"<<";
-                            } else if (ex.ReadingContext.Record.Contains("'")){
+                            }
+                            else if (ex.ReadingContext.Record.Contains("'"))
+                            {
                                 detailMsg = "Field contains invalid character: >>'<<";
-                            } else if (ex.ReadingContext.Record.Contains("\r") || ex.ReadingContext.Record.Contains("\n")){
+                            }
+                            else if (ex.ReadingContext.Record.Contains("\r") || ex.ReadingContext.Record.Contains("\n"))
+                            {
                                 detailMsg = "Field contains invalid character: >>CR or LF<<";
-                            } else {
+                            }
+                            else
+                            {
                                 detailMsg = "Other error.";
                             }
                         }
                         this.ValidationErrorMessage(EnumValidationResult.ERR_LINE_INVALID_CSV, "", linesNumber, $"line is not well formed CSV record index:{ex.ReadingContext.CurrentIndex}, char position: {ex.ReadingContext.CharPosition}. Detail - {detailMsg}");
                         linesNumber++;
                     }
-                    catch (Exception ex){
+                    catch (Exception ex)
+                    {
                         LoggerService.LoggerService.GetGlobalLog().Error("Exception while processing CSV row", ex);
                         this.ValidationErrorMessage(EnumValidationResult.ERR_INTERNAL, "", linesNumber, $"exception while processing line:{ex.Message}");
                         linesNumber++;
@@ -471,10 +488,10 @@ namespace ValidationPilotServices.DataReader
 
             // List<string> filesByModel = target.Select(p => p.Description).ToList();
 
-            ModelGameFileReaderService modelGameFileService = new ModelGameFileReaderService(this._package.Model,this._package.GameType);
+            ModelGameFileReaderService modelGameFileService = new ModelGameFileReaderService(this._package.Model, this._package.GameType);
             List<ModelGameFileProfile> modelGameFiles = modelGameFileService.Get();
 
-            List<string> filesByModelAndGame = modelGameFiles.Select(p=>p.File).ToList();
+            List<string> filesByModelAndGame = modelGameFiles.Select(p => p.File).ToList();
 
             // List<String> finalList = filesByModel.Intersect(filesByModelAndGame).ToList();
             List<string> finalList = filesByModelAndGame;
@@ -593,6 +610,54 @@ namespace ValidationPilotServices.DataReader
         {
             try
             {
+                using (var binStream = new FileStream(fileInfo.FullName, FileMode.Open))
+                {
+                    var buf = new byte[4];
+                    int count = binStream.Read(buf, 0, 4);
+                    if (count < 4)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_META, 1, "Metadata line too short");
+                        return false;
+                    }
+
+                    if (buf[0] == 0x00 && buf[1] == 0x00 && buf[2] == 0xfe && buf[3] == 0xff)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_BAD_UTF8, 1, "File starts with BOM varianta UTF-32BE, (big-endian)");
+                        return false;
+                    }
+
+                    if (buf[0] == 0xff && buf[1] == 0xfe && buf[2] == 0x00 && buf[3] == 0x00)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_BAD_UTF8, 1, "File starts with BOM varianta UTF-32LE, (little-endian)");
+                        return false;
+                    }
+
+                    if (buf[0] == 0xfe && buf[1] == 0xff)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_BAD_UTF8, 1, "File starts with BOM varianta UTF-16BE, (big-endian)");
+                        return false;
+                    }
+
+                    if (buf[0] == 0xff && buf[1] == 0xfe)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_BAD_UTF8, 1, "File starts with BOM varianta UTF-16LE, (little-endian)");
+                        return false;
+                    }
+
+
+                    if (buf[0] == 0xef && buf[1] == 0xbb && buf[2] == 0xbf)
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File is UTF-8 but starts with BOM - should start with hash");
+                        return false;
+                    }
+
+                    if (buf[0] != '#')
+                    {
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File should start with hash #");
+                        return false;
+                    }
+                }
+                
                 using (StreamReader reader = new StreamReader(fileInfo.FullName))
                 using (var csv = new CsvReader(reader))
                 {
@@ -666,7 +731,7 @@ namespace ValidationPilotServices.DataReader
         /// This procedure gets file collection from folder selected and
         /// starts validation process for each file.
         /// </summary>
-        public void StartValidationProcess(string fileToValidate=null)
+        public void StartValidationProcess(string fileToValidate = null)
         {
             LoggerService.LoggerService.GetValidationProcessingLog().Info($"Start processing package {this._package.package_number}");
 
@@ -692,8 +757,9 @@ namespace ValidationPilotServices.DataReader
             }
 
             //limit to single file if requested
-            if (fileToValidate!=null){
-                files = files.Where(f=>f.Name.Equals(fileToValidate)).ToList();
+            if (fileToValidate != null)
+            {
+                files = files.Where(f => f.Name.Equals(fileToValidate)).ToList();
             }
             //files validation cycle
             this.ReadFileDataValidationCycle(files);
