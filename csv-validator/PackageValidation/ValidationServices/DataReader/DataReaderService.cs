@@ -645,19 +645,13 @@ namespace ValidationPilotServices.DataReader
                     }
 
 
-                    if (buf[0] == 0xef && buf[1] == 0xbb && buf[2] == 0xbf)
+                    if ( ! ( buf[0] == '#' || (buf[0] == 0xef && buf[1] == 0xbb && buf[2] == 0xbf && buf[3] == '#') ) )
                     {
-                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File is UTF-8 but starts with BOM - should start with hash");
-                        return false;
-                    }
-
-                    if (buf[0] != '#')
-                    {
-                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File should start with hash #");
-                        return false;
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File should start with hash # or UTF-8 BOM and hash #");
+                        return false;                        
                     }
                 }
-                
+
                 using (StreamReader reader = new StreamReader(fileInfo.FullName))
                 using (var csv = new CsvReader(reader))
                 {
