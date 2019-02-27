@@ -111,7 +111,7 @@ func main() {
 		log.Fatalf("error creating package %s", err.Error())
 	}
 
-	err = generatePackage(".", "28934929", "V", "L", "", "2019", "06", "30", "16", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	err = generatePackage(".", "28934929", "V", "L", "", "2019", "07", "25", "16", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
 	}
@@ -147,17 +147,17 @@ func main() {
 	}
 
 	//=============M
-	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "06", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "01", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
 	}
 
-	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "06", "30", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "02", "28", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
 	}
 
-	err = generatePackage(".", "28934929", "M", "Z", "cas01", "2019", "06", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	err = generatePackage(".", "28934929", "M", "Z", "cas01", "2019", "03", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
 	}
@@ -191,10 +191,10 @@ func generatePackage(baseDir string, idProvozovatele string, model string, druhH
 
 	if model == "V" {
 		//velky model
-		if (mesic == "03" && den == "31" && hodina == "16") ||
-			(mesic == "06" && den == "30" && hodina == "16") ||
-			(mesic == "09" && den == "30" && hodina == "16") ||
-			(mesic == "12" && den == "31" && hodina == "16") {
+		if (mesic == "04" && den == "25" && hodina == "16") ||
+			(mesic == "07" && den == "25" && hodina == "16") ||
+			(mesic == "10" && den == "25" && hodina == "16") ||
+			(mesic == "01" && den == "25" && hodina == "16") {
 			menaKursMandatory = true
 		}
 	}

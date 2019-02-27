@@ -587,11 +587,11 @@ namespace ValidationPilotServices.DataReader
             }
 
             if (this._package.Model.ToUpper()=="V"){
-                //velky model
-                if (    this._package.ReportPeriod.EndsWith("033116") 
-                     || this._package.ReportPeriod.EndsWith("063016")
-                     || this._package.ReportPeriod.EndsWith("093016")
-                     || this._package.ReportPeriod.EndsWith("123116")){
+                //velky model //042516, 072516, 102516, 012516
+                if (    this._package.ReportPeriod.EndsWith("042516") 
+                     || this._package.ReportPeriod.EndsWith("072516")
+                     || this._package.ReportPeriod.EndsWith("102516")
+                     || this._package.ReportPeriod.EndsWith("012516")){
                     menaKursMandatory = true;
                 }
             }
@@ -611,7 +611,7 @@ namespace ValidationPilotServices.DataReader
             } else {
                 if ( menaKursFi != null ){
                     ValidationErrorMessage(
-                        EnumValidationResult.ERR_PKG_MISSING_FILE,
+                        EnumValidationResult.ERR_PKG_EXTRA_FILES,
                         "MENA_KURS.CSV",
                         -1,
                         "Extra file - must not be present"
