@@ -82,7 +82,8 @@ namespace ValidationPilotServices.Infrastructure.Extensions
         public static Identifier GetIdentifierType(FileStructureProfile source)
         {
             int maxlength = int.Parse(source.MaxLength);
-            return new Identifier(maxlength);
+            int.TryParse(source.MinLength, out var minLength);
+            return new Identifier(minLength, maxlength);
         }
 
         public static DateAndTime GetDateAndTimeType(FileStructureProfile source)
@@ -119,7 +120,9 @@ namespace ValidationPilotServices.Infrastructure.Extensions
         
         public static ReferenceLink GetReferenceLinkType(FileStructureProfile source)
         {
-            return new ReferenceLink() ;
+             int maxlength = int.Parse(source.MaxLength);
+            int.TryParse(source.MinLength, out var minLength);
+            return new ReferenceLink(minLength, maxlength);
         }
 
     }
