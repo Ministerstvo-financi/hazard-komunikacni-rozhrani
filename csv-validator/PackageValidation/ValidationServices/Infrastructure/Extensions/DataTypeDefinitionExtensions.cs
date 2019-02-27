@@ -48,6 +48,13 @@ namespace ValidationPilotServices.Infrastructure.Extensions
                     ? true
                     : false;
             }
+            else if (sourceType == typeof(Date))
+            {
+                target = GetDateType(source);
+                target.IsNullable = !string.IsNullOrEmpty(source.IsNullable) && source.IsNullable.ToUpper().Equals("Y")
+                    ? true
+                    : false;
+            }
             else if (sourceType == typeof(Text))
             {
                 target = GetTextType(source);
@@ -59,9 +66,14 @@ namespace ValidationPilotServices.Infrastructure.Extensions
             {
                 target = GetCodeBookType(source);
             }
+            else if (sourceType == typeof(ReferenceLink))
+            {
+                target = GetReferenceLinkType(source);
+            }
             else
             {
-                target = new Text(string.Empty, "100");
+                throw new ArgumentException($"Unknown field type [{source.FieldName}-{source.FieldName}]");
+                //target = new Text(string.Empty, "100");
             }
 
             return target;
@@ -76,6 +88,12 @@ namespace ValidationPilotServices.Infrastructure.Extensions
         public static DateAndTime GetDateAndTimeType(FileStructureProfile source)
         {
             return new DateAndTime();
+        }
+
+        
+        public static Date GetDateType(FileStructureProfile source)
+        {
+            return new Date();
         }
 
         public static DecimalNumber GetDecimalNumberType(FileStructureProfile source)
@@ -96,6 +114,12 @@ namespace ValidationPilotServices.Infrastructure.Extensions
         public static CodeBook GetCodeBookType(FileStructureProfile source)
         {
             return new CodeBook() {CodeBookName = source.FieldNameKey};
+        }
+
+        
+        public static ReferenceLink GetReferenceLinkType(FileStructureProfile source)
+        {
+            return new ReferenceLink() ;
         }
 
     }

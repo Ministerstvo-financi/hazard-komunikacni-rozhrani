@@ -15,26 +15,38 @@ function buildCsvValidator {
 
 	# build using docker dotnet core image
 	# linux build 
+	if [ -z "$BUILD_SKIP_LINUX" ]; then
 	docker run --rm -v ${DIR}/csv-validator:/work \
 	       microsoft/dotnet:2.2.104-sdk \
 	       dotnet publish \
 	       -c Release -r linux-x64 --version-suffix ${VERSUFF} \
 	       /work/PackageValidation/PackageValidation/PackageValidation.csproj
+	else 
+		echo "############## LINUX BUILD SKIPPED #################"
+	fi
 
 	#windows build
+	if [ -z "$BUILD_SKIP_WIN" ]; then
 	docker run --rm -v ${DIR}/csv-validator:/work \
 	       microsoft/dotnet:2.2.104-sdk \
 	       dotnet publish \
 	       -c Release -r win-x64 --version-suffix ${VERSUFF} \
 	       /work/PackageValidation/PackageValidation/PackageValidation.csproj
+	else 
+		echo "############## WIN BUILD SKIPPED #################"
+	fi
+
 
 	#macosx build
+	if [ -z "$BUILD_SKIP_MAC" ]; then
 	docker run --rm -v ${DIR}/csv-validator:/work \
 	       microsoft/dotnet:2.2.104-sdk \
 	       dotnet publish \
 	       -c Release -r osx-x64 --version-suffix ${VERSUFF} \
 	       /work/PackageValidation/PackageValidation/PackageValidation.csproj
-
+	else 
+		echo "############## MAC BUILD SKIPPED #################"
+	fi
 
 	# fix ownership
 	docker run --rm -v ${DIR}/csv-validator:/work \
@@ -69,9 +81,17 @@ function packAll {
 	rm -rf ${DIR}/build/dist
 	mkdir -p ${DIR}/build/dist
 
-	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/linux-x64/publish ${DIR}/build/dist/csv-validator-linux
-	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/win-x64/publish ${DIR}/build/dist/csv-validator-win
-	cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/osx-x64/publish ${DIR}/build/dist/csv-validator-macosx
+	if [ -z "$BUILD_SKIP_LINUX" ]; then
+		cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/linux-x64/publish ${DIR}/build/dist/csv-validator-linux
+	fi
+
+    if [ -z "$BUILD_SKIP_WIN" ]; then
+		cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/win-x64/publish ${DIR}/build/dist/csv-validator-win
+	fi
+
+	if [ -z "$BUILD_SKIP_MAC" ]; then
+		cp -R csv-validator/PackageValidation/PackageValidation/bin/Release/netcoreapp2.1/osx-x64/publish ${DIR}/build/dist/csv-validator-macosx
+	fi
 
 	# build crypto utils
 

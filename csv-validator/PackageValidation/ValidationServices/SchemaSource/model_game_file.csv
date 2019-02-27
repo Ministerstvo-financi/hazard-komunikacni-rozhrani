@@ -16,7 +16,6 @@ V,L,prihlaseni.csv
 V,L,sebeomezeni.csv
 V,L,sebeomezeni_hra_druh.csv
 V,L,ucet.csv
-V,L,mena_kurs.csv
 V,K,provozovatel.csv
 V,K,konto.csv
 V,K,misto.csv
@@ -38,7 +37,6 @@ V,K,prihlaseni.csv
 V,K,sebeomezeni.csv
 V,K,sebeomezeni_hra_druh.csv
 V,K,ucet.csv
-V,K,mena_kurs.csv
 V,R,provozovatel.csv
 V,R,konto.csv
 V,R,misto.csv
@@ -59,7 +57,6 @@ V,R,prihlaseni.csv
 V,R,sebeomezeni.csv
 V,R,sebeomezeni_hra_druh.csv
 V,R,ucet.csv
-V,R,mena_kurs.csv
 V,B,provozovatel.csv
 V,B,konto.csv
 V,B,evidence_her.csv
@@ -74,7 +71,6 @@ V,B,prihlaseni.csv
 V,B,sebeomezeni.csv
 V,B,sebeomezeni_hra_druh.csv
 V,B,ucet.csv
-V,B,mena_kurs.csv
 V,T,provozovatel.csv
 V,T,konto.csv
 V,T,misto.csv
@@ -91,7 +87,6 @@ V,T,sebeomezeni.csv
 V,T,sebeomezeni_hra_druh.csv
 V,T,ucet.csv
 V,T,doba_ucasti.csv
-V,T,mena_kurs.csv
 V,Z,provozovatel.csv
 V,Z,konto.csv
 V,Z,evidence_her.csv
@@ -107,7 +102,6 @@ V,Z,prihlaseni.csv
 V,Z,sebeomezeni.csv
 V,Z,sebeomezeni_hra_druh.csv
 V,Z,ucet.csv
-V,Z,mena_kurs.csv
 M,B,provozovatel.csv
 M,B,misto.csv
 M,B,evidence_her.csv
@@ -115,7 +109,6 @@ M,B,pokladna_stul_turnaj_bingo.csv
 M,B,pstb_transakce.csv
 M,B,hra_turnaj_bingo.csv
 M,B,mozna_vyhra_stul_bingo.csv
-M,B,mena_kurs.csv
 M,Z,provozovatel.csv
 M,Z,misto.csv
 M,Z,evidence_her.csv
@@ -125,4 +118,3 @@ M,Z,pstb_transakce.csv
 M,Z,hra_turnaj_bingo.csv
 M,Z,mozna_vyhra_stul_bingo.csv
 M,Z,mozna_vyhra_pro_hru.csv
-M,Z,mena_kurs.csv

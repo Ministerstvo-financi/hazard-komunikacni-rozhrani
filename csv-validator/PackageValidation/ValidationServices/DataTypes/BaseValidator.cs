@@ -46,7 +46,7 @@ namespace ValidationPilotServices.DataTypes
                 bool flag = match.Success && match.Value.Equals(fieldValue);
                 if (!flag)
                 {
-                    this.ErrorMessage = $"The field has the invalid value: {fieldValue}.";
+                    this.ErrorMessage = $"The field has the invalid value: {fieldValue} - regex: {regex.ToString()}.";
                 }
 
                 return flag;

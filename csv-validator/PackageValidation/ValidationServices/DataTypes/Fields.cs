@@ -78,16 +78,22 @@ namespace ValidationPilotServices.DataTypes
                 }
             }
 
-            foreach (string field in fieldsArrayUpper)
+
+            for ( var i = 0; i<fieldsArrayUpper.Count ; i++)
             {
+                string field = fieldsArrayUpper[i];
                 FieldItem value = collection.FirstOrDefault(p => p.FieldName.ToUpper().Equals(field.ToUpper()));
                 if (value == null)
                 {
                     valid = false;
                     ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_HEADER,"",1,$"The field {field} of the file received is not presented in the structure; ");
                 }
+                if ( value.Order != i+1 ){
+                    valid = false;
+                    ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_HEADER,"",1,
+                             $"The field {field} of the file received is at a bad position found at {i+1}, should be at {value.Order} ");
+                }
             }
-
             return valid;
         }
     }

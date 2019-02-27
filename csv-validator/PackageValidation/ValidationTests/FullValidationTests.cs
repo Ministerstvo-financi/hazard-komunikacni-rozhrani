@@ -29,14 +29,15 @@ namespace ValidationPilotTests
         [Fact]
         public void TestFile(){
             //PackageValidation.Program.Main(new string[]{"DataSource/28934929-M-201906-B-cas01-01/"});
-            // PackageValidation.Program.Main(new string[]{"DataSource/28934929-M-201906-Z-cas01-01"});
+            //PackageValidation.Program.Main(new string[]{"DataSource/28934929-M-201906-B-cas01-01"});
 
+            //PackageValidation.Program.Main(new string[]{"DataSource/30123456-M-201902-Z-456-01"});
 
-
-
-            PackageValidation.Program.Main(new string[]{"DataSource/30123456-M-201902-Z-456-01"});
             // PackageValidation.Program.Main(new string[]{"DataSource/14613549-V-2018051416-K-01","provozovatel.csv"});
-            // PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-K-01"});
+            //PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-K-01"});
+            //PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-K-02"});
+            //PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019063016-K-01"});
+            PackageValidation.Program.Main(new string[]{"/home/rasekl/data/T/proj/SPCSS/2018/analyticky-modul/repo/spcss-hazard/csv-validator/package-generator/src/spcss-aisg-am-km/package-generator/28934929-V-2019061208-T-01"});
             // PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-R-01"});
             // PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-B-01"});
             // PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-T-01"});
