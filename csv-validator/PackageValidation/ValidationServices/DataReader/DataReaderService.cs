@@ -19,7 +19,6 @@ namespace ValidationPilotServices.DataReader
 
     public class DataReaderService : ValidationCoreService
     {
-        private readonly bool _checkMissingFiles = false;
 
         /// <summary>
         /// The package object contained all initial parameters for validating files received.
@@ -545,7 +544,7 @@ namespace ValidationPilotServices.DataReader
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>
-        private List<string> FilesCompositionValidate(List<FileInfo> collection)
+        private List<string> ListMissingFiles(List<FileInfo> collection)
         {
             List<string> missed = new List<string>();
 
@@ -565,11 +564,68 @@ namespace ValidationPilotServices.DataReader
                 }
             }
 
+
             return missed;
         }
 
+        /// <summary>
+        /// This function returns true if mena_kurs.csv presence is valid, false othervise 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        private bool chckMenaKurs(List<FileInfo> collection){
+            //check mena_kurs.csv
+            bool menaKursMandatory=false;
+            if (this._package.Model.ToUpper()=="M"){
+                //maly model
+                if (    this._package.ReportPeriod.EndsWith("03") 
+                     || this._package.ReportPeriod.EndsWith("06")
+                     || this._package.ReportPeriod.EndsWith("09")
+                     || this._package.ReportPeriod.EndsWith("12")){
+                    menaKursMandatory = true;
+                }
+            }
+
+            if (this._package.Model.ToUpper()=="V"){
+                //velky model //042516, 072516, 102516, 012516
+                if (    this._package.ReportPeriod.EndsWith("042516") 
+                     || this._package.ReportPeriod.EndsWith("072516")
+                     || this._package.ReportPeriod.EndsWith("102516")
+                     || this._package.ReportPeriod.EndsWith("012516")){
+                    menaKursMandatory = true;
+                }
+            }
+
+            FileInfo menaKursFi = collection.FirstOrDefault(file=>"MENA_KURS.CSV".Equals(file.Name.ToUpper()));
+            if (menaKursMandatory){
+                //is mandatory
+                if ( menaKursFi == null ){
+                    ValidationErrorMessage(
+                        EnumValidationResult.ERR_PKG_MISSING_FILE,
+                        "MENA_KURS.CSV",
+                        -1,
+                        "Mandatory file is missing"
+                    );
+                    return false;
+                }
+            } else {
+                if ( menaKursFi != null ){
+                    ValidationErrorMessage(
+                        EnumValidationResult.ERR_PKG_EXTRA_FILES,
+                        "MENA_KURS.CSV",
+                        -1,
+                        "Extra file - must not be present"
+                    );
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         private void ReadFileDataValidationCycle(List<FileInfo> files)
         {
+            files = files.OrderBy(fi=>fi.Name.ToLower()).ToList();
             foreach (FileInfo file in files)
             {
                 this.Clean();
@@ -645,19 +701,13 @@ namespace ValidationPilotServices.DataReader
                     }
 
 
-                    if (buf[0] == 0xef && buf[1] == 0xbb && buf[2] == 0xbf)
+                    if ( ! ( buf[0] == '#' || (buf[0] == 0xef && buf[1] == 0xbb && buf[2] == 0xbf && buf[3] == '#') ) )
                     {
-                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File is UTF-8 but starts with BOM - should start with hash");
-                        return false;
-                    }
-
-                    if (buf[0] != '#')
-                    {
-                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File should start with hash #");
-                        return false;
+                        this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_HASH, 1, "File should start with hash # or UTF-8 BOM and hash #");
+                        return false;                        
                     }
                 }
-                
+
                 using (StreamReader reader = new StreamReader(fileInfo.FullName))
                 using (var csv = new CsvReader(reader))
                 {
@@ -683,7 +733,7 @@ namespace ValidationPilotServices.DataReader
                             }
 
                             //date time file creation validate
-                            if (!DateTime.TryParse(csv.GetField<string>(2), out DateTime date) || date >= DateTime.Now)
+                            if (!DateTime.TryParse(csv.GetField<string>(2), out DateTime date) )
                             {
                                 this.FieldErrorMessage(EnumValidationResult.ERR_META_FIELD_DATETIME, 1, "CreatedAt", 0, "CreatedAt field has an invalid format.");
                             }
@@ -740,20 +790,21 @@ namespace ValidationPilotServices.DataReader
 
             if (!files.Any())
             {
-                throw new FileNotFoundException($"There are no any files found in {this.DataSourceFolder}");
+                throw new FileNotFoundException($"There are no files found in {this.DataSourceFolder}");
             }
 
             //validate files composition
-            if (this._checkMissingFiles)
-            {
-                List<string> missed = this.FilesCompositionValidate(files);
+            List<string> missed = this.ListMissingFiles(files);
 
-                if (missed.Any())
-                {
-                    string mess = string.Join(",", missed);
-                    LoggerService.LoggerService.GetGlobalLog().Warn($"Missing files: {mess}");
-                    throw new ArgumentException("Missing files");
-                }
+            if (missed.Any())
+            {
+                string mess = string.Join(",", missed);
+                LoggerService.LoggerService.GetGlobalLog().Warn($"Missing files: {mess}");
+                throw new ArgumentException("Missing files");
+            }
+            
+            if (!chckMenaKurs(files)){
+                throw new ArgumentException("mena_kurs.csv presence problem");
             }
 
             //limit to single file if requested

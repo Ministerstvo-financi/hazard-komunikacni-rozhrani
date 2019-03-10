@@ -13,5 +13,14 @@ public enum ResultCodes {
     //ERR_PKG_SIG_CERT_UNKNOWN – pokud certifikát není mezi registrovanými certifikáty operátora
     ERR_PKG_SIG_CERT_UNKNOWN,
 
-    INFO_PKG_SIG_CERT_OK;
+    INFO_PKG_SIG_CERT_OK, 
+    ERR_CERT_PARSE,
+    ERR_CERT_CHAIN_OTHER,
+    ERR_CERT_NO_CHAIN,
+    ERR_CERT_ROOT_MISSING,
+    ERR_CERT_EUTL_INVALID,
+    ERR_CERT_EUTL_INVALID_OTH,
+    ERR_CERT_NOT_CA,
+    ERR_VALID_CERT_NOT_FOR_QSEAL
+    
 }

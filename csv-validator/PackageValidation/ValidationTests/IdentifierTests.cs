@@ -11,47 +11,12 @@ namespace ValidationPilotTests
 {
     public class IdentifierTests : CoreTest
     {
-        private readonly string _regExpression = @"(\w|\-){1,20}";
 
         public IdentifierTests(ITestOutputHelper output) : base(output)
         {
         }
 
-        #region IDENTIFIER DATA TYPE REG EXPRESSION STRIING PARSER
-
-        [Theory]
-        [InlineData("AA_-OO1290")]
-        [InlineData("_tttOverdrive1280238")]
-        [InlineData("12345678901234567890")]
-        public void RegExpressionCorrectTest(string value)
-        {
-            Regex regex = new Regex(this._regExpression);
-            Match match = regex.Match(value, 0, value.Length);
-
-            bool flag = match.Success && (match.Value.Equals(value));
-            Assert.True(flag);
-        }
-
-        /// <summary>
-        /// This procedure tests the regular string to validate identifier data
-        /// type when input value has wrong format.
-        /// </summary>
-        /// <param name="value">The string to convert into identifier data type.</param>
-        [Theory]
-        [InlineData("AA_!-OO1290")]
-        [InlineData("_tttOverdrive*12802389023-")]
-        [InlineData("%_tttOverdrive*12802389023-")]
-        public void RegExpressionFailTest(string value)
-        {
-            Regex regex = new Regex(this._regExpression);
-            Match match = regex.Match(value, 0, value.Length);
-
-            bool flag = match.Success && (match.Value.Equals(value));
-            Assert.False(flag);
-        }
-
-        #endregion
-
+        
         #region IDENTIFIER  TESTS - LENGTH 20
 
         /// <summary>
@@ -68,7 +33,7 @@ namespace ValidationPilotTests
         [InlineData("AD89#")]
         public void Identifier_20_NotNullable_FailTest(string value)
         {
-            Identifier src = new Identifier { IsNullable = false };
+            Identifier src = new Identifier(0,20) { IsNullable = false };
             src.Value = value;
 
             this.Output.WriteLine($"Source Value = {value}, Target Value = {src.Value}");
@@ -86,7 +51,7 @@ namespace ValidationPilotTests
         [InlineData("AD89#")]
         public void Identifier_20_Nullable_FailTest(string value)
         {
-            Identifier src = new Identifier();
+            Identifier src = new Identifier(0,20);
             src.IsNullable = true;
             src.Value = value;
 
@@ -138,7 +103,7 @@ namespace ValidationPilotTests
         [InlineData("AD89#")]
         public void Identifier_50_Nullable_FailTest(string value)
         {
-            Identifier src = new Identifier(50);
+            Identifier src = new Identifier(0,50);
             src.IsNullable = true;
             src.Value = value;
 
@@ -156,7 +121,7 @@ namespace ValidationPilotTests
         [InlineData("AD89#")]
         public void Identifier_50_NotNullable_FailTest(string value)
         {
-            Identifier src = new Identifier(50);
+            Identifier src = new Identifier(0,50);
             src.IsNullable = false;
             src.Value = value;
 
@@ -175,7 +140,7 @@ namespace ValidationPilotTests
         [InlineData("AD_6")]
         public void Identifier_50_Nullable_PassTest(string value)
         {
-            Identifier src = new Identifier(50);
+            Identifier src = new Identifier(0,50);
             src.IsNullable = true;
             src.Value = value;
             this.Output.WriteLine($"Source Value = {value}, Target Value = {src.Value}");
@@ -190,7 +155,7 @@ namespace ValidationPilotTests
         [InlineData("AD_6")]
         public void Identifier_50_NotNullable_PassTest(string value)
         {
-            Identifier src = new Identifier(50);
+            Identifier src = new Identifier(0,50);
             src.IsNullable = false;
             src.Value = value;
             this.Output.WriteLine($"Source Value = {value}, Target Value = {src.Value}");
@@ -213,7 +178,7 @@ namespace ValidationPilotTests
             Type type = DataTypeDefinitionExtensions.GetTypeByName(dataType);
 
             Assert.NotNull(type);
-            if (Activator.CreateInstance(type, new object[] {len}) is BaseValidator src)
+            if (Activator.CreateInstance(type, new object[] {0,len}) is BaseValidator src)
             {
                 src.Value = value;
                 Assert.True(src.IsValid);

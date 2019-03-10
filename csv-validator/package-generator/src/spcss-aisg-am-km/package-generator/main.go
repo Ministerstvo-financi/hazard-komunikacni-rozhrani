@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"os"
 	"path"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -52,6 +53,7 @@ type Field struct {
 	Mandatory     int
 	Context       string
 	RealMandatory int
+	Order         int
 }
 
 func parseMandatory(val string) int {
@@ -79,16 +81,22 @@ func main() {
 
 	rand.Seed(time.Now().UnixNano())
 
+	csvSchema := "fields_structure.csv"
+	codebooks := "codebook.csv"
+	modelGameFile := "model_game_file.csv"
+	fileLineCount := 30
+
 	if len(os.Args) < 4 {
-		log.Fatal("Usage: package-generator fields_structure.csv codebook.csv model_game_file.csv fileLineCount")
+		log.Print("Usage: package-generator fields_structure.csv codebook.csv model_game_file.csv fileLineCount")
+		log.Print("Using default schema files: fields_structure.csv codebook.csv model_game_file.csv and line count 30")
+	} else {
+		csvSchema = os.Args[1]
+		codebooks = os.Args[2]
+		modelGameFile = os.Args[3]
+		fileLineCount, _ = strconv.Atoi(os.Args[4])
 	}
 
 	codesByField = make(map[string][]string)
-
-	csvSchema := os.Args[1]
-	codebooks := os.Args[2]
-	modelGameFile := os.Args[3]
-	fileLineCount, _ := strconv.Atoi(os.Args[4])
 
 	filesByModel, fieldsByFileModel, _ := loadFields(csvSchema)
 	filesByModelGame, _ := loadModelGameFile(modelGameFile)
@@ -98,6 +106,16 @@ func main() {
 	//fmt.Printf("%v\n", fieldsByFileModel)
 	// fmt.Printf("%v\n", codesByField)
 	var err error
+	err = generatePackage(".", "28934929", "V", "L", "", "2019", "06", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	if err != nil {
+		log.Fatalf("error creating package %s", err.Error())
+	}
+
+	err = generatePackage(".", "28934929", "V", "L", "", "2019", "07", "25", "16", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	if err != nil {
+		log.Fatalf("error creating package %s", err.Error())
+	}
+
 	err = generatePackage(".", "28934929", "V", "L", "", "2019", "06", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
@@ -129,15 +147,22 @@ func main() {
 	}
 
 	//=============M
-	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "06", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "01", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
 	}
 
-	err = generatePackage(".", "28934929", "M", "Z", "cas01", "2019", "06", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	err = generatePackage(".", "28934929", "M", "B", "cas01", "2019", "02", "28", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
 	if err != nil {
 		log.Fatalf("error creating package %s", err.Error())
 	}
+
+	err = generatePackage(".", "28934929", "M", "Z", "cas01", "2019", "03", "12", "08", "01", fileLineCount, filesByModel, fieldsByFileModel, codesByField, filesByModelGame)
+	if err != nil {
+		log.Fatalf("error creating package %s", err.Error())
+	}
+
+	log.Print("DONE")
 
 }
 
@@ -155,6 +180,29 @@ func generatePackage(baseDir string, idProvozovatele string, model string, druhH
 	targetDir := path.Join(baseDir, packageName)
 	os.MkdirAll(targetDir, 0777)
 	fileList := filesByModelGame[fmt.Sprintf("%s-%s", strings.ToLower(model), strings.ToLower(druhHry))]
+
+	menaKursMandatory := false
+	if model == "M" {
+		//maly model
+		if mesic == "03" || mesic == "06" || mesic == "09" || mesic == "12" {
+			menaKursMandatory = true
+		}
+	}
+
+	if model == "V" {
+		//velky model
+		if (mesic == "04" && den == "25" && hodina == "16") ||
+			(mesic == "07" && den == "25" && hodina == "16") ||
+			(mesic == "10" && den == "25" && hodina == "16") ||
+			(mesic == "01" && den == "25" && hodina == "16") {
+			menaKursMandatory = true
+		}
+	}
+
+	if menaKursMandatory {
+		fileList = append(fileList, "mena_kurs.csv")
+	}
+
 	for _, file := range fileList {
 		filePath := path.Join(targetDir, file)
 		//fmt.Printf("creating file %s\n", filePath)
@@ -171,8 +219,13 @@ func generatePackage(baseDir string, idProvozovatele string, model string, druhH
 			return err
 		}
 
+		sort.Slice(fields, func(i int, j int) bool {
+			return fields[i].Order < fields[j].Order
+		})
+
 		//write header
 		for fldIdx, fld := range fields {
+			//log.Printf("[%02d][%s]", fld.Order, fld.FieldName)
 
 			if fldIdx > 0 {
 				_, err = fmt.Fprint(out, ";")
@@ -226,6 +279,21 @@ func generatePackage(baseDir string, idProvozovatele string, model string, druhH
 						fieldValues[fldIdx] = fmt.Sprintf("%s-%s", idProvozovatele, fieldValues[fldIdx])
 						//case "WITHINPACKAGETIMESPAN":
 					}
+				}
+			}
+
+			for fldIdx, fld := range fields {
+				val := fieldValues[fldIdx]
+				if fld.MinLen > 0 && len(val) < fld.MinLen {
+					dif := fld.MinLen - len(val)
+					var buf strings.Builder
+					buf.WriteString(val)
+					buf.WriteString(generateRandomAsci(dif))
+					fieldValues[fldIdx] = buf.String()
+				}
+
+				if fld.MaxLen > 0 && len(val) > fld.MaxLen {
+					fieldValues[fldIdx] = val[0:fld.MaxLen]
 				}
 			}
 
@@ -452,6 +520,7 @@ func loadFields(csvSchema string) (filesByModel map[string][]string, fieldsByFil
 	maxLengthCol, _ := fldIdxByName("MaxLength", hdr)
 	presenceCol, _ := fldIdxByName("Presence", hdr)
 	contextCol, _ := fldIdxByName("Context", hdr)
+	orderCol, _ := fldIdxByName("ColumnId", hdr)
 	lineNo++
 	fields := make([]Field, 200)
 	for {
@@ -459,8 +528,22 @@ func loadFields(csvSchema string) (filesByModel map[string][]string, fieldsByFil
 		if err == io.EOF {
 			break
 		}
-		minLen, _ := strconv.Atoi(rec[minLengthCol])
+		minLen, err := strconv.Atoi(rec[minLengthCol])
+		if err != nil {
+			minLen = -1
+		}
 		maxLen, _ := strconv.Atoi(rec[maxLengthCol])
+		if err != nil {
+			maxLen = -1
+		}
+
+		val := rec[orderCol]
+		order, err := strconv.Atoi(val)
+		if err != nil {
+			log.Fatalf("failed to parse: [%s] - error: %s", rec[orderCol], err.Error())
+			order = -1
+		}
+
 		fld := Field{
 			Model:         strings.ToLower(rec[modelCol]),
 			FileName:      strings.ToLower(rec[fileNameCol]),
@@ -471,6 +554,7 @@ func loadFields(csvSchema string) (filesByModel map[string][]string, fieldsByFil
 			MaxLen:        maxLen,
 			Mandatory:     parseMandatory(rec[presenceCol]),
 			Context:       rec[contextCol],
+			Order:         int(order),
 		}
 		fields = append(fields, fld)
 

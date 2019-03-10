@@ -7,6 +7,10 @@ namespace ValidationPilotServices.DataTypes
 
         public Text(string minLen, string maxLen)
         {
+            minLen = minLen.Trim();
+            maxLen = maxLen.Trim();
+
+
             if (string.IsNullOrEmpty(minLen))
             {
                 this.min_len = 0;
@@ -15,13 +19,13 @@ namespace ValidationPilotServices.DataTypes
             {
                 if (!uint.TryParse(minLen, out this.min_len))
                 {
-                    throw new ArgumentOutOfRangeException($"Minimal length parameter has invalid value.");
+                    throw new ArgumentOutOfRangeException($"Minimal length parameter has invalid value: [{minLen}]");
                 }
             }
 
             if (string.IsNullOrEmpty(maxLen) || !uint.TryParse(maxLen, out this.max_len))
             {
-                throw new ArgumentOutOfRangeException($"Maximal length parameter has invalid value.");
+                throw new ArgumentOutOfRangeException($"Maximal length parameter has invalid value: [{maxLen}]");
             }
         }
 

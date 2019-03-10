@@ -1,1 +1,274 @@
-../../../../PackageValidation/ValidationServices/SchemaSource/fields_structure.csv
+Model,FileName,ColumnId,FieldNameEn,FieldNameCz,FieldType,DomainType,Nullable,Presence,Condition,MinLength,MaxLength,RegExp,Context,Note,Description
+V,doba_ucasti.csv,1,IDDurationParticipation,IDDobaUcasti,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor doby účasti (Primární klíč)
+V,doba_ucasti.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,doba_ucasti.csv,3,StartParticipationTime,ZacatekUcastiCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas zahájení účasti
+V,doba_ucasti.csv,4,EndParticipationTime,KonecUcastiCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,,Datum a čas ukončení účasti
+M,evidence_her.csv,1,IDGame,IDHra,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor živé hry, nebo binga (Primární klíč)"
+M,evidence_her.csv,2,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_PROVOZOVATEL
+M,evidence_her.csv,3,GameName,HraNazev,Text,D_TEXT,N,mandatory,,,250,,,,"Název živé hry, nebo binga"
+M,evidence_her.csv,4,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+V,evidence_her.csv,1,IDGameDescription,IDHraPopis,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor hazardní hry (Primární klíč)
+V,evidence_her.csv,2,GameName,HraNazev,Text,D_TEXT,N,mandatory,,,250,,,,Název hazardní hry
+V,evidence_her.csv,3,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,,,Druh hazardní hry
+V,evidence_her.csv,4,GameCategory,HraKategorie,codebook,D_KOD,N,mandatory,,,1,,,,Kategorie hry hazardní hry
+V,evidence_her.csv,5,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,evidence_her.csv,6,StartTime,SpusteniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas zahájení provozování hazardní hry
+V,herni_pozice.csv,1,IDGamingPoint,IDHerniPozice,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor herní pozice koncového zařízení technické hry (Primární klíč)
+V,herni_pozice.csv,2,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_MISTO
+V,herni_pozice.csv,3,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,hra_toky.csv,1,IDGameFlows,IDHraToky,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor sázky, nebo její části/ Identifikátor cizího vkladu (Primární klíč)"
+V,hra_toky.csv,2,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+V,hra_toky.csv,3,GameCategory,HraKategorie,codebook,D_KOD,N,mandatory,,,1,,,,Kategorie hry hazardní hry
+V,hra_toky.csv,4,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,hra_toky.csv,5,BetAmountOriginal,SazkaVysePuvodni,DecimalNumber,D_MONEY,Y,,,,50,(\d|\.)*,,cross file reference not validated,"Výše sázky, nebo její části/ Výše cizího vkladu"
+V,hra_toky.csv,6,BetAcceptanceTime,SazkaPrijetiCas,DateAndTime,D_DATETIME,N,mandatory,,,50,,withinPackageTimespan,cross file reference not validated,Datum a čas přijetí sázky/ cizího vkladu
+V,hra_toky.csv,7,AccompanyingPaymentAmountOriginal,DoprovodnePlneniVysePuvodni,DecimalNumber,D_MONEY,Y,,,,50,(\d|\.)*,,cross file reference not validated,"Výše doprovodného plnění, nebo jeho poměrné části"
+V,hra_toky.csv,8,AccompanyingPaymentTime,DoprovodnePlneniCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,cross file reference not validated,"Datum a čas přijetí doprovodného plnění, nebo jeho poměrné části"
+V,hra_toky.csv,9,BetGameCombination,SazkaHerniKombinace,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Herní kombinace
+V,hra_toky.csv,10,WinningAmountClaim,VyhraVyseNarok,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,"Výše výhry, na niž vznikl nárok"
+V,hra_toky.csv,11,WinningAmountOriginal,VyhraVysePuvodni,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,Výše vyplacené výhry/ Výše cizí výhry
+V,hra_toky.csv,12,WinningPayoutTime,VyhraVyplaceniCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,,Datum a čas vyplacení výhry účastníku hazardní hry/ cizí výhry
+V,hra_toky.csv,13,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+V,hra_toky.csv,14,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_MISTO
+V,hra_toky.csv,15,IDGamingPoint,IDHerniPozice,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HERNI_POZICE
+V,hra_toky_kursova.csv,1,IDGameFlowsFixedodds,IDHraTokyKursova,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o sázce do kursové sázky (Primární klíč)
+V,hra_toky_kursova.csv,2,IDGameFlows,IDHraToky,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HRA_TOKY
+V,hra_toky_kursova.csv,3,IDTicket,IDTiket,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_TIKET
+V,hra_toky_kursova.csv,4,CommonOddsAmount,SpolecnyKursVyse,DecimalNumber,D_COURSE,N,mandatory,,,,(\d|\.)*,,,Výše kursu
+V,hra_toky_kursova.csv,5,CashOut,CashOut,codebook,D_BINARY,Y,,,,,,,cross file reference not validated,Přijetí dohody o cash-outu
+V,hra_toky_kursova.csv,6,CashOutOddsAmount,CashOutKursVyse,DecimalNumber,D_COURSE,Y,mandatoryIf,CashOut.Equals(1),,,(\d|\.)*,,,Výše dohodnutého výplatního poměru
+V,hra_toky_kursova.csv,7,CashOutTime,CashOutCas,DateAndTime,D_DATETIME,Y,mandatoryIf,CashOut.Equals(1),,,,withinPackageTimespan,,Datum a čas přijetí dohody o cash-outu
+V,hra_toky_kursova.csv,8,OddsAdvantage,KursoveZvyhodneni,DecimalNumber,D_DECIMAL,Y,,,,,(\d|\.)*,,,Kursové zvýhodnění
+V,hra_toky_kursova.csv,9,OddsChange,KursZmena,DecimalNumber,D_COURSE,Y,,,,,(\d|\.)*,,,Změna kursu
+V,hra_toky_kursova.csv,10,AKO,AKO,codebook,D_BINARY,N,mandatory,,,,,,,Podmínění nároku na výhru
+V,hra_toky_oprava.csv,1,IDGameFlowsCorrection,IDHraTokyOprava,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o opravě (Primární klíč)
+V,hra_toky_oprava.csv,2,IDGameFlows,IDHraToky,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HRA_TOKY
+V,hra_toky_oprava.csv,3,TypeFlowsCorrection,TypTokyOprava,codebook,D_KOD,N,mandatory,,,1,,,,Typ plnění
+V,hra_toky_oprava.csv,4,FlowsCorrectionAmount,TokyOpravaVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,Výše plnění
+V,hra_toky_oprava.csv,5,FlowsCorrectionTime,TokyOpravaCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas plnění
+V,hra_toky_oprava.csv,6,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,,Kód měny
+M,hra_turnaj_bingo.csv,1,IDOneGamePartofTournament,IDJednaHraCastTurnaje,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor hry binga/ hry živé hry/ turnaje živé hry, nebo jeho části (Primární klíč)"
+M,hra_turnaj_bingo.csv,2,IDEntryPSTB,IDZaznamPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,hra_turnaj_bingo.csv,3,IDPSTB,IDPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,hra_turnaj_bingo.csv,4,TournamentIdentification,OznaceniTurnaj,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Označení turnaje živé hry
+M,hra_turnaj_bingo.csv,5,StartTime,ZahajeniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,"Datum a čas zahájení hry binga, hry živé hry, turnaje živé hry, nebo jeho části"
+M,hra_turnaj_bingo.csv,6,EndTime,UkonceniCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas ukončení turnaje živé hry
+M,hra_turnaj_bingo.csv,7,AggregateBetAmount,UhrnSazkyVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,"Výše celkového úhrnu sázek do hry binga, hry živé hry, nebo do turnaje živé hry"
+M,hra_turnaj_bingo.csv,8,AggregateAccompanyingPaymentAmount,UhrnDoprovodnaPlneniVyse,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,,"Výše celkového úhrnu přijatých doprovodných plnění ke hře binga, ke hře živé hry, nebo do turnaje živé hry"
+M,hra_turnaj_bingo.csv,9,AggregateWinningsAmount,UhrnVyhryVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,"Výše celkového úhrnu vyplacených výher ze hry binga, ze hry živé hry, nebo z turnaje živé hry"
+M,hra_turnaj_bingo.csv,10,AggregateReturnedAccompanyingPaymentAmount,UhrnVracenaDoprovodnaPlneniVyse,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,,"Výše celkového úhrnu vrácených doprovodných plnění ke hře binga, ke hře živé hry, nebo do turnaje živé hry"
+M,hra_turnaj_bingo.csv,11,AggregateReturnedBetAmount,UhrnVraceneSazkyVyse,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,Výše celkového úhrnu vrácených sázek
+M,hra_turnaj_bingo.csv,12,GameLimitStake,HraOmezeniVkladu,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Omezení vkladů
+M,hra_turnaj_bingo.csv,13,MinimumStakeAmount,PovinnyVkladVyse,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Stanovená výše sázky za jeden sázkový tiket/ povinného vkladu do živé hry/ vkladu do turnaje živé hry
+M,hra_turnaj_bingo.csv,14,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+M,hra_turnaj_bingo.csv,15,TournamentNumberPlayers,TurnajPocetHracu,IntegerNumber,D_AMOUNT,Y,,,,,(\d)*,,cross file reference not validated,Počet účastníků turnaje živé hry
+M,hra_turnaj_bingo.csv,16,TournamentStakesBeforeStartAmount,TurnajVkladyPredZahajenimVyse,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,Výše vkladů účastníků přijatých před zahájením turnaje živé hry
+V,jedna_hra.csv,1,IDOneGame,IDJednaHra,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor hry hazardní hry (Primární klíč)
+V,jedna_hra.csv,2,IDGameDescription,IDHraPopis,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_EVIDENCE_HER
+V,jedna_hra.csv,3,GameStartTime,HraZahajeniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas zahájení hry hazardní hry
+V,jedna_hra.csv,4,GameLimitStake,HraOmezeniVkladu,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Výše omezení vkladů
+V,jedna_hra.csv,5,MethodIncreaseBets,ZpusobZvysovaniSazek,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Způsob zvyšování sázek
+V,jedna_hra.csv,6,MinimumStakeAmount,PovinnyVkladVyse,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Stanovená výše sázky za jeden sázkový tiket/Výše povinného vkladu do hry (turnaje) internetové živé hry
+V,jedna_hra.csv,7,PrizemoneyDetermination,JistinaUrceni,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Způsob určení výherní jistiny loterie a turnaje internetové živé hry
+V,jedna_hra.csv,8,ClaimWinning,NarokVyhra,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Nárok na výhru a způsob určení její výše
+V,jedna_hra.csv,9,GameResult,HraVysledek,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Výsledek hry hazardní hry
+V,jedna_hra.csv,10,ForeignParticipation,ZahranicniUcast,codebook,D_BINARY,Y,,,,,,,cross file reference not validated,Účast cizího účastníka na hře hazardní hry
+V,konto.csv,1,IDUserAccount,IDUzivKonto,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor uživatelského konta (Primární klíč)
+V,konto.csv,2,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,konto.csv,3,CreationTime,ZrizeniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas zřízení uživatelského konta
+V,konto_zmeny.csv,1,IDEntryUserAccount,IDZaznamUzivKonto,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o uživatelském kontu (Primární klíč)
+V,konto_zmeny.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,konto_zmeny.csv,3,GameType,HraDruh,codebook,D_KOD,N,mandatory,,1,1,,equalsGameType,,Druh hazardní hry
+V,konto_zmeny.csv,4,Landbase,Landbased,codebook,D_BINARY,N,mandatory,,,,,,,Hazardní hra neprovozována jako internetová hra
+V,konto_zmeny.csv,5,Internet,Internet,codebook,D_BINARY,N,mandatory,,,,,,,Umožnění účasti na internetové hře
+V,konto_zmeny.csv,6,TemporaryPermanent,DocasneTrvale,codebook,D_KOD,N,mandatory,,,1,,,,Režim uživatelského konta
+V,konto_zmeny.csv,7,ChangeTime,ZmenaCas,DateAndTime,D_DATETIME,N,mandatory,,,1,,withinPackageTimespan,cross file reference not validated,Datum a čas změny parametru uživatelského konta
+V,kursova_toto_rozpad.csv,1,IDOddsTotoBreakup,IDKursovaTotoRozpad,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o sázkové příležitosti (Primární klíč)
+V,kursova_toto_rozpad.csv,2,IDGameFlows,IDHraToky,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HRA_TOKY
+V,kursova_toto_rozpad.csv,3,IDOpportunity,IDPrilezitost,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PRILEZITOST
+V,kursova_toto_rozpad.csv,4,OddsQuote,KursVyse,DecimalNumber,D_COURSE,Y,,,,,(\d|\.)*,,cross file reference not validated,Výše kursu
+M,mena_kurs.csv,1,IDEntryCurrencyExchangerate,IDZaznamMenaKurs,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Jedinečný identifikátor záznamu o výši měnového kursu (Primární klíč)
+M,mena_kurs.csv,2,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_MISTO
+M,mena_kurs.csv,3,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+M,mena_kurs.csv,4,ExchangerateAmount,KursVyse,DecimalNumber,D_COURSE,N,mandatory,,,,(\d|\.)*,,,Měnový kurs rozhodný pro určení základu daně z hazardních her
+M,mena_kurs.csv,5,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+M,mena_kurs.csv,6,Date,Datum,Date,D_DATE,N,mandatory,,,,,withinPackageTimespan,,"Označení kalendářního dne, ke kterému je výše měnového kursu stanovena"
+V,mena_kurs.csv,1,IDEntryCurrencyExchangerate,IDZaznamMenaKurs,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Jedinečný identifikátor záznamu o výši měnového kursu (Primární klíč)
+V,mena_kurs.csv,2,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,mena_kurs.csv,3,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+V,mena_kurs.csv,4,ExchangerateAmount,KursVyse,DecimalNumber,D_COURSE,N,mandatory,,,,(\d|\.)*,,,Měnový kurs rozhodný pro určení základu daně z hazardních her
+V,mena_kurs.csv,5,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+V,mena_kurs.csv,6,Date,Datum,Date,D_DATE,N,mandatory,,,,,withinPackageTimespan,,Označení kalendářního dne
+M,misto.csv,1,IDLocation,IDMisto,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor kasina (Primární klíč)
+M,misto.csv,3,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Název kasina uvedený v povolení k umístění herního prostoru
+M,misto.csv,4,GPSX,GPSX,DecimalNumber,D_GPS,Y,mandatoryif,SidloKodRuian.IsEmpty(),,,,,,Cizí klíč do tabulky HAZARDSM_PROVOZOVATEL
+M,misto.csv,5,GPSY,GPSY,DecimalNumber,D_GPS,Y,mandatoryif,SidloKodRuian.IsEmpty(),,,,,,Zeměpisná délka kasina
+M,misto.csv,2,TypeLocation,MistoNazev,Text,D_TEXT,N,mandatory,,,250,,,,Zeměpisná šířka kasina
+M,misto.csv,6,Street,Ulice,Text,D_TEXT,Y,,,,250,,,,"Název ulice, ve které je kasino umístěno"
+M,misto.csv,7,CN,CP,IntegerNumber,D_INTEGER,Y,,,,,,,,"Číslo popisné, na kterém je kasino umístěno"
+M,misto.csv,8,ON,CO,Text,D_TEXT,Y,,,,10,,,,"Číslo orientační s dodatkem, je-li použit, na kterém je kasino umístěno"
+M,misto.csv,9,MunicipalityPart,CastObce,Text,D_TEXT,Y,,,,250,,,,Část obce
+M,misto.csv,10,PC,PSC,IntegerNumber,D_INTEGER,N,mandatory,,,,(\d)*,,Postal code value is not validated,"Poštovní směrovací číslo nebo její části, ve které je kasino umístěno"
+M,misto.csv,11,Municipality,Obec,Text,D_TEXT,N,mandatory,,,250,,,,"Název obce, ve které je kasino umístěno"
+M,misto.csv,12,Borough,Obvod,IntegerNumber,D_INTEGER,Y,,,,,,,,Číslo obvodu hlavního města Prahy
+M,misto.csv,13,Region,Kraj,codebook,D_KOD,N,mandatory,,3,3,,,,"Třípísmenné označení kraje, ve kterém je kasino umístěno"
+M,misto.csv,14,LocationCodeRuian,SidloKodRuian,IntegerNumber,D_INTEGER,Y,,,,,,,"If RUIAN value is presented, it's not validated.","Kód adresního místa adresy kasina přiřazený v Registru územní identifikace, adres a nemovitostí"
+V,misto.csv,1,IDLocation,IDMisto,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor herního prostoru, prodejního místa, nebo sázkové kanceláře (Primární klíč)"
+V,misto.csv,2,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,misto.csv,3,GPSX,GPSX,DecimalNumber,D_GPS,Y,mandatoryif,SidloKodRuian.IsEmpty(),,,(\d|\.)*,,,"Zeměpisná délka herního prostoru, prodejního místa, nebo sázkové "
+V,misto.csv,4,GPSY,GPSY,DecimalNumber,D_GPS,Y,mandatoryif,SidloKodRuian.IsEmpty(),,,(\d|\.)*,,,"Zeměpisná šířka herního prostoru, prodejního místa, nebo sázkové kanceláře"
+V,misto.csv,5,TypeLocation,TypMisto,codebook,D_KOD,N,mandatory,,1,2,,,,"Typ místa, kde dochází k provozování hazardní hry"
+V,misto.csv,6,Street,Ulice,Text,D_TEXT,Y,,,,250,,,,Název ulice 
+V,misto.csv,7,CN,CP,IntegerNumber,D_INTEGER,Y,,,,,(\d)*,,,Číslo popisné
+V,misto.csv,8,ON,CO,Text,D_TEXT,Y,,,,10,,,,Číslo orientační
+V,misto.csv,9,MunicipalityPart,CastObce,Text,D_TEXT,Y,,,,250,,,,Část obce
+V,misto.csv,10,PC,PSC,IntegerNumber,D_INTEGER,N,mandatory,,,,(\d)*,,,Poštovní směrovací číslo
+V,misto.csv,11,Municipality,Obec,Text,D_TEXT,N,mandatory,,,250,,,,Název obce
+V,misto.csv,12,Borough,Obvod,IntegerNumber,D_INTEGER,Y,,,,,(\d)*,,,Číslo obvodu hlavního města Prahy
+V,misto.csv,13,Region,Kraj,codebook,D_KOD,N,mandatory,,,3,,,,Třípísmenné označení kraje
+V,misto.csv,14,LocationCodeRuian,SidloKodRuian,IntegerNumber,D_INTEGER,Y,,,,,,,cross file reference not validated,"Kód adresního místa herního prostoru, prodejního místa, nebo sázkové kanceláře"
+M,mozna_vyhra_pro_hru.csv,1,IDPotentialWinningForGame,IDMoznaVyhraProHru,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Jedinečný identifikátor záznamu o možné výhře pro živou hru (Primární klíč)
+M,mozna_vyhra_pro_hru.csv,2,IDGame,IDHra,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_EVIDENCE_HER
+M,mozna_vyhra_pro_hru.csv,3,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_MISTO
+M,mozna_vyhra_pro_hru.csv,4,PotentialWinningForGameAmountInitial,MoznaVyhraProHruVysePocatek,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,"Počáteční stav celkové možné výhry určené na základě kumulování části vkladů, která se tvoří v návaznosti na jednotlivou hazardní hru jako celek"
+M,mozna_vyhra_pro_hru.csv,5,PotentialWinningForGameAmountFinal,MoznaVyhruProHruVyseKonec,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,"Konečný stav celkové možné výhry určené na základě kumulování části vkladů, která se tvoří v návaznosti na jednotlivou hazardní hru jako celek"
+M,mozna_vyhra_pro_hru.csv,6,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+M,mozna_vyhra_pro_hru.csv,7,Date,Datum,Date,D_DATE,N,mandatory,,,,,withinPackageTimespan,,"Kalendářní den, ve kterém byl provozní den, za který jsou údaje poskytovány, započatý"
+M,mozna_vyhra_stul_bingo.csv,1,IDPotentialWinning,IDMoznaVyhra,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o možné výhře nebo o vyčleněných peněžních prostředcích (Primární klíč)
+M,mozna_vyhra_stul_bingo.csv,2,IDEntryPSTB,IDZaznamPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,mozna_vyhra_stul_bingo.csv,3,IDPSTB,IDPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,mozna_vyhra_stul_bingo.csv,4,PotentialWinningName,MoznaVyhraNazev,Text,D_TEXT,N,mandatory,,,250,,,cross file reference not validated,Označení možné výhry
+M,mozna_vyhra_stul_bingo.csv,5,PotentialWinningAmountInitial,MoznaVyhraVysePocatek,DecimalNumber,D_MONEY,Y,,,,,(\d)*,,cross file reference not validated,Výše možné výhry v počátečním stavu
+M,mozna_vyhra_stul_bingo.csv,6,PotentialWinningAmountEnd,MoznaVyhraVyseKonec,DecimalNumber,D_MONEY,N,mandatory,,,,(\d)*,,,Výše možné výhry v konečném stavu/ Výše vyčleněných peněžních prostředků
+M,mozna_vyhra_stul_bingo.csv,7,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+V,ostatni_plneni.csv,1,IDExtraPayment,IDOstatniPlneni,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor ostatního plnění (Primární klíč)
+V,ostatni_plneni.csv,2,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,ostatni_plneni.csv,3,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,ostatni_plneni.csv,4,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+V,ostatni_plneni.csv,5,ExtraPaymentAmount,OstatniPlneniVysePuvodni,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,"Výše ostatního plnění, nebo jeho poměrné části"
+V,ostatni_plneni.csv,6,ExtraPaymentTime,OstatniPlneniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas přijetí ostatního plnění
+V,ostatni_plneni.csv,7,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+V,ostatni_plneni.csv,8,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_MISTO
+V,ostatni_plneni_oprava.csv,1,IDExtraPaymentCorrection,IDOstatniPlneniOprava,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor opravy ostatního plnění (Primární klíč)
+V,ostatni_plneni_oprava.csv,2,IDExtraPayment,IDOstatniPlneni,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_OSTATNI_PLNENI
+V,ostatni_plneni_oprava.csv,3,TypeExtraPaymentCorrection,TypOstatniPlneniOprava,codebook,D_KOD,N,mandatory,,,1,,,,Typ plnění
+V,ostatni_plneni_oprava.csv,4,ExtraPaymentCorrectionAmount,OstatniPlneniOpravaVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,Výše plnění
+V,ostatni_plneni_oprava.csv,5,ExtraPaymentCorrectionTime,OstatniPlneniOpravaCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas plnění
+V,ostatni_plneni_oprava.csv,6,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+M,pokladna_stul_turnaj_bingo.csv,1,IDEntryPSTB,IDZaznamPSTB,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor záznamu o pokladně kasina, hře na hracím stole živé hry, turnaji živé hry, nebo bingu (Primární klíč)"
+M,pokladna_stul_turnaj_bingo.csv,2,IDPSTB,IDPSTB,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,equalsOperatorId,,Identifikátor pokladny kasina/ hracího stolu živé hry/ turnaje živé hry/ losovacího osudí pro bingo
+M,pokladna_stul_turnaj_bingo.csv,3,CageTableTournamentBingo,PokladnaStulTurnajBingo,codebook,D_KOD,N,mandatory,,1,1,,,,"Informace o tom, zda tento záznam obsahuje údaje o pokladně kasina, hracím stole živé hry, turnaji živé hry nebo bingu"
+M,pokladna_stul_turnaj_bingo.csv,4,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_MISTO
+M,pokladna_stul_turnaj_bingo.csv,5,IDGame,IDHra,ReferenceLink,D_REFERENCE,Y,mandatoryif,CageTableTournamentBingo.NotIn('P'),8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,"Identifikátor živé hry, která se hraje na daném stole živé hry, v rámci turnaje živé hry, nebo binga, za které jsou údaje poskytovány (Cizí klíč do tabulky HAZARDSM_EVIDENCE_HER)"
+M,pokladna_stul_turnaj_bingo.csv,6,NetGamingResult,CistyHerniVysledek,DecimalNumber,D_MONEY,Y,mandatoryif,"CageTableTournamentBingo.NotIn('P', 'T', 'B')",,,,,,Celková hodnota čistého herního výsledku
+M,pokladna_stul_turnaj_bingo.csv,7,CurrencyCode,MenaKod,Text,D_KOD,Y,mandatoryif,"CageTableTournamentBingo.NotIn('P', 'T', 'B')",,3,,,cross file reference not validated,Kód měny
+M,pokladna_stul_turnaj_bingo.csv,8,OperationFrom,ProvozOd,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Počátek časového vymezení provozního dne pokladny kasina/ hracího stolu živé hry/ provozního dne turnaje živé hry/ provozního dne binga
+M,pokladna_stul_turnaj_bingo.csv,9,OperationTo,ProvozDo,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Konec časového vymezení provozního dne pokladny kasina/ hracího stolu živé hry/ provozního dne turnaje živé hry/ provozního dne binga
+V,preruseni_omezeni_kursova_toto.csv,1,IDEntryInterruptionRestriction,IDZaznamPreruseniOmezeni,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o přerušení nebo omezení (Primární klíč)
+V,preruseni_omezeni_kursova_toto.csv,2,IDOpportunity,IDPrilezitost,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PRILEZITOST
+V,preruseni_omezeni_kursova_toto.csv,3,RestrictionText,OmezeniText,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Konkrétní omezení příjmu sázek
+V,preruseni_omezeni_kursova_toto.csv,4,InterruptionIntroductionTime,PreruseniZavedeniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas přerušení nebo zavedení omezení příjmu sázek
+V,preruseni_omezeni_kursova_toto.csv,5,EndTime,UkonceniCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,,Datum a čas ukončení přerušení nebo omezení příjmu sázek
+V,prihlaseni.csv,1,IDLogin,IDPrihlaseni,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor přihlášení k uživatelskému kontu (Primární klíč)
+V,prihlaseni.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,prihlaseni.csv,3,LoginTime,PrihlaseniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas přihlášení k uživatelskému kontu
+V,prihlaseni.csv,4,LogoutTime,OdhlaseniCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,,Datum a čas odhlášení k uživatelskému kontu
+V,prihlaseni.csv,5,IDGamingPoint,IDHerniPozice,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HERNI_ZARIZENI
+V,prilezitost.csv,1,IDOpportunity,IDPrilezitost,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Identifikátor sázkové příležitosti (Primární klíč)
+V,prilezitost.csv,2,OpportunityName,PrilezitostNazev,Text,D_TEXT,N,mandatory,,,500,,,,Název nebo jiný identifikátor sázkové příležitosti
+V,prilezitost.csv,3,StartCollectionBetsTime,ZahajeniPrijmuSazekCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas zahájení náběru sázek
+V,prilezitost.csv,4,EndCollectionBetsTime,UkonceniPrijmuSazekCas,DateAndTime,D_DATETIME,Y,,,,,,,cross file reference not validated,Datum a čas ukončení náběru sázek na sázkovou příležitost
+V,prilezitost.csv,5,Winning,Vyherni,codebook,D_KOD,Y,,,,1,,,,Vyhodnocení sázkové příležitosti
+V,prilezitost.csv,6,IDEvent,IDUdalost,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,"Identifikátor sázkové události, ke které je vypsána sázková příležitost (Cizí klíč do tabulky HAZARD_UDALOST)"
+V,prilezitost.csv,7,Live,Live,codebook,D_BINARY,Y,,,,,,,,Označení živé kursové sázky
+V,prilezitost_kurs.csv,1,IDEntryOddsOpportunity,IDZaznamPrilezitostKurs,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o kursu sázkové příležitosti (Primární klíč)
+V,prilezitost_kurs.csv,2,IDOpportunity,IDPrilezitost,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PRILEZITOST
+V,prilezitost_kurs.csv,3,OddsQuote,KursVyse,DecimalNumber,D_COURSE,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,Výše kursu
+V,prilezitost_kurs.csv,4,OddsTime,KursCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas stanovení výše kursu
+M,prostredek.csv,1,IDEntryMeans,IDZaznamProstredek,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o prostředku v pokladně (Primární klíč)
+M,prostredek.csv,2,IDEntryPSTB,IDZaznamPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,prostredek.csv,3,IDPSTB,IDPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,prostredek.csv,4,Meansofpayment,Prostredek,codebook,D_KOD,N,mandatory,,,1,,,,Typ prostředku
+M,prostredek.csv,5,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+M,prostredek.csv,6,BalanceAmountOpening,StavVysePocatek,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,Počáteční stav prostředku
+M,prostredek.csv,7,BalanceAmountClosing,StavVyseKonec,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,Konečný stav prostředku
+M,provozovatel.csv,1,IDOperator,IDProvozovatel,Identifier,D_IDENTIFIER,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,,Identifikátor provozovatele (Primární klíč)
+M,provozovatel.csv,2,OperatorName,ProvozovatelNazev,Text,D_TEXT,N,mandatory,,,250,,,,Název nebo obchodní firma provozovatele
+V,provozovatel.csv,1,IDOperator,IDProvozovatel,Identifier,D_IDENTIFIER,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,,Identifikátor provozovatele (Primární klíč)
+V,provozovatel.csv,2,OperatorName,ProvozovatelNazev,Text,D_TEXT,N,mandatory,,,250,,,cross file reference not validated,Název nebo obchodní firma provozovatele
+M,PSTB_transakce.csv,1,IDTransaction,IDTransakce,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor celkového úhrnu peněžních prostředků, nebo celkové hodnoty hodnotových žetonů (Primární klíč)"
+M,PSTB_transakce.csv,2,IDEntryPSTB,IDZaznamPSTB,Identifier,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,PSTB_transakce.csv,3,IDPSTB,IDPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
+M,PSTB_transakce.csv,4,TransactionType,TypTransakce,codebook,D_KOD,N,mandatory,,,2,,,,Typ transakce
+M,PSTB_transakce.csv,5,TransactionAmount,TransakceVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,Výše celkového úhrnu peněžních prostředků nebo celkové hodnoty hodnotových žetonů
+M,PSTB_transakce.csv,6,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,,Kód měny
+M,PSTB_transakce.csv,7,Cash,TransakceZpusob,IntegerNumber,D_BINARY,Y,mandatoryif,"TransactionType.NotIn(‘2’, ‘3’, ‘4’, ‘6’, ‘7’, ‘L1’, ‘8’, ‘9’, ‘10’, ‘11’, ‘12’, ‘13’, ‘15’, ‘16’ or ‘17’)",,,,,value not validated,"Přijetí platby v hotovosti, nebo bezhotovostně"
+V,sdileni.csv,1,IDShared,IDSdileni,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o transakci týkající se sdílené herní jistiny (Primární klíč)
+V,sdileni.csv,2,IDOneGame,IDJednaHra,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_JEDNA_HRA
+V,sdileni.csv,3,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,sdileni.csv,4,PrizeMoney,HerniJistina,Text,D_TEXT,N,mandatory,,,500,,,,Identifikace konkrétní herní jistiny sdílené loterie 
+V,sdileni.csv,5,ReceivedAmountOriginal,PrijataVysePuvodni,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,Výše úhrnu vkladů přijatých ze sdílené herní jistiny
+V,sdileni.csv,6,ReceiptTime,PrijetiCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas přijetí úhrnu vkladů přijatých ze sdílené herní jistiny
+V,sdileni.csv,7,CurrencyCodeReceipt,MenaKodPrijeti,Text,D_KOD,Y,,,,3,,,cross file reference not validated,"Měna, v níž byl úhrn vkladů přijatých ze sdílené herní jistiny přijat"
+V,sdileni.csv,8,ProvidedAmountOriginal,PoskytnutaVysePuvodni,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,Výše úhrnu výher poskytnutých do sdílené herní jistiny
+V,sdileni.csv,9,ProvisionTime,PoskytnutiCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas poskytnutí úhrnu vkladů do sdílené herní jistiny
+V,sdileni.csv,10,CurrencyCodeProvision,MenaKodPoskytnuti,Text,D_KOD,Y,,,,3,,,cross file reference not validated,"Měna, v níž byl úhrn výher poskytnutých do sdílené herní jistiny přijat"
+V,sdileni_oprava.csv,1,IDSharedCorrection,IDSdileniOprava,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor opravy záznamu o transakci týkající se sdílené herní jistiny (Primární klíč)
+V,sdileni_oprava.csv,2,IDShared,IDSdileni,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_SDILENI
+V,sdileni_oprava.csv,3,TypeSharedCorrection,TypSdileniOprava,codebook,D_KOD,N,mandatory,,,2,,,,Typ plnění
+V,sdileni_oprava.csv,4,SharedCorrectionAmount,SdileniOpravaVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,cross file reference not validated,Výše plnění
+V,sdileni_oprava.csv,5,SharedCorrectionTime,SdileniOpravaCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas plnění
+V,sdileni_oprava.csv,6,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+V,sebeomezeni.csv,1,IDSettingSM,IDNastaveniSO,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor nastavení sebeomezujícího opatření (Primární klíč)
+V,sebeomezeni.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,sebeomezeni.csv,3,TypeSM,TypSO,codebook,D_KOD,N,mandatory,,,2,,,,Typ sebeomezujícího opatření a automatické přijímání
+V,sebeomezeni.csv,4,ValueAmount,HodnotaVyse,DecimalNumber,D_MONEY,Y,mandatoryif,"TypeSM.In(‘a’, ‘b’, ‘c’ or ‘d’)",,,(\d|\.)*,,,Hodnota sebeomezujícího opatření - výše
+V,sebeomezeni.csv,5,ValueNumber,HodnotaPocet,IntegerNumber,D_AMOUNT,Y,mandatoryif,TypeSM.In(‘e’),,,(\d)*,,,Hodnota sebeomezujícího opatření - počet
+V,sebeomezeni.csv,6,ValueTime,HodnotaCas,IntegerNumber,D_AMOUNT,Y,mandatoryif,"TypeSM.(‘f’, 'g')",,,(\d)*,,,Hodnota sebeomezujícího opatření - doba
+V,sebeomezeni.csv,7,SMSettingTime,SONastaveniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas nastavení hodnoty
+V,sebeomezeni.csv,8,SMEffectiveTime,SOUcinnostiCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas účinnosti hodnoty
+V,sebeomezeni.csv,9,SMRejection,SOOdmitnuti,codebook,D_BINARY,Y,,,,,,,,Odmítnutí nastavení hodnoty
+V,sebeomezeni.csv,10,CurrencyCode,MenaKod,Text,D_KOD,Y,mandatoryif,"TypeSM.In(‘a’, ‘b’, ‘c’ or ‘d’)",,3,,,cross file reference not validated,Kód měny
+V,sebeomezeni_hra_druh.csv,1,IDSMGameType,IDSOHraDruh,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor záznamu o druhu hazardní hry, ke kterému je nastaveno sebeomezující opatření (Primární klíč)"
+V,sebeomezeni_hra_druh.csv,2,IDSettingSM,IDNastaveniSO,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_SEBEOMEZENI
+V,sebeomezeni_hra_druh.csv,3,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+V,seznam_sazek.csv,1,IDListBets,IDSeznamSazek,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor seznamu sázek (Primární klíč)
+V,seznam_sazek.csv,2,IDGameDecription,IDHraPopis,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_EVIDENCE_HER
+V,seznam_sazek.csv,3,IDOneGame,IDJednaHra,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_JEDNA_HRA
+V,seznam_sazek.csv,4,IDGameFlows,IDHraToky,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HRA_TOKY
+V,tiket.csv,1,IDTicket,IDTiket,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o sázkové události ke hře totalizátorové hry (Primární klíč)
+V,tiket.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_JEDNA_HRA
+V,tiket.csv,3,MethodPlacement,ZpusobUzavreni,Text,D_TEXT,N,mandatory,,,50,,,,Cizí klíč do tabulky HAZARD_UDALOST
+V,tiket.csv,4,PlacementTime,UzavreniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,"Datum a čas uzavření, nebo odmítnutí přijetí kursové sázky"
+V,tiket.csv,5,IDLocation,IDMisto,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_MISTO
+V,tiket.csv,6,TicketRejection,TiketOdmitnuti,codebook,D_BINARY,N,mandatory,,,,,,cross file reference not validated,Záznam o odmítnutí přijetí tiketu kursové sázky
+V,tiket.csv,7,RejectionReason,OdmitnutiDuvod,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,"Důvod odmítnutí sázky, nebo její části"
+V,toto_udalost.csv,1,IDEntryTotoEvent,IDZaznamTotoUdalost,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu o sázkové události ke hře totalizátorové hry (Primární klíč)
+V,toto_udalost.csv,2,IDOneGame,IDJednaHra,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_JEDNA_HRA
+V,toto_udalost.csv,3,IDEvent,IDUdalost,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_UDALOST
+V,turnaj_detaily.csv,1,IDTournamentDetails,IDTurnajDetaily,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor záznamu s údaji o turnaji živé hry (Primární klíč)
+V,turnaj_detaily.csv,2,IDOneGame,IDJednaHra,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_JEDNA_HRA
+V,turnaj_detaily.csv,3,TournamentIntervalIncrease,TurnajIntervalZvysovani,Text,D_TEXT,N,mandatory,,,250,,,cross file reference not validated,Interval zvyšování povinných sázek do turnaje internetové živé hry
+V,turnaj_detaily.csv,4,TournametMethodOrganisation,TurnajZpusobKonani,Text,D_TEXT,N,mandatory,,,250,,,cross file reference not validated,Způsob konání turnaje internetové živé hry
+V,turnaj_detaily.csv,5,TournamentRegistration,TurnajRegistrace,Text,D_TEXT,N,mandatory,,,250,,,cross file reference not validated,Registrace do turnaje internetové živé hry
+V,turnaj_detaily.csv,6,TournamentStakesBeforeStart,TurnajVkladyPredZahajenim,DecimalNumber,D_MONEY,Y,,,,,(\d|\.)*,,cross file reference not validated,Vklady účastníků přijaté před zahájením turnaje internetové živé hry
+V,turnaj_detaily.csv,7,TournamentMaxNumberParticipants,TurnajMaxPocetUcastnici,IntegerNumber,D_AMOUNT,Y,,,,,(\d)*,,cross file reference not validated,Maximální počet účastníků turnaje internetové živé hry
+V,turnaj_detaily.csv,8,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,cross file reference not validated,Kód měny
+V,ucet.csv,1,IDTransaction,IDTransakce,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor převedení peněžních prostředků (Primární klíč)
+V,ucet.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
+V,ucet.csv,3,TransactionAmount,TransakceVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,Výše převedených peněžních prostředků
+V,ucet.csv,4,TransactionTime,TransakceCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas převedení peněžních prostředků
+V,ucet.csv,5,TransactionMethod,TransakceZpusob,IntegerNumber,D_BINARY,N,mandatory,,,,(\d|\.)*,,,Způsob převedení
+V,udalost.csv,1,IDEvent,IDUdalost,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor sázkové události (Primární klíč)
+V,udalost.csv,2,EventName,UdalostNazev,Text,D_TEXT,N,mandatory,,,500,,,,Název nebo jiný identifikátor sázkové události
+V,udalost.csv,3,GameType,HraDruh,codebook,D_KOD,N,mandatory,,,1,,equalsGameType,,Druh hazardní hry
+V,udalost.csv,4,StartTime,ZahajeniCas,DateAndTime,D_DATETIME,Y,mandatoryif,Field.IsEmpty(IDMainEvent),,,,withinPackageTimespan,,Datum a čas předpokládaného zahájení sázkové události
+V,udalost.csv,5,EventResult,UdalostVysledek,Text,D_TEXT,Y,,,,250,,,,Výsledek sázkové události
+V,udalost.csv,6,IDMainEvent,IDHlavniUdalost,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,equalsOperatorId,cross file reference not validated,Hlavní sázková událost (Cizí klíč do tabulky HAZARD_UDALOST)
+V,udalost.csv,7,IDOperator,IDProvozovatel,ReferenceLink,D_REFERENCE,N,mandatory,,8,20,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_PROVOZOVATEL
+V,vazba_hra_sazka.csv,1,IDVazbaHraSazka,IDVazbaHraSazka,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,
+V,vazba_hra_sazka.csv,2,IDHraPopis,IDHraPopis,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,
+V,vazba_hra_sazka.csv,3,IDJednaHra,IDJednaHra,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,
+V,vazba_hra_sazka.csv,4,IDHraToky,IDHraToky,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,
+V,ucet.csv,6,TransactionMethodDetail,TransakceZpusobUpresneni,Text,D_TEXT,N,mandatory,,,250,(\w|\-)*,,,
+V,ucet.csv,7,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,,

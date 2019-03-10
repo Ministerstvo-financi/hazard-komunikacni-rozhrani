@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DssValidator {
     static {
@@ -53,6 +55,10 @@ public class DssValidator {
 
     private static final String DETAILED_REPORT_XSTL = "xstl/detailed-report.xslt";
     private static final String SIMPLE_REPORT_XSTL = "xstl/simple-report.xslt";
+
+    private static final String DEFAULT_KEYSTORE_PATH = "/keystore.p12";
+    private static final String DEFAULT_KEYSTORE_PASSWORD = "dss-password";
+    private static final String DEFAULT_KEYSTORE_TYPE = "PKCS12";
 
     private CMSSignedData cmsSignedData;
     private DSSDocument signedDocument;
@@ -132,10 +138,14 @@ public class DssValidator {
 
         for (String certificateId : simpleReport.getCertificateIds()) {
             if (simpleReport.getCertificateIndication(certificateId) != null && simpleReport.getCertificateIndication(certificateId).toString().equals("PASSED")) {
-                return new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString());
+            	if (simpleReport.getQualificationAtCertificateIssuance()==CertificateQualification.QCERT_FOR_ESEAL) {
+            		return new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString());
+            	} else {
+            		return new SignResult(ResultCodes.ERR_VALID_CERT_NOT_FOR_QSEAL,"Certifikát je platný, ale není určen pro pečetění. Certificate valid but not for qseal purposes");
+            	}
             }
         }
-        return new SignResult(ResultCodes.NOOK, ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED.toString());
+        return new SignResult(ResultCodes.ERR_CERT_EUTL_INVALID, "Nepodařilo se ověřit certifikát vůči EU Trust Listu. Certificate not validated in the context of EU Trust list.");
     }
 
     private boolean validSignatureDSSID(AdvancedSignature advancedSignature, List<String> certificateFiles) throws DSSException {
@@ -179,35 +189,65 @@ public class DssValidator {
         return new SignResult(ResultCodes.NOOK, ResultCodes.ERR_PKG_SIG_INVALID_SIGNATURE.toString());
     }
 
+    static private final Object cachedTrustedCertificatesSourceLock=new Object();
+    static private TrustedListsCertificateSource cachedTrustedCertificatesSource;
+    static {
+    	new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				synchronized (cachedTrustedCertificatesSourceLock) {
+					cachedTrustedCertificatesSource =  null;
+				}
+			}
+		}, 20*60*1000 );
+    }
+    
     private TrustedListsCertificateSource loadTSL() throws IOException {
-        TSLRepository tslRepository = new TSLRepository();
-        tslRepository.setCacheDirectoryPath(properties.getProperty("CacheTSL"));
+    	synchronized (cachedTrustedCertificatesSourceLock) {
+        	if ( cachedTrustedCertificatesSource!=null) {
+        		return cachedTrustedCertificatesSource;
+        	}
+        	
+        	TSLRepository tslRepository = new TSLRepository();
+            tslRepository.setCacheDirectoryPath(properties.getProperty("CacheTSL"));
 
-        TrustedListsCertificateSource certificateSource = new TrustedListsCertificateSource();
-        tslRepository.setTrustedListsCertificateSource(certificateSource);
+            TrustedListsCertificateSource certificateSource = new TrustedListsCertificateSource();
+            tslRepository.setTrustedListsCertificateSource(certificateSource);
 
-        TSLValidationJob job = new TSLValidationJob();
-        job.setDataLoader(new CommonsDataLoader());
-        job.setCheckLOTLSignature(true);
-        job.setCheckTSLSignatures(true);
-        job.setLotlUrl(properties.getProperty("LotlUrl"));
-        job.setLotlCode(properties.getProperty("LotlCode"));
+            TSLValidationJob job = new TSLValidationJob();
+            job.setDataLoader(new CommonsDataLoader());
+            job.setCheckLOTLSignature(true);
+            job.setCheckTSLSignatures(true);
+            job.setLotlUrl(properties.getProperty("LotlUrl"));
+            job.setLotlCode(properties.getProperty("LotlCode"));
 
-        // This information is needed to be able to filter the LOTL pivots
-        job.setLotlRootSchemeInfoUri(properties.getProperty("LotlRootSchemeInfoUri"));
+            // This information is needed to be able to filter the LOTL pivots
+            job.setLotlRootSchemeInfoUri(properties.getProperty("LotlRootSchemeInfoUri"));
 
-        // The keystore contains certificates referenced in the Official Journal Link (OJ URL)
-        KeyStoreCertificateSource keyStoreCertificateSource = new KeyStoreCertificateSource(new File(properties.getProperty("KeyStoreCertificatePath")), properties.getProperty("KeyStoreCertificateType"),
+            // The keystore contains certificates referenced in the Official Journal Link (OJ URL)
+            KeyStoreCertificateSource keyStoreCertificateSource = getKeyStoreCertificateSource();
+            job.setOjUrl(properties.getProperty("OjUrl"));
+            job.setOjContentKeyStore(keyStoreCertificateSource);
+            job.setRepository(tslRepository);
+            job.refresh();
+
+            validationCertPool = new CertificatePool();
+            validationCertPool.importCerts(keyStoreCertificateSource);
+
+            cachedTrustedCertificatesSource = certificateSource;
+            return certificateSource;    		
+		}
+    }
+
+    private KeyStoreCertificateSource getKeyStoreCertificateSource() throws IOException {
+        File keystoreFile = new File(properties.getProperty("KeyStoreCertificatePath"));
+        if (!keystoreFile.exists()) {
+            LOG.error("FAILED to read keystore file - using default keystore");
+            final InputStream keystoreStream = DssValidator.class.getResourceAsStream(DEFAULT_KEYSTORE_PATH);
+            return new KeyStoreCertificateSource(keystoreStream, DEFAULT_KEYSTORE_TYPE, DEFAULT_KEYSTORE_PASSWORD);
+        }
+        return new KeyStoreCertificateSource(new File(properties.getProperty("KeyStoreCertificatePath")), properties.getProperty("KeyStoreCertificateType"),
                 properties.getProperty("KeyStoreCertificatePassword"));
-        job.setOjUrl(properties.getProperty("OjUrl"));
-        job.setOjContentKeyStore(keyStoreCertificateSource);
-        job.setRepository(tslRepository);
-        job.refresh();
-
-        validationCertPool = new CertificatePool();
-        validationCertPool.importCerts(keyStoreCertificateSource);
-
-        return certificateSource;
     }
 
     private void validateDSSDocument(DSSDocument document) {
@@ -306,7 +346,7 @@ public class DssValidator {
     }
 
     private static void setProperties() {
-        final InputStream propertiesStream = ClassLoader.getSystemClassLoader().getResourceAsStream("keystore.properties");
+        final InputStream propertiesStream = DssValidator.class.getResourceAsStream("/keystore.properties");
         try {
             properties = new Properties();
             properties.load(propertiesStream);

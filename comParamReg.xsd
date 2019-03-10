@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+	targetNamespace="http://hazard.mfcr.cz/komunikacni-modul/registrace-parametru/2019-02"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://hazard.mfcr.cz/komunikacni-modul/registrace-parametru/2019-02">
+
+	<element name="Registrace" type="tns:RegistraceTyp">
+		<annotation>
+			<documentation>Jeden formulář vždy obsahuje změny pro právě jednoho
+				operátora. Může obsahovat změny typu update - tedy nastavení
+				parametrů a delete - tedy ukončení provozu dané hry.
+				Každý formulář
+				má právě jedno datum, od kdy začíná platit.
+			</documentation>
+		</annotation>
+	</element>
+
+	<complexType name="RegistraceTyp">
+		<sequence>
+			<element name="Zmenit" type="tns:ZmenitTyp" minOccurs="0"
+				maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Obsahuje seznam registrací, které mají být
+						aktualizovány. Pomocí této položky se rovněž
+						zakládají nové. Položka musí vždy obsahovat
+						kompketní sadu potřebných údajů.
+
+						Vrámci jedné položky je předávána sada her,
+						které sdílení totožné údaje (certifikáty a URL)
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Smazat" type="tns:SmazatTyp" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="Rozsireni" type="tns:RozsireniTyp" minOccurs="0" maxOccurs="unbounded"></element>
+		</sequence>
+		<attributeGroup ref="tns:AtributyProvozovatele" />
+		<attribute name="PlatnostOd" type="date" />
+		<attribute name="Podano" type="dateTime">
+			<annotation>
+				<documentation>Datum a cas podani</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="IDPodani" type="string">
+			<annotation>
+				<documentation>
+					Identifikator podani pro korelaci mezi systemy
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="PrislusnyUrad" type="string"></attribute>
+		<attribute name="Playground" type="boolean"></attribute>
+	</complexType>
+
+	<attributeGroup name="AtributyProvozovatele">
+		<attribute name="IDProvozovatel" type="string"
+			use="required">
+			<annotation>
+				<documentation>identifikátor provozovatele dle vyhlášky
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="NazevProvozovatel" type="string"
+			use="required">
+			<annotation>
+				<documentation>název provozovatele v souladu s jeho registrací jako
+					osoby
+				</documentation>
+			</annotation>
+		</attribute>
+	</attributeGroup>
+
+
+
+	<group name="HodnotyCertitikatuSkupina">
+		<choice>
+			<element name="CertifikatBinarni" type="base64Binary">
+				<annotation>
+					<documentation>Obsahue binární soubor certifikátu ve formátu
+						DER/CER.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="CertifikatText" type="string">
+				<annotation>
+					<documentation>Obsahuje textovou verzi certifikátu ve formátu PEM
+						(včetně hlavičky a patičky)
+						-----BEGIN
+						...
+						-----END
+					</documentation>
+				</annotation>
+			</element>
+		</choice>
+	</group>
+
+	<complexType name="SeznamCertifikatuTyp">
+		<sequence>
+			<group ref="tns:HodnotyCertitikatuSkupina" minOccurs="1"
+				maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="CertifikatyTyp">
+		<sequence>
+			<element name="PecetCertifikaty"
+				type="tns:SeznamCertifikatuTyp" minOccurs="0">
+				<annotation>
+					<documentation>Sada certifikátů, kterými může být pečetěn předávaný
+						soubor. Musí jít o platné certifikáty, které lze ověřit s využitím
+						EU Trust list.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="SifrovaniCertifikaty"
+				type="tns:SeznamCertifikatuTyp" minOccurs="0">
+				<annotation>
+					<documentation>Sada šifrovacích certifikátů, které budou použity
+						pro zašifrování odpovědí obsahujících výsledky zpracování.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="AutentizaceKlientaCertifikaty"
+				type="tns:SeznamCertifikatuTyp" minOccurs="0">
+				<annotation>
+					<documentation>Certifikáty, které bude provozovatel využívat pro
+						autentizaci při stahování odpovědí ze sreverů ministerstva.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="AutentizaceKlientaCACertifikaty"
+				type="tns:SeznamCertifikatuTyp" minOccurs="0">
+				<annotation>
+					<documentation>Seznam certifikátů certifikačních autorit, kterými
+						lze ověřit platnost klientských certifikátů provozovatele, které
+						využívá pro klientskou autentizaci vůči serveru MF.
+						Položka musí
+						obsahovat všechny certifikáty tak, aby bylo možné sestavit
+						certifikační cestu - tedy i mezilehlé CA.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="AutentizaceServeruCACertifikaty"
+				type="tns:SeznamCertifikatuTyp" minOccurs="0">
+				<annotation>
+					<documentation>Sada certifikátů certifikačních autorit, které
+						ověřují serverový TLS certifikát serveru provozovatele. Nemusí být
+						předáváno,
+						pokud server používá kvalifikovaný certifikát pro web
+						server ověřitelný
+						pomocí EU Trust list nebo pokud používá
+						certifikát ověřitelný na
+						základě seznamu CAB (obvyklá sada
+						důvěryhodných kořenových autorit
+						v prohlížečích.)
+						Položka musí
+						obsahovat všechny certifikáty tak, aby bylo možné sestavit
+						certifikační cestu - tedy i mezilehlé CA.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ZmenitTyp">
+		<sequence>
+			<element name="Certifikaty" type="tns:CertifikatyTyp"
+				minOccurs="0">
+				<annotation>
+					<documentation>
+						Element obsahuje seznam všech potřebných
+						certifikátů.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Url" type="tns:UrlTyp" minOccurs="0">
+				<annotation>
+					<documentation>
+						Sada URL pro komunikaci
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Balicek" type="tns:BalicekTyp" minOccurs="1"
+				maxOccurs="unbounded" />
+			<element name="Rozsireni" type="tns:RozsireniTyp" minOccurs="0" maxOccurs="unbounded"></element>
+		</sequence>
+		<attribute name="zmenitExistujici" type="boolean">
+			<annotation>
+				<documentation>
+					Pokud je nastaveno na true, provede se změna
+					existujících nastavení. Hodnoty, které ve formuláři
+					chybí jsou převzaty z minulé verze. Certifikáty z
+					formuláře jsou přidány k již známým certifikátům. V
+					režimu aktualizace nelze odebrat certifikáty.
+				</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="vymazatNasledujiciPlanovaneZmeny" type="boolean">
+			<annotation>
+				<documentation>Pokud je nastaveno, aplikací této změny se zároveň provede smazání všech plánovaných změn, s PlatnostOd následujícím po PlatnostOd této změny.</documentation>
+			</annotation></attribute>
+	</complexType>
+
+
+	<complexType name="SmazatTyp">
+		<sequence>
+			<element name="Balicek" type="tns:BalicekTyp" minOccurs="1"
+				maxOccurs="unbounded" />
+			<element name="Rozsireni" type="tns:RozsireniTyp" minOccurs="0" maxOccurs="unbounded"></element>
+		</sequence>
+		<attribute name="vymazatNasledujiciPlanovaneZmeny" type="boolean">
+			<annotation>
+				<documentation>Provede smazani vsech nasledujicich naplanovanych zme nastaveni parametru.
+s</documentation>
+			</annotation></attribute>
+	</complexType>
+
+	<complexType name="UrlTyp">
+		<sequence>
+			<element name="StazeniBalickuUrl" type="anyURI" minOccurs="0">
+				<annotation>
+					<documentation>Základ URL pro stahování balíků</documentation>
+				</annotation>
+			</element>
+			<element type="anyURI" name="NotifikaceChybyUrl" minOccurs="0">
+				<annotation>
+					<documentation>URL pro notifikaci zpracování, které skončilo chybou
+					</documentation>
+				</annotation>
+			</element>
+			<element type="anyURI" name="NotifikaceUspechuUrl" minOccurs="0">
+				<annotation>
+					<documentation>URL pro notifikaci úspěšného zpracování.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="BalicekTyp">
+		<attribute name="Model" type="tns:ModelTyp" use="required">
+			<annotation>
+				<documentation>Model - dle vyhlášky</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="HraDruh" type="tns:HraDruhTyp"
+			use="required">
+			<annotation>
+				<documentation>Typ hry dle vyhlášky</documentation>
+			</annotation>
+		</attribute>
+		<attribute name="Kasino" type="string" use="optional">
+			<annotation>
+				<documentation>
+					identifikator heniho mista
+				</documentation>
+			</annotation>
+		</attribute>
+		<anyAttribute></anyAttribute>
+	</complexType>
+
+	<simpleType name="HraDruhTyp">
+		<restriction base="string">
+			<enumeration value="Z" />
+			<enumeration value="L" />
+			<enumeration value="B" />
+			<enumeration value="T" />
+			<enumeration value="K" />
+			<enumeration value="R" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ModelTyp">
+		<restriction base="string">
+			<enumeration value="M"></enumeration>
+			<enumeration value="V"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<complexType name="RozsireniTyp">
+		<sequence>
+			<any></any>
+		</sequence>
+		<anyAttribute></anyAttribute>
+	</complexType>
+</schema>
