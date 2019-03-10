@@ -222,7 +222,105 @@ TBD
 ```
 
 ### Postup zpracování potvrzovacího balíčku
+#### Validace pečeti potvrzovacího balíčku
+**Windows**
+Pro validaci pečeti potvrzovacího balíčku je nezbytné získat certifikát, který komunikační rozhraní používá 
+k vytváření elektornických pečetí. MF publikuje parametry komunikačního rozhraní na stránkách věnovaných [reportingu 
+v oblasti hazardních her](https://www.mfcr.cz/hazard). 
+
+Pro příklad validace použijeme [publikované parametry pro prostředí playground](https://www.mfcr.cz/cs/soukromy-sektor/hazardni-hry/reportingova-vyhlaska/komunikacni-parametry/komunikacni-parametry-pro-playground). Parametry jsou publikovány jednak přímo na odkazované webové stránce. Autoritativním zdrojem 
+komunikačních parametrů je strojově čitelný soubor JSON, který obsahuje všechny podstatné certifikáty a URL. Soubor s komunikačními parametry je vystavený 
+[na stránkách ve formě ZIP souboru](https://www.mfcr.cz/assets/cs/media/2b80e14e53e7a24b71c8153e71cbfae5bcf4c42789d4ec67c67f76122446df00.zip), který obsahuje jednak přímo JSON soubor a zároveň JSON soubor zapečetěný. Jako ukázku validace pečeti a extrakce zapečetěných dat použijeme soubor stažený z uvedeného URL.
+
+Pro validaci pečeti souboru je možné použít `/crypto_utils/validateFile.bat INPUT OUTPUT CERT1 CERT2` s následujícími parametry:
+* INPUT - zapečetěný soubor, jehož pečeť validujeme
+* OUTPUT - výsledek ověření pečeti - data, která jsou v souboru INPUT zapečetěna
+* CERT1 - certifikát, kterým se očekává, že je pečeť vytvořena - první kandidát
+* CERT2 - certifikát, kterým se očekává, že je pečeť vytvořena - druhý kandidát - může být shodný s prvním, pokud existuje jen jeden možný certifikát, 
+  kterým má být zapečetěno
+
+Konkrétně pro parametry Playgroundu jde o následující soubory:
+* INPUT: 2b80e14e53e7a24b71c8153e71cbfae5bcf4c42789d4ec67c67f76122446df00.json.p7s - získaný ze [staženéo ZIP souboru](https://www.mfcr.cz/assets/cs/media/2b80e14e53e7a24b71c8153e71cbfae5bcf4c42789d4ec67c67f76122446df00.zip)
+* OUTPUT: 2b80e14e53e7a24b71c8153e71cbfae5bcf4c42789d4ec67c67f76122446df00.json - soubor, kam bude zapsán výsledek
+* CERT1: spcss-pg-pecet.der - soubor pro pečetění získaný např. [ze ZIP souboru](https://www.mfcr.cz/assets/cs/media/Prehled_Certifikaty-organu-vykonavajici-dozor-pro-Playground.zip)
+* CERT2: spcss-pg-pecet.der - existuje pouze jeden správný certifikát, proto ho pro spuštění zdvojíme
+
+
+Před spuštěním je potřeba ještě ověřit, zda je správně nastavena cesta k java.exe v souboru `config.bat`.
+
+Výsledný příkaz pro validaci pečeti bude vypadat takto (^ na konci řádku umožňuje zpasat jede příkaz na více řádků):
+```
+> cd c:\hazard
+> crypto_utils\validateFile.bat 2b80e14e53e7a24b71c8153e71cbfae5bcf4c42789d4ec67c67f76122446df00.json.p7s ^
+  2b80e14e53e7a24b71c8153e71cbfae5bcf4c42789d4ec67c67f76122446df00.json ^
+  spcss-pg-pecet.der ^
+  spcss-pg-pecet.der 
+```
+Spustí se validace, která nejprve provádí načtení EU Trust listu. Poté proběhne validace podpisu/pečeti, extrakce podepsaných/pečetěných dat a výpis výsledku validace.
+
+```
+2019-03-09 23:57:16 INFO  DssCommands:57 - Starting validateFile
+2019-03-09 23:57:16 ERROR DssValidator:245 - FAILED to read keystore file - using default keystore
+[main] INFO eu.europa.esig.dss.tsl.service.TSLRepository - New version of EU TSL is stored in cache
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by com.sun.xml.bind.v2.runtime.reflect.opt.Injector (file:/T:/proj/SPCSS/2018/analyticky-modul/repo/hazard-komunikacni-rozhrani/build/hazard-2019-03-10.1552227930/crypto_utils/crypto_cli-1.0-jar-with-dependencies.jar) to method java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int)
+WARNING: Please consider reporting this to the maintainers of com.sun.xml.bind.v2.runtime.reflect.opt.Injector
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+[main] INFO eu.europa.esig.dss.tsl.service.TSLRepository - New version of the pivot LOTL 'https://ec.europa.eu/information_society/policy/esignature/trusted-list/tl-pivot-172-mp.xml' is stored in cache
+[pool-1-thread-3] INFO eu.europa.esig.dss.validation.CommonCertificateVerifier - + New CommonCertificateVerifier created.
+[pool-1-thread-3] INFO eu.europa.esig.dss.validation.SignedDocumentValidator - Validator 'eu.europa.esig.dss.asic.validation.ASiCContainerWithCAdESValidator' is registred
+[pool-1-thread-3] INFO eu.europa.esig.dss.validation.SignedDocumentValidator - Validator 'eu.europa.esig.dss.pades.validation.PDFDocumentValidator' is registred
+...
+...
+...
+...
+[main] INFO eu.europa.esig.dss.tsl.service.TSLRepository - Nb of loaded trusted lists : 30/32
+[main] INFO eu.europa.esig.dss.tsl.service.TSLRepository - Nb of trusted certificates : 2403
+[main] INFO eu.europa.esig.dss.tsl.service.TSLRepository - Nb of trusted public keys : 2311
+[main] INFO eu.europa.esig.dss.validation.CommonCertificateVerifier - + New CommonCertificateVerifier created.
+[main] INFO eu.europa.esig.dss.validation.SignedDocumentValidator - Document validation...
+[main] INFO eu.europa.esig.dss.x509.ocsp.OCSPToken - OCSP status is good
+2019-03-09 23:59:21 INFO  Main:74 - ValidateFile INFO_PKG_SIG_CERT_OK
+```  
+V případě úspěšné validace bude také vytvořen OUTPUT soubor.
+
+Stejným způsobem je možné ověřit pečeti potvrzovacího balíčku tak, že INPUT soubor v přípazech bude jménem získaného potvrzovacího balíčku a OUTPUT bude název souboru šifrovaného balíčku po ověření pečeti. Příkaz bude vypadat např. takto:
+```
+> cd c:\hazard
+> crypto_utils\validateFile.bat 28934929-V-2019061208-B-01.Ok.zip.p7e.p7s ^
+  28934929-V-2019061208-B-01.Ok.zip.p7e ^
+  spcss-pg-pecet.der ^
+  spcss-pg-pecet.der 
+```
+
+#### Dešifrování potvrzovacího balíčku
+```
+> cd c:\hazard
+> crypto_utils\decryptFile.bat 28934929-V-2019061208-B-01.Ok.zip.p7e^
+  28934929-V-2019061208-B-01.Ok.zip ^
+  encryption-private.key ^
+  encryption-cert.pem 
+```
+
+
+**Poznámka:** Pro získání klíče ve správném formátu ze souboru PKCS12 pro uvedený příkaz je možné použít následující příkazy:
+
+Export privátního klíče:
+```
+openssl pkcs12 -in test-hazard-sifrovani.p12 -nodes -nocerts -out encryption-private.key
+```
+
+Export certifikátu:
+```
+openssl pkcs12 -in test-hazard-sifrovani.p12 -nodes -nokeys -out encryption-cert.pem 
+```
+
+#### Rozzipování potvrzovacího balíčku
+
 TBD
+
+
 
 ## Sestavení modulů
 Sestavení je podporováno pouze na platfomě Linux. Výsledkem jsou binární výstupy pro všechny podporované platformy.
