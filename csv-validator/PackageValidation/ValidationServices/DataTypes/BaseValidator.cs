@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using ValidationPilotServices.Infrastructure.Enums;
 
 namespace ValidationPilotServices.DataTypes
 {
@@ -15,6 +16,7 @@ namespace ValidationPilotServices.DataTypes
         public virtual bool IsNullable { get; set; }
 
         public virtual string ErrorMessage { get; protected set; }
+        public virtual EnumValidationResult ErrorCode { get; protected set; }
 
         public virtual string Value
         {
@@ -29,9 +31,18 @@ namespace ValidationPilotServices.DataTypes
 
         protected virtual bool Validate(string fieldValue)
         {
+            this.ErrorCode = EnumValidationResult.ERR_FIELD_DOMAIN_TYPE;
+
             if (string.IsNullOrEmpty(fieldValue) && this.IsNullable)
             {
                 return true;
+            }
+
+            if (string.IsNullOrEmpty(fieldValue) && !this.IsNullable)
+            {
+                this.ErrorCode =EnumValidationResult.ERR_FIELD_NOT_NULL;
+                this.ErrorMessage = $"The field must have a value. Currently this field is empty.";
+                return false;
             }
 
             if (this.pattern==null)
@@ -46,6 +57,7 @@ namespace ValidationPilotServices.DataTypes
                 bool flag = match.Success && match.Value.Equals(fieldValue);
                 if (!flag)
                 {
+                    this.ErrorCode = EnumValidationResult.ERR_FIELD_BAD_FORMAT_RE;
                     this.ErrorMessage = $"The field has the invalid value: {fieldValue} - regex: {regex.ToString()}.";
                 }
 
@@ -53,6 +65,7 @@ namespace ValidationPilotServices.DataTypes
             }
             else
             {
+                this.ErrorCode =EnumValidationResult.ERR_FIELD_NOT_NULL;
                 this.ErrorMessage = $"The field must have a value. Currently this field is empty.";
                 return false;
             }

@@ -62,7 +62,7 @@ public class DssValidator {
 
     private CMSSignedData cmsSignedData;
     private DSSDocument signedDocument;
-    private CertificatePool validationCertPool = null;
+    private static CertificatePool validationCertPool = null;
 
     public SignResult validateFile(@NotNull String inputFile,
                                    @NotNull String outputFile,
@@ -195,14 +195,19 @@ public class DssValidator {
     	new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
-				synchronized (cachedTrustedCertificatesSourceLock) {
-					cachedTrustedCertificatesSource =  null;
+				try {
+					synchronized (cachedTrustedCertificatesSourceLock) {
+						cachedTrustedCertificatesSource =  null;			
+					}
+				}
+				catch (Exception e) {
+					LOG.error("failed to refresh TSL", e);
 				}
 			}
 		}, 20*60*1000 );
     }
-    
-    private TrustedListsCertificateSource loadTSL() throws IOException {
+        
+    private static TrustedListsCertificateSource loadTSL() throws IOException {
     	synchronized (cachedTrustedCertificatesSourceLock) {
         	if ( cachedTrustedCertificatesSource!=null) {
         		return cachedTrustedCertificatesSource;
@@ -231,15 +236,16 @@ public class DssValidator {
             job.setRepository(tslRepository);
             job.refresh();
 
-            validationCertPool = new CertificatePool();
-            validationCertPool.importCerts(keyStoreCertificateSource);
+            CertificatePool newCertPool=new CertificatePool();
+            newCertPool.importCerts(keyStoreCertificateSource);
+            validationCertPool = newCertPool;
 
             cachedTrustedCertificatesSource = certificateSource;
             return certificateSource;    		
 		}
     }
 
-    private KeyStoreCertificateSource getKeyStoreCertificateSource() throws IOException {
+    private static KeyStoreCertificateSource getKeyStoreCertificateSource() throws IOException {
         File keystoreFile = new File(properties.getProperty("KeyStoreCertificatePath"));
         if (!keystoreFile.exists()) {
             LOG.error("FAILED to read keystore file - using default keystore");

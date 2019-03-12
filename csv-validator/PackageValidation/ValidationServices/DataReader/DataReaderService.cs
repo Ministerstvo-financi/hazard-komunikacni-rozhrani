@@ -216,7 +216,7 @@ namespace ValidationPilotServices.DataReader
 
             if (!item.FieldType.IsValid)
             {
-                this.ValidationErrorMessage(EnumValidationResult.ERR_FIELD_DOMAIN_TYPE, item.FieldName,
+                this.ValidationErrorMessage(item.FieldType.ErrorCode, item.FieldName,
                     rowId,
                     item.FieldType.ErrorMessage);
                 return item.FieldType.IsValid;

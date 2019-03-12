@@ -118,6 +118,16 @@ function packAll {
 		cd "${DIR}/build/"
 		zip -r "${HAZARD}-${BUILDVER}.zip" "${HAZARD}-${BUILDVER}" 
 	)
+
+
+	## samostatny validator
+	mkdir ${DIR}/build/Validator
+	cp -R ${DIR}/build/dist/csv-validator-win/* ${DIR}/build/Validator
+	cp ${DIR}/build/dist/version ${DIR}/build/Validator
+	(
+		cd "${DIR}/build/"
+		zip -r "Validator.zip" Validator
+	)
 }
 
 buildCryptoUtil
