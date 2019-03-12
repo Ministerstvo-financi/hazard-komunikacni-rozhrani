@@ -121,9 +121,10 @@ function packAll {
 
 
 	## samostatny validator
-	mkdir ${DIR}/build/Validator
-	cp -R ${DIR}/build/dist/csv-validator-win/* ${DIR}/build/Validator
-	cp ${DIR}/build/dist/version ${DIR}/build/Validator
+    rm -rf ${DIR}/build/Validator
+	mkdir -p ${DIR}/build/Validator
+	cp -R "${DIR}/build/${HAZARD}-${BUILDVER}"/csv-validator-win/* ${DIR}/build/Validator
+	cp "${DIR}/build/${HAZARD}-${BUILDVER}"/version ${DIR}/build/Validator
 	(
 		cd "${DIR}/build/"
 		zip -r "Validator.zip" Validator
