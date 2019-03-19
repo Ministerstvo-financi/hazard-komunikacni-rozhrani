@@ -36,7 +36,7 @@ public class FileCryptor {
     }
 
     public SignResult decryptFile(String inputPath, String outputPath, String keyPath, String recipientCertificate) throws IOException {
-        ProcessBuilder builder = new ProcessBuilder(properties.getProperty("openSSL"), "cms", "-decrypt", "-in", inputPath, "-out", outputPath, "-inform", "DER", "-inkey", keyPath, "-recip", recipientCertificate);
+        ProcessBuilder builder = new ProcessBuilder(properties.getProperty("openSSL"), "cms", "-decrypt", "-in", inputPath, "-binary", "-out", outputPath, "-inform", "DER", "-inkey", keyPath, "-recip", recipientCertificate);
 
         String errorMessage = runCommand(builder);
         if (errorMessage != null) {
