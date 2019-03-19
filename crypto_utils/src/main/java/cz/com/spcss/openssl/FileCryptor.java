@@ -66,7 +66,7 @@ public class FileCryptor {
     }
 
     private static void setProperties() {
-        final InputStream propertiesStream = FileCryptor.class.getResourceAsStream("openssl.properties");
+        final InputStream propertiesStream = FileCryptor.class.getResourceAsStream("/openssl.properties");
         try {
             properties = new Properties();
             properties.load(propertiesStream);
