@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  apache:
+    build:
+      context: ./docker 
+
+    volumes:
+      - ./lego:/lego
+      - ./data:/var/www/html/data
+
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - ADMIN_EMAIL=${ADMIN_EMAIL}
+    restart: always
+
+    ports:
+      - target: 443
+        published: 443
+        protocol: tcp
+      - target: 80
+        published: 80
+        protocol: tcp
+
+
+
