@@ -4,6 +4,7 @@ public enum ResultCodes {
     OK,
     NOOK,
 
+    ERR_PKG_ENC_INVALID_DER,
     //ERR_PKG_SIG_INVALID_DER – pokud není možné přečíst ASN.1 DER struktury balíčku
     ERR_PKG_SIG_INVALID_DER,
     //ERR_PKG_SIG_INVALID_SIGNATURE – pokud nesouhlasí kryptografické ověření podpisu

@@ -6,6 +6,8 @@ import eu.europa.esig.dss.*;
 import eu.europa.esig.dss.cades.validation.CAdESSignature;
 import eu.europa.esig.dss.client.crl.OnlineCRLSource;
 import eu.europa.esig.dss.client.http.commons.CommonsDataLoader;
+import eu.europa.esig.dss.client.http.proxy.ProxyConfig;
+import eu.europa.esig.dss.client.http.proxy.ProxyProperties;
 import eu.europa.esig.dss.client.ocsp.OnlineOCSPSource;
 import eu.europa.esig.dss.tsl.TrustedListsCertificateSource;
 import eu.europa.esig.dss.tsl.service.TSLRepository;
@@ -77,7 +79,7 @@ public class DssValidator {
         signedDocument = new FileDocument(inputFile);
         validateDSSDocument(signedDocument);
         if (!isSupported(signedDocument)) {
-            return new SignResult(ResultCodes.NOOK, ResultCodes.ERR_PKG_SIG_INVALID_DER.toString());
+            return new SignResult(ResultCodes.ERR_PKG_SIG_INVALID_DER, "Nebylo možné přečíst ASN.1 DER struktury balíčku");
         }
 
         TrustedListsCertificateSource trustedCertSource = loadTSL();
@@ -92,22 +94,32 @@ public class DssValidator {
 
             try {
                 if (!validSignatureDSSID(signature, certificateFiles)) {
-                    return new SignResult(ResultCodes.NOOK, ResultCodes.ERR_PKG_SIG_CERT_UNKNOWN.toString());
+                    return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNKNOWN, "Certifikát není mezi registrovanými certifikáty operátora");
                 }
             } catch (DSSException e) {
-                return new SignResult(ResultCodes.NOOK, ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED.toString());
+                return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED, "Nebylo možné ověřit platnost certifikátu");
             }
             List<DSSDocument> originalDocuments = getOriginalDocuments(signedDocument, signature.getId());
             if (!originalDocuments.isEmpty()) {
                 originalDocuments.get(0).save(outputFile);
             }
         } else {
-            return new SignResult(ResultCodes.OK, ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED.toString());
+            return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED, "Nebylo možné ověřit platnost certifikátu");
         }
         return new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString());
     }
 
     public SignResult validateCertificate(@NotNull String testedCertificate) throws IOException, JAXBException, TransformerException {
+        CommonsDataLoader dataLoader = new CommonsDataLoader();
+        ProxyConfig proxyConfig = getProxyConfig();
+        OnlineOCSPSource ocspSource = new OnlineOCSPSource();
+        OnlineCRLSource crlSource =	new OnlineCRLSource();
+        if (proxyConfig!=null) {
+        	dataLoader.setProxyConfig(proxyConfig);
+        }
+    	ocspSource.setDataLoader(dataLoader);
+    	crlSource.setDataLoader(dataLoader);
+    	
         Validate.notBlank(testedCertificate, "testedCertificate can't be blank");
 
         TrustedListsCertificateSource trustedCertSource = loadTSL();
@@ -115,9 +127,9 @@ public class DssValidator {
 
         CertificateToken token = DSSUtils.loadCertificate(new File(testedCertificate));
         CertificateVerifier cv = new CommonCertificateVerifier();
-        cv.setDataLoader(new CommonsDataLoader());
-        cv.setOcspSource(new OnlineOCSPSource());
-        cv.setCrlSource(new OnlineCRLSource());
+        cv.setDataLoader(dataLoader);
+        cv.setOcspSource(ocspSource);
+        cv.setCrlSource(crlSource);
         cv.setTrustedCertSource(trustedCertSource);
 
         CertificateValidator validator = CertificateValidator.fromCertificate(token);
@@ -160,10 +172,20 @@ public class DssValidator {
     }
 
     private SignResult signatureValidate(CertificateSource trustedCertSource, DSSDocument document, String certificateReportPath) throws JAXBException, TransformerException {
+        CommonsDataLoader dataLoader = new CommonsDataLoader();
+        ProxyConfig proxyConfig = getProxyConfig();
+        OnlineOCSPSource ocspSource = new OnlineOCSPSource();
+        OnlineCRLSource crlSource =	new OnlineCRLSource();
+        if (proxyConfig!=null) {
+        	dataLoader.setProxyConfig(proxyConfig);
+        }
+    	ocspSource.setDataLoader(dataLoader);
+    	crlSource.setDataLoader(dataLoader);
+        
         CertificateVerifier cv = new CommonCertificateVerifier();
-        cv.setDataLoader(new CommonsDataLoader());
-        cv.setOcspSource(new OnlineOCSPSource());
-        cv.setCrlSource(new OnlineCRLSource());
+        cv.setDataLoader(dataLoader);
+        cv.setOcspSource(ocspSource);
+        cv.setCrlSource(crlSource);
         cv.setTrustedCertSource(trustedCertSource);
 
         SignedDocumentValidator documentValidator = SignedDocumentValidator.fromDocument(document);
@@ -186,7 +208,7 @@ public class DssValidator {
                 return new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString());
             }
         }
-        return new SignResult(ResultCodes.NOOK, ResultCodes.ERR_PKG_SIG_INVALID_SIGNATURE.toString());
+        return new SignResult(ResultCodes.ERR_PKG_SIG_INVALID_SIGNATURE, "Nesouhlasí kryptografické ověření podpisu");
     }
 
     static private final Object cachedTrustedCertificatesSourceLock=new Object();
@@ -206,7 +228,22 @@ public class DssValidator {
 			}
 		}, 20*60*1000 );
     }
-        
+
+    private static ProxyConfig getProxyConfig() {
+        if (System.getenv("PROXY_HOST")!=null && System.getenv("PROXY_PORT")!=null) {
+        	LOG.info(String.format("Will use PROXY for communication %s:%s",System.getenv("PROXY_HOST"),System.getenv("PROXY_PORT")));
+            ProxyConfig proxyConfig=new ProxyConfig();
+            ProxyProperties props = new ProxyProperties();
+            props.setHost(System.getenv("PROXY_HOST"));
+            props.setPort(Integer.parseInt(System.getenv("PROXY_PORT")));
+            proxyConfig.setHttpProperties(props);
+            proxyConfig.setHttpsProperties(props);
+            return proxyConfig;
+        }
+        return null;
+    }
+    
+    
     private static TrustedListsCertificateSource loadTSL() throws IOException {
     	synchronized (cachedTrustedCertificatesSourceLock) {
         	if ( cachedTrustedCertificatesSource!=null) {
@@ -220,7 +257,14 @@ public class DssValidator {
             tslRepository.setTrustedListsCertificateSource(certificateSource);
 
             TSLValidationJob job = new TSLValidationJob();
-            job.setDataLoader(new CommonsDataLoader());
+            CommonsDataLoader dataLoader = new CommonsDataLoader();
+            ProxyConfig proxyConfig = getProxyConfig();
+            if (proxyConfig!=null) {
+            	dataLoader.setProxyConfig(proxyConfig);
+            }
+            
+            
+            job.setDataLoader(dataLoader);
             job.setCheckLOTLSignature(true);
             job.setCheckTSLSignatures(true);
             job.setLotlUrl(properties.getProperty("LotlUrl"));

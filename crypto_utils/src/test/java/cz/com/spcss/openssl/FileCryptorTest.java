@@ -58,36 +58,36 @@ public class FileCryptorTest {
     }
 
     @Test
-    public void testEncryptOK() throws IOException {
+    public void testEncryptOK() throws IOException, InterruptedException {
         SignResult signResult = encryptTest(inputEncryptPath, outputEncryptPath, certificateFiles);
         assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, "EncryptFile - OK")));
     }
 
     @Test
-    public void testEncryptNOOK() throws IOException {
+    public void testEncryptNOOK() throws IOException, InterruptedException {
         SignResult signResult = encryptTest(inputEncryptPath + "FAIL", outputEncryptPath, certificateFiles);
         assertThat(signResult.getResultCode(), samePropertyValuesAs(new SignResult(ResultCodes.NOOK, "EncryptFile - NOOK").getResultCode()));
     }
 
     @Test
-    public void testDecryptOK() throws IOException {
+    public void testDecryptOK() throws IOException, InterruptedException {
         SignResult signResult =  decryptTest(inputDecryptPath, outputDecryptPath, keyPath, certificateFiles.get(0));
         assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, "DecryptFile - OK")));
     }
 
     @Test
-    public void testDecryptNOOK() throws IOException {
+    public void testDecryptNOOK() throws IOException, InterruptedException {
         SignResult signResult =  decryptTest(inputDecryptPath, outputDecryptPath, keyPath + "FAIL", certificateFiles.get(0));
         assertThat(signResult.getResultCode(), samePropertyValuesAs(new SignResult(ResultCodes.NOOK, "DecryptFile - NOOK").getResultCode()));
     }
 
 
-    private SignResult encryptTest(String inputPath, String outputPath, List<String> certificateFiles) throws IOException {
+    private SignResult encryptTest(String inputPath, String outputPath, List<String> certificateFiles) throws IOException, InterruptedException {
         FileCryptor fileCryptor = new FileCryptor();
         return fileCryptor.encryptFile(inputPath, outputPath, certificateFiles);
     }
 
-    private SignResult decryptTest(String inputPath, String outputPath, String keyPath, String certificateFile) throws IOException {
+    private SignResult decryptTest(String inputPath, String outputPath, String keyPath, String certificateFile) throws IOException, InterruptedException {
         FileCryptor fileCryptor = new FileCryptor();
         return fileCryptor.decryptFile(inputPath, outputPath, keyPath, certificateFile);
     }
