@@ -150,7 +150,7 @@ public class DssValidator {
 
         for (String certificateId : simpleReport.getCertificateIds()) {
             if (simpleReport.getCertificateIndication(certificateId) != null && simpleReport.getCertificateIndication(certificateId).toString().equals("PASSED")) {
-            	if (simpleReport.getQualificationAtCertificateIssuance()==CertificateQualification.QCERT_FOR_ESEAL) {
+            	if (simpleReport.getQualificationAtCertificateIssuance()==CertificateQualification.QCERT_FOR_ESEAL || simpleReport.getQualificationAtCertificateIssuance()==CertificateQualification.QCERT_FOR_ESEAL_QSCD) {
             		return new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString());
             	} else {
             		return new SignResult(ResultCodes.ERR_VALID_CERT_NOT_FOR_QSEAL,"Certifikát je platný, ale není určen pro pečetění. Certificate valid but not for qseal purposes");

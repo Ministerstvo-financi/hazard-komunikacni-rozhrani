@@ -15,7 +15,7 @@ import java.util.List;
 public class OpenSSLCommands {
     private static final Logger LOG = Logger.getLogger(OpenSSLCommands.class);
 
-    public SignResult encryptFile(CommandLine cmd){
+    public SignResult encryptFile(CommandLine cmd) throws InterruptedException{
         LOG.info("Starting encryptFile");
         String inputFile;
         String outputFile;
@@ -41,7 +41,7 @@ public class OpenSSLCommands {
         return new SignResult(ResultCodes.NOOK, "Invalid argument values for encryptFile");
     }
 
-    public SignResult decryptFile(CommandLine cmd){
+    public SignResult decryptFile(CommandLine cmd) throws InterruptedException{
         LOG.info("Starting decryptFile");
         String inputFile;
         String outputFile;

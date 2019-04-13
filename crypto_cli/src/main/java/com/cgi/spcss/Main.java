@@ -16,7 +16,7 @@ public class Main {
     // -f encryptFile -i C:/testFiles/testFiles/myDoc.txt -o C:/testFiles/encrypted-rsa.p7e -cert C:/testFiles/testFiles/rsa.pem -cert C:/testFiles/testFiles/rsa2.pem
     // -f decryptFile -i C:/testFiles/testFiles/encrypted-rsa.p7e -o C:/testFiles/myDoc-rsa-dec.txt -k C:/testFiles/testFiles/rsa.key -cert C:/testFiles/testFiles/rsa.pem
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException{
         Options options = new Options();
 
         Option functionOption = new Option("f", "functionName", true, "function name");
