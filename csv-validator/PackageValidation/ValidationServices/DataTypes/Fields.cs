@@ -87,11 +87,12 @@ namespace ValidationPilotServices.DataTypes
                 {
                     valid = false;
                     ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_HEADER,"",1,$"The field {field} of the file received is not presented in the structure; ");
-                }
-                if ( value.Order != i+1 ){
-                    valid = false;
-                    ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_HEADER,"",1,
-                             $"The field {field} of the file received is at a bad position found at {i+1}, should be at {value.Order} ");
+                } else {
+                    if ( value.Order != i+1 ){
+                        valid = false;
+                        ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_HEADER,"",1,
+                                $"The field {field} of the file received is at a bad position found at {i+1}, should be at {value.Order} ");
+                    }
                 }
             }
             return valid;

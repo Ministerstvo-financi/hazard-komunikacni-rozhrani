@@ -199,7 +199,7 @@ V,provozovatel.csv,2,OperatorName,ProvozovatelNazev,Text,D_TEXT,N,mandatory,,,25
 M,PSTB_transakce.csv,1,IDTransaction,IDTransakce,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,"Identifikátor celkového úhrnu peněžních prostředků, nebo celkové hodnoty hodnotových žetonů (Primární klíč)"
 M,PSTB_transakce.csv,2,IDEntryPSTB,IDZaznamPSTB,Identifier,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
 M,PSTB_transakce.csv,3,IDPSTB,IDPSTB,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARDSM_POKLADNA_STUL_TURNAJ_BINGO
-M,PSTB_transakce.csv,4,TransactionType,TypTransakce,codebook,D_KOD,N,mandatory,,,2,,,,Typ transakce
+M,PSTB_transakce.csv,4,TransactionType,TransakceTyp,codebook,D_KOD,N,mandatory,,,2,,,,Typ transakce
 M,PSTB_transakce.csv,5,TransactionAmount,TransakceVyse,DecimalNumber,D_MONEY,N,mandatory,,,,(\d|\.)*,,,Výše celkového úhrnu peněžních prostředků nebo celkové hodnoty hodnotových žetonů
 M,PSTB_transakce.csv,6,CurrencyCode,MenaKod,Text,D_KOD,N,mandatory,,,3,,,,Kód měny
 M,PSTB_transakce.csv,7,Cash,TransakceZpusob,IntegerNumber,D_BINARY,Y,mandatoryif,"TransactionType.NotIn(‘2’, ‘3’, ‘4’, ‘6’, ‘7’, ‘L1’, ‘8’, ‘9’, ‘10’, ‘11’, ‘12’, ‘13’, ‘15’, ‘16’ or ‘17’)",,,,,value not validated,"Přijetí platby v hotovosti, nebo bezhotovostně"

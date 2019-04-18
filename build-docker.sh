@@ -114,6 +114,7 @@ function packAll {
 	echo  "BUILDVER=${BUILDVER}" > ${DIR}/build/dist/version
 	echo  "GITID=${GITID}" >> ${DIR}/build/dist/version
 	mv ${DIR}/build/dist "${DIR}/build/${HAZARD}-${BUILDVER}"
+	ln -s "${DIR}/build/${HAZARD}-${BUILDVER}" ${DIR}/build/hazard
 	(
 		cd "${DIR}/build/"
 		zip -r "${HAZARD}-${BUILDVER}.zip" "${HAZARD}-${BUILDVER}" 
