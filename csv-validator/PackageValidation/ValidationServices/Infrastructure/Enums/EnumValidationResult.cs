@@ -58,6 +58,7 @@ namespace ValidationPilotServices.Infrastructure.Enums
         ERR_FIELD_CODEBOOK,
         ERR_FILE,
         ERR_FILE_TOO_MANY_ERRORS,
+        ERR_FILE_BAD_RECORD_COUNT,
         ERR_LINE_BAD_UTF,
         ERR_LINE_INVALID_CSV,
         ERR_LINE_INVALID_FIELDS,

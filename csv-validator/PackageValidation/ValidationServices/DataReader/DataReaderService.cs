@@ -319,7 +319,7 @@ namespace ValidationPilotServices.DataReader
             using (CsvReader csv = new CsvReader(reader))
             {
                 csv.Configuration.Delimiter = this.FieldsSeparator;
-                csv.Configuration.IgnoreBlankLines = true;
+                csv.Configuration.IgnoreBlankLines = false;
                 csv.Configuration.LineBreakInQuotedFieldIsBadData = true;
                 csv.Configuration.AllowComments = false;
                 // csv.Configuration.BadDataFound = (c)=>{
@@ -384,13 +384,12 @@ namespace ValidationPilotServices.DataReader
                         //ERR_LINE_BAD_FIELD_COUNT - validation type
                         if (headerCount != csv.Context.Record.Length)
                         {
-                            this.ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_FIELD_COUNT, "", linesNumber, $"{csv.Context.Record.Length} fields expected in metadata line found {headerCount}");
+                            this.ValidationErrorMessage(EnumValidationResult.ERR_LINE_BAD_FIELD_COUNT, "", linesNumber, $"{csv.Context.Record.Length} fields found in metadata line expected {headerCount}");
                             linesNumber++;
                             continue;
                         }
 
                         ExpandoObject row = csv.GetRecord<dynamic>();
-
                         foreach (KeyValuePair<string, object> key in row.ToList())
                         {
                             try
@@ -426,7 +425,6 @@ namespace ValidationPilotServices.DataReader
                             }
                         }
                         linesNumber++;
-
                     }
                     catch (BadDataException ex)
                     {
@@ -460,6 +458,7 @@ namespace ValidationPilotServices.DataReader
                         linesNumber++;
                     }
                 }
+                ;
             }
         }
 
@@ -475,7 +474,7 @@ namespace ValidationPilotServices.DataReader
             }
         }
 
-        /// <summary>
+        /// <summary>R
         /// This function returns collection of the files which are compulsory for the package
         /// validation. 
         /// </summary>
@@ -622,6 +621,27 @@ namespace ValidationPilotServices.DataReader
             return true;
         }
 
+        private void validateExactRecordCount(int expectedRecordCount, int foundRecordCount){
+            if (foundRecordCount!=expectedRecordCount){
+                this.IsValid=false;
+                FileErrorMessage(EnumValidationResult.ERR_FILE_BAD_RECORD_COUNT,$"File must contain exactly {expectedRecordCount} record. Found {foundRecordCount} records");
+            }
+        }
+
+        private void validateRecordCount(int lineCount){
+            int recordCount=lineCount-2;
+            switch (this.CurrentFileToValidate.ToLower()){
+                case "provozovatel.csv": validateExactRecordCount(1,recordCount); break; 
+                case "misto.csv":
+                if ("M".Equals(this._package.Model.ToUpper())){
+                    validateExactRecordCount(1,recordCount);
+                }
+                break;
+                default:
+                    break;
+            }
+        }
+
 
         private void ReadFileDataValidationCycle(List<FileInfo> files)
         {
@@ -640,6 +660,7 @@ namespace ValidationPilotServices.DataReader
                 string fileHash = this.FileSha256HashCalculation(file);
                 LoggerService.LoggerService.GetValidationProcessingLog().Info($"Start validate {file.Name}");
                 this.ReadFileData(file, out var counter);
+                validateRecordCount(counter); 
 
                 if (this.IsValid)
                 {
@@ -647,7 +668,6 @@ namespace ValidationPilotServices.DataReader
                 }
                 else
                 {
-
                     FileErrorMessage(EnumValidationResult.ERR_FILE, $"The file {file.Name} is invalid.");
                 }
 
@@ -790,6 +810,8 @@ namespace ValidationPilotServices.DataReader
 
             if (!files.Any())
             {
+                LoggerService.LoggerService.GetGlobalLog().Warn($"No package data file found.");
+                this.PackageErrorMessage(EnumValidationResult.ERR_PKG_MISSING_FILE,"No package data file found",true);
                 throw new FileNotFoundException($"There are no files found in {this.DataSourceFolder}");
             }
 
@@ -800,10 +822,12 @@ namespace ValidationPilotServices.DataReader
             {
                 string mess = string.Join(",", missed);
                 LoggerService.LoggerService.GetGlobalLog().Warn($"Missing files: {mess}");
+                this.PackageErrorMessage(EnumValidationResult.ERR_PKG_MISSING_FILE,$"Missing file(s) {mess}",true);
                 throw new ArgumentException("Missing files");
             }
             
             if (!chckMenaKurs(files)){
+                LoggerService.LoggerService.GetGlobalLog().Warn($"mena_kurs.csv presence problem. The file is missing when mandatory or is present when not expected");
                 throw new ArgumentException("mena_kurs.csv presence problem");
             }
 
