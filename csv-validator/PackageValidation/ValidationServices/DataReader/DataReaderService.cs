@@ -256,18 +256,36 @@ namespace ValidationPilotServices.DataReader
                     {
                         return true;
                     }
+                    this.ValidationErrorMessage(
+                        EnumValidationResult.ERR_FIELD_CTX_GAMETYPE,
+                        item.FieldName,
+                        rowId,
+                        $"Value >>{sourceValue.ToUpper()}<< not same as package game type {_package.GameType.ToUpper()}"
+                    );
                     return false;
                 case "EQUALSOPERATORID":
                     if (_package.OperatorId.ToUpper().Equals(sourceValue.ToUpper()))
                     {
                         return true;
                     }
+                    this.ValidationErrorMessage(
+                        EnumValidationResult.ERR_FIELD_CTX_OPERTORID,
+                        item.FieldName,
+                        rowId,
+                        $"Value >>{sourceValue.ToUpper()}<< not same as package operator Id {_package.OperatorId.ToUpper()}"
+                    );
                     return false;
                 case "STARTSWITHOPERATORID":
                     if (sourceValue.ToUpper().StartsWith(_package.OperatorId.ToUpper()))
                     {
                         return true;
                     }
+                    this.ValidationErrorMessage(
+                        EnumValidationResult.ERR_FIELD_CTX_OPERATORID_PREFIX,
+                        item.FieldName,
+                        rowId,
+                        $"Value >>{sourceValue.ToUpper()}<< does not start with package operator Id {_package.OperatorId.ToUpper()}"
+                    );
                     return false;
                 case "WITHINPACKAGETIMESPAN":
                     // FIXME: not yet implemented
