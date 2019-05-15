@@ -249,6 +249,10 @@ namespace ValidationPilotServices.DataReader
                 return true;
             }
 
+            if (string.IsNullOrEmpty(sourceValue)){
+                return true;
+            }
+
             switch (item.ContextConditionParameter.ToUpper())
             {
                 case "EQUALSGAMETYPE":
