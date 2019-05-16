@@ -173,7 +173,7 @@ V,prihlaseni.csv,1,IDLogin,IDPrihlaseni,Identifier,D_IDENTIFIER,N,mandatory,,8,5
 V,prihlaseni.csv,2,IDUserAccount,IDUzivKonto,ReferenceLink,D_REFERENCE,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_KONTO
 V,prihlaseni.csv,3,LoginTime,PrihlaseniCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,,Datum a čas přihlášení k uživatelskému kontu
 V,prihlaseni.csv,4,LogoutTime,OdhlaseniCas,DateAndTime,D_DATETIME,Y,,,,,,withinPackageTimespan,,Datum a čas odhlášení k uživatelskému kontu
-V,prihlaseni.csv,5,IDGamingPoint,IDHerniPozice,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,equalsOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HERNI_ZARIZENI
+V,prihlaseni.csv,5,IDGamingPoint,IDHerniPozice,ReferenceLink,D_REFERENCE,Y,,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Cizí klíč do tabulky HAZARD_HERNI_ZARIZENI
 V,prilezitost.csv,1,IDOpportunity,IDPrilezitost,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,cross file reference not validated,Identifikátor sázkové příležitosti (Primární klíč)
 V,prilezitost.csv,2,OpportunityName,PrilezitostNazev,Text,D_TEXT,N,mandatory,,1,500,,,,Název nebo jiný identifikátor sázkové příležitosti
 V,prilezitost.csv,3,StartCollectionBetsTime,ZahajeniPrijmuSazekCas,DateAndTime,D_DATETIME,N,mandatory,,,,,withinPackageTimespan,cross file reference not validated,Datum a čas zahájení náběru sázek
