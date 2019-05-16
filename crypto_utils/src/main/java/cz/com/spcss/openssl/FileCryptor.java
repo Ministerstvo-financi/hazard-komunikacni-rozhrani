@@ -41,7 +41,7 @@ public class FileCryptor {
         if (!validateDerCertificate(recipientCertificate))
             return new SignResult(ResultCodes.ERR_PKG_ENC_INVALID_DER, "Error while reading ANS1 DER structures");
 
-        ProcessBuilder builder = new ProcessBuilder(properties.getProperty("openSSL"), "cms", "-decrypt", "-in", inputPath, "-out", outputPath, "-inform", "DER", "-inkey", keyPath, "-recip", recipientCertificate);
+        ProcessBuilder builder = new ProcessBuilder(properties.getProperty("openSSL"), "cms", "-binary", "-decrypt", "-in", inputPath, "-out", outputPath, "-inform", "DER", "-inkey", keyPath, "-recip", recipientCertificate);
 
         String errorMessage = runCommand(builder);
         if (errorMessage != null) {
