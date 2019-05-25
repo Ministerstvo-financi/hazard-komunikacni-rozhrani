@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Security.Cryptography;
 using ValidationPilotServices.DataTypes;
 using ValidationPilotServices.Infrastructure;
@@ -333,13 +334,91 @@ namespace ValidationPilotServices.DataReader
             // return item.FieldType.IsValid;
         }
 
+        private class BadLineEndsException:Exception {
+            public BadLineEndsException(string message):base(message){
+            }
+        }
+
+        private class VerifyingStreamReader:StreamReader {
+            enum States{
+                _idle,_0a,_0d
+            }
+            bool found_0D0A=false;
+            bool found_0A=false;
+            bool found_0D=false;
+            int line=0;
+            States state = States._idle;     
+
+            public VerifyingStreamReader(string fileName, Encoding enc):base(fileName,enc){}
+            public override int Read(char[] buffer, int index, int count){
+                int readCnt=base.Read(buffer,index,count);
+                for (int i=0; i<readCnt; i++){
+                    char c=buffer[i+index];
+                    switch (state) {
+                        case States._idle:
+                        switch (c){
+                            case (char)0x0D: 
+                                state=States._0d; 
+                                break;
+                            case (char)0x0A: 
+                                state=States._idle;
+                                line++; 
+                                if (line>2) found_0A=true;
+                                checkValidity();
+                                break;
+                            default: 
+                                state=States._idle; 
+                                break;
+                        }
+                        break;
+
+                        case States._0d:
+                        switch (c){
+                            case (char)0x0D: 
+                                state=States._0d; 
+                                found_0D=true; 
+                                checkValidity();
+                                break;
+                            case (char)0x0A: 
+                                state=States._idle;
+                                line++; 
+                                if (line>2) found_0D0A=true; 
+                                checkValidity();
+                                break;
+                            default: 
+                                state=States._idle; 
+                                found_0D=true;  
+                                checkValidity();
+                                break;
+                        }
+                        break;
+                    }
+                }
+
+                return readCnt;
+            }
+
+            private void checkValidity(){
+                if ( found_0D ) 
+                  throw new BadLineEndsException(String.Format("found standalone char 0x0d which is not allowed: line {0}",line));
+                if ( found_0A && found_0D0A) 
+                  throw new BadLineEndsException(String.Format("found mixed line ends 0x0d0x0a and 0x0a which is not allowed: line {0}",line));
+            }
+        }
+
         private void ReadFileData(FileInfo fileInfo, out int linesNumber)
         {
             linesNumber = 0;
+            Encoding enc = Encoding.GetEncoding(
+                  "utf-8",
+                  new EncoderExceptionFallback(), 
+                  new DecoderExceptionFallback());
 
-            using (StreamReader reader = new StreamReader(fileInfo.FullName))
+
+            using (StreamReader reader = new VerifyingStreamReader(fileInfo.FullName,enc))
             using (CsvReader csv = new CsvReader(reader))
             {
+                
                 csv.Configuration.Delimiter = this.FieldsSeparator;
                 csv.Configuration.IgnoreBlankLines = false;
                 csv.Configuration.LineBreakInQuotedFieldIsBadData = true;
@@ -361,7 +440,20 @@ namespace ValidationPilotServices.DataReader
 
                     try
                     {
-                        moreRecords = csv.Read();
+                        try {
+                            moreRecords = csv.Read();
+                        } catch (ParserException ex){
+                            if ( ex.GetBaseException() is DecoderFallbackException) {
+                                this.LineErrorMessage(EnumValidationResult.ERR_LINE_BAD_UTF8, linesNumber, $"Char encoding error: {ex.GetBaseException().Message}");
+                                break;
+                            } else if (ex.GetBaseException() is BadLineEndsException){
+                                this.LineErrorMessage(EnumValidationResult.ERR_LINE_INVALID_CSV, linesNumber, $"Line endings error: {ex.GetBaseException().Message}");
+                                break;
+                            } else {
+                                LoggerService.LoggerService.GetGlobalLog().Error("Exception while reading row", ex);
+                                throw ex;
+                            }
+                        }
                         if (!moreRecords)
                         {
                             break;
