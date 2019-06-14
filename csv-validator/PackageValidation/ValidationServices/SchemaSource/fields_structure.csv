@@ -70,7 +70,7 @@ V,jedna_hra.csv,4,GameLimitStake,HraOmezeniVkladu,Text,D_TEXT,Y,,,,250,,,cross f
 V,jedna_hra.csv,5,MethodIncreaseBets,ZpusobZvysovaniSazek,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Způsob zvyšování sázek
 V,jedna_hra.csv,6,MinimumStakeAmount,PovinnyVkladVyse,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Stanovená výše sázky za jeden sázkový tiket/Výše povinného vkladu do hry (turnaje) internetové živé hry
 V,jedna_hra.csv,7,PrizemoneyDetermination,JistinaUrceni,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Způsob určení výherní jistiny loterie a turnaje internetové živé hry
-V,jedna_hra.csv,8,ClaimWinning,NarokVyhra,Text,D_TEXT,Y,,,,,,,cross file reference not validated,Nárok na výhru a způsob určení její výše
+V,jedna_hra.csv,8,ClaimWinning,NarokVyhra,Text,D_TEXT,Y,,,,32000,,,cross file reference not validated,Nárok na výhru a způsob určení její výše
 V,jedna_hra.csv,9,GameResult,HraVysledek,Text,D_TEXT,Y,,,,250,,,cross file reference not validated,Výsledek hry hazardní hry
 V,jedna_hra.csv,10,ForeignParticipation,ZahranicniUcast,codebook,D_BINARY,Y,,,,,,,cross file reference not validated,Účast cizího účastníka na hře hazardní hry
 V,konto.csv,1,IDUserAccount,IDUzivKonto,Identifier,D_IDENTIFIER,N,mandatory,,8,50,(\w|\-)*,startsWithOperatorId,,Identifikátor uživatelského konta (Primární klíč)
