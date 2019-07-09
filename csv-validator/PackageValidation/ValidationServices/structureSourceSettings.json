@@ -6,7 +6,7 @@
       "ModelColumn": "Model",
       "FileNameColumn": "FileName",
       "OrderColumn": "ColumnId",
-      "FieldNameColumn": "FieldNameEn",
+      "FieldNameColumn": "FieldNameCz",
       "FieldNameKeyColumn": "FieldNameCz",
       "FieldDataTypeColumn": "FieldType",
       "GameTypeColumn": "GameType",

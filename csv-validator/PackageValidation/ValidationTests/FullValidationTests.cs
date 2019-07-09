@@ -37,7 +37,7 @@ namespace ValidationPilotTests
             //PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-K-01"});
             //PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-K-02"});
             //PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019063016-K-01"});
-            PackageValidation.Program.Main(new string[]{"/home/rasekl/Downloads/valid-data/26301091-V-2019041516-T-01"});
+            PackageValidation.Program.Main(new string[]{"/home/rasekl/buffer/27625231-V-2019070816-T-01"});
             //PackageValidation.Program.Main(new string[]{"/home//buffer/47252481-V-2019051500-T-02"});
             // PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-R-01"});
             // PackageValidation.Program.Main(new string[]{"DataSource/28934929-V-2019061208-B-01"});

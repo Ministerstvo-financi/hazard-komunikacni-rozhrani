@@ -184,5 +184,36 @@ namespace ValidationPilotTests
                 Assert.True(src.IsValid);
             }
         }
+
+        [Theory]
+        [InlineData(20, "1",true)]
+        [InlineData(20, "12345678901234567890",true)]
+        [InlineData(20, "TEST-67-555_8",true)]
+        [InlineData(20, "AD_6",true)]
+        [InlineData(50, "1",true)]
+        [InlineData(50, "12345678901234567890123-5_7890AsVtr67890YnIo567890",true)]
+        [InlineData(50, "TEST-67-555_8",true)]
+        [InlineData(50, "AD_6",true)]
+        [InlineData(50, "*****",false)]
+        [InlineData(50, "111-*****",true)]
+        [InlineData(50, "9999999-MB14004 A + B + C",true)]
+        [InlineData(50, "9999999-6324/1,2,3,4,5",true)]
+        [InlineData(50, "9999999-MLP36127; kabinet: E-LINK",true)]        
+        public void IdentifierExtendedFromType(int len, string value, bool shallPass)
+        {
+            string dataType = "IdentifierExtended";
+            Type type = DataTypeDefinitionExtensions.GetTypeByName(dataType);
+
+            Assert.NotNull(type);
+            if (Activator.CreateInstance(type, new object[] {0,len}) is BaseValidator src)
+            {
+                src.Value = value;
+                if (shallPass){
+                    Assert.True(src.IsValid);
+                } else {
+                    Assert.False(src.IsValid);                    
+                }
+            }
+        }
     }
 }

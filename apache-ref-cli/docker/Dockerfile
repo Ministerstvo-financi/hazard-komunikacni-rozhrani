@@ -4,13 +4,17 @@ RUN sed -i -e 's!/archive!/cz.archive!' /etc/apt/sources.list \
  && apt update \
  && apt upgrade -y \
  && ln -sf /usr/share/zoneinfo/Europe/Prague /etc/localtime \
- && apt install -y tzdata wget software-properties-common apache2 lego\
+ && apt install -y tzdata wget software-properties-common apache2 \
  && a2enmod ssl \
  && a2enmod cgi \
  && a2dismod -f autoindex \
  && a2dissite 000-default \
  && a2dissite default-ssl \
  && echo "Hazard referencni klient."> /var/www/html/index.html
+
+RUN wget https://github.com/go-acme/lego/releases/download/v2.6.0/lego_v2.6.0_linux_amd64.tar.gz \
+ && tar -xvzf lego_v2.6.0_linux_amd64.tar.gz \
+ && mv lego /usr/bin/
 
 
 RUN mkdir /acme \

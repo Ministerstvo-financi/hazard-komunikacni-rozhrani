@@ -26,8 +26,13 @@ namespace ValidationPilotServices.Infrastructure.Extensions
                 target.IsNullable = !string.IsNullOrEmpty(source.IsNullable) && source.IsNullable.ToUpper().Equals("Y")
                     ? true
                     : false;
-            }
-            else if (sourceType == typeof(DecimalNumber))
+            } else if (sourceType == typeof(IdentifierExtended))
+            {
+                target = GetIdentifierExtendedType(source);
+                target.IsNullable = !string.IsNullOrEmpty(source.IsNullable) && source.IsNullable.ToUpper().Equals("Y")
+                    ? true
+                    : false;
+            } else if (sourceType == typeof(DecimalNumber))
             {
                 target = GetDecimalNumberType(source);
                 target.IsNullable = !string.IsNullOrEmpty(source.IsNullable) && source.IsNullable.ToUpper().Equals("Y")
@@ -70,6 +75,10 @@ namespace ValidationPilotServices.Infrastructure.Extensions
             {
                 target = GetReferenceLinkType(source);
             }
+            else if (sourceType == typeof(ReferenceLinkExtended))
+            {
+                target = GetReferenceLinkExtendedType(source);
+            }
             else
             {
                 throw new ArgumentException($"Unknown field type [{source.FieldName}-{source.FieldName}]");
@@ -84,6 +93,13 @@ namespace ValidationPilotServices.Infrastructure.Extensions
             int maxlength = int.Parse(source.MaxLength);
             int.TryParse(source.MinLength, out var minLength);
             return new Identifier(minLength, maxlength);
+        }
+
+        public static IdentifierExtended GetIdentifierExtendedType(FileStructureProfile source)
+        {
+            int maxlength = int.Parse(source.MaxLength);
+            int.TryParse(source.MinLength, out var minLength);
+            return new IdentifierExtended(minLength, maxlength);
         }
 
         public static DateAndTime GetDateAndTimeType(FileStructureProfile source)
@@ -123,6 +139,12 @@ namespace ValidationPilotServices.Infrastructure.Extensions
              int maxlength = int.Parse(source.MaxLength);
             int.TryParse(source.MinLength, out var minLength);
             return new ReferenceLink(minLength, maxlength);
+        }
+        public static ReferenceLinkExtended GetReferenceLinkExtendedType(FileStructureProfile source)
+        {
+             int maxlength = int.Parse(source.MaxLength);
+            int.TryParse(source.MinLength, out var minLength);
+            return new ReferenceLinkExtended(minLength, maxlength);
         }
 
     }
