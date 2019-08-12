@@ -97,6 +97,7 @@ public class DssValidator {
                     return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNKNOWN, "Certifikát není mezi registrovanými certifikáty operátora");
                 }
             } catch (DSSException e) {
+            	LOG.error("Exception while verifying certificate",e);
                 return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED, "Nebylo možné ověřit platnost certifikátu");
             }
             List<DSSDocument> originalDocuments = getOriginalDocuments(signedDocument, signature.getId());
