@@ -205,13 +205,12 @@ public class DssValidator {
         	reports = documentValidator.validateDocument();
         }
         catch (DSSException e) {
-        	LOG.warn("Exception while validating with ocsp",e);
+        	LOG.warn("Exception while validating with ocsp - will try CRL only validation",e);
         }
     
         if (!ocspValidationDone) {
         	documentValidator = SignedDocumentValidator.fromDocument(document);
         	documentValidator.setCertificateVerifier(cvNoOcsp);
-        	ocspValidationDone=true;        	
         	reports = documentValidator.validateDocument();
         }
 
