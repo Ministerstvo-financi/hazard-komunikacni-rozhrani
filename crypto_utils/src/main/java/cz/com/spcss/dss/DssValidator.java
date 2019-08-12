@@ -182,14 +182,35 @@ public class DssValidator {
     	ocspSource.setDataLoader(dataLoader);
     	crlSource.setDataLoader(dataLoader);
         
-        CertificateVerifier cv = new CommonCertificateVerifier();
-        cv.setDataLoader(dataLoader);
-        cv.setOcspSource(ocspSource);
-        cv.setCrlSource(crlSource);
-        cv.setTrustedCertSource(trustedCertSource);
+        CertificateVerifier cvOcsp = new CommonCertificateVerifier();
+        cvOcsp.setDataLoader(dataLoader);
+        cvOcsp.setOcspSource(ocspSource);
+        cvOcsp.setCrlSource(crlSource);
+        cvOcsp.setTrustedCertSource(trustedCertSource);
 
-        SignedDocumentValidator documentValidator = SignedDocumentValidator.fromDocument(document);
-        documentValidator.setCertificateVerifier(cv);
+        CertificateVerifier cvNoOcsp = new CommonCertificateVerifier();
+        cvNoOcsp.setDataLoader(dataLoader);
+        cvNoOcsp.setOcspSource(null);
+        cvNoOcsp.setCrlSource(crlSource);
+        cvNoOcsp.setTrustedCertSource(trustedCertSource);
+
+        boolean ocspValidationDone = false;
+        
+        SignedDocumentValidator documentValidator=null;
+        try {
+        	documentValidator = SignedDocumentValidator.fromDocument(document);
+        	documentValidator.setCertificateVerifier(cvOcsp);
+        	ocspValidationDone=true;
+        }
+        catch (DSSException e) {
+        	LOG.warn("Exception while validating with ocsp",e);
+        }
+    
+        if (!ocspValidationDone) {
+        	documentValidator = SignedDocumentValidator.fromDocument(document);
+        	documentValidator.setCertificateVerifier(cvNoOcsp);
+        	ocspValidationDone=true;        	
+        }
 
         Reports reports = documentValidator.validateDocument();
         SimpleReport simpleReport = reports.getSimpleReport();
