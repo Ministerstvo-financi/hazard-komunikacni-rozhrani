@@ -26,10 +26,13 @@ public class DssValidatorTest {
     private String inputFile2 = "src/test/resources/signedFiles/testdoc.p7m";
     private String inputFile3 = "src/test/resources/signedFiles/2A35D77823E3EA4EB41F6FC620A95FE6.pdf";
     private String inputFile4 = "src/test/resources/signedFiles/vypis-0.pdf";
+    private String inputFile5 = "src/test/resources/signedFiles/18273645-V-2019030600-B-01.zip.p7e.p7s";
 
     private String certPath1 = "src/test/resources/keystore/ec.europa.eu.1.cer";
     private String certPath2 = "src/test/resources/keystore/ec.europa.eu.2.cer";
     private String certPath3 = "src/test/resources/keystore/2A35D77823E3EA4EB41F6FC620A95FE6.cer";
+    private String certPath5 = "src/test/resources/keystore/quovadis.pem";
+
 
     private final String outputFile = "target/result.txt";
     private List<String> certificateFiles = new ArrayList<>();;
@@ -62,6 +65,11 @@ public class DssValidatorTest {
         Files.copy(inpPath,dstPath);
         inputFile4 = dstPath.toString(); 
 
+        inpPath = Paths.get(inputFile5);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        inputFile5 = dstPath.toString(); 
+
         inpPath = Paths.get(certPath1);
         dstPath=tempDir.resolve(inpPath.getFileName());
         Files.copy(inpPath,dstPath);
@@ -77,14 +85,26 @@ public class DssValidatorTest {
         Files.copy(inpPath,dstPath);
         certPath3 = dstPath.toString(); 
 
+        inpPath = Paths.get(certPath5);
+        dstPath=tempDir.resolve(inpPath.getFileName());
+        Files.copy(inpPath,dstPath);
+        certPath5 = dstPath.toString(); 
+
         certificateFiles.add(certPath1);
         certificateFiles.add(certPath2);
 
         certificateFilesForDoc.add(certPath3);
+        certificateFilesForDoc.add(certPath5);
     }
 
     public void cleanup() {
         //TODO
+    }
+
+    @Test
+    public void testIsSignedOk() throws IOException, JAXBException, TransformerException {
+        SignResult signResult = validateTask(inputFile5, outputFile, certificateFilesForDoc);
+        assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString())));
     }
 
     @Test
@@ -121,6 +141,13 @@ public class DssValidatorTest {
         SignResult signResult = validateCertificateTask(certificateFilesForDoc.get(0));
         assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString())));
     }
+
+    @Test
+    public void testCertificateNl() throws JAXBException, TransformerException, IOException {
+        SignResult signResult = validateCertificateTask(certificateFilesForDoc.get(1));
+        assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString())));
+    }
+
 
     @Test
     public void testCertificateUNTRUSTED() throws JAXBException, TransformerException, IOException {

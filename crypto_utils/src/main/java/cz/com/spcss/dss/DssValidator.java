@@ -126,16 +126,24 @@ public class DssValidator {
         String certificateReportPath = FilenameUtils.removeExtension(testedCertificate);
 
         CertificateToken token = DSSUtils.loadCertificate(new File(testedCertificate));
-        CertificateVerifier cv = new CommonCertificateVerifier();
-        cv.setDataLoader(dataLoader);
-        cv.setOcspSource(ocspSource);
-        cv.setCrlSource(crlSource);
-        cv.setTrustedCertSource(trustedCertSource);
-
-        CertificateValidator validator = CertificateValidator.fromCertificate(token);
-        validator.setCertificateVerifier(cv);
-
-        CertificateReports certificateReports = validator.validate();
+        CertificateVerifier cvOcsp = new CommonCertificateVerifier();
+        cvOcsp.setDataLoader(dataLoader);
+        cvOcsp.setOcspSource(ocspSource);
+        cvOcsp.setCrlSource(crlSource);
+        cvOcsp.setTrustedCertSource(trustedCertSource);
+        
+        CertificateVerifier cvNoOcsp = new CommonCertificateVerifier();
+        cvNoOcsp.setDataLoader(dataLoader);
+        cvNoOcsp.setOcspSource(null);
+        cvNoOcsp.setCrlSource(crlSource);
+        cvNoOcsp.setTrustedCertSource(trustedCertSource);
+        
+        CertificateValidator validator = null;
+        CertificateReports certificateReports = null;
+        
+        validator = CertificateValidator.fromCertificate(token);
+        validator.setCertificateVerifier(cvOcsp);
+        certificateReports = validator.validate();
 
         DiagnosticData diagnosticData = certificateReports.getDiagnosticData();
         SimpleCertificateReport simpleReport = certificateReports.getSimpleReport();
@@ -188,31 +196,12 @@ public class DssValidator {
         cvOcsp.setCrlSource(crlSource);
         cvOcsp.setTrustedCertSource(trustedCertSource);
 
-        CertificateVerifier cvNoOcsp = new CommonCertificateVerifier();
-        cvNoOcsp.setDataLoader(dataLoader);
-        cvNoOcsp.setOcspSource(null);
-        cvNoOcsp.setCrlSource(crlSource);
-        cvNoOcsp.setTrustedCertSource(trustedCertSource);
-
-        boolean ocspValidationDone = false;
         
         SignedDocumentValidator documentValidator=null;
         Reports reports=null;
-        try {
-        	documentValidator = SignedDocumentValidator.fromDocument(document);
-        	documentValidator.setCertificateVerifier(cvOcsp);
-        	ocspValidationDone=true;
-        	reports = documentValidator.validateDocument();
-        }
-        catch (DSSException e) {
-        	LOG.warn("Exception while validating with ocsp - will try CRL only validation",e);
-        }
-    
-        if (!ocspValidationDone) {
-        	documentValidator = SignedDocumentValidator.fromDocument(document);
-        	documentValidator.setCertificateVerifier(cvNoOcsp);
-        	reports = documentValidator.validateDocument();
-        }
+    	documentValidator = SignedDocumentValidator.fromDocument(document);
+    	documentValidator.setCertificateVerifier(cvOcsp);
+    	reports = documentValidator.validateDocument();
 
         SimpleReport simpleReport = reports.getSimpleReport();
         DetailedReport detailedReport = reports.getDetailedReport();
