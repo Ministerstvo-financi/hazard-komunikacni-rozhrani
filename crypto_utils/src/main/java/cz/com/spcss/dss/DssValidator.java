@@ -197,10 +197,12 @@ public class DssValidator {
         boolean ocspValidationDone = false;
         
         SignedDocumentValidator documentValidator=null;
+        Reports reports=null;
         try {
         	documentValidator = SignedDocumentValidator.fromDocument(document);
         	documentValidator.setCertificateVerifier(cvOcsp);
         	ocspValidationDone=true;
+        	reports = documentValidator.validateDocument();
         }
         catch (DSSException e) {
         	LOG.warn("Exception while validating with ocsp",e);
@@ -210,9 +212,9 @@ public class DssValidator {
         	documentValidator = SignedDocumentValidator.fromDocument(document);
         	documentValidator.setCertificateVerifier(cvNoOcsp);
         	ocspValidationDone=true;        	
+        	reports = documentValidator.validateDocument();
         }
 
-        Reports reports = documentValidator.validateDocument();
         SimpleReport simpleReport = reports.getSimpleReport();
         DetailedReport detailedReport = reports.getDetailedReport();
         DiagnosticData diagnosticData = reports.getDiagnosticData();
