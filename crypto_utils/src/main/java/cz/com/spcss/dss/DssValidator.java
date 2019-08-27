@@ -105,7 +105,7 @@ public class DssValidator {
                 originalDocuments.get(0).save(outputFile);
             }
         } else {
-            return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED, "Nebylo možné ověřit platnost certifikátu");
+            return new SignResult(ResultCodes.ERR_PKG_SIG_CERT_UNTRUSTED, "Nebylo možné ověřit platnost certifikátu - chybí certifikát podepisujícího");
         }
         return new SignResult(ResultCodes.OK, ResultCodes.INFO_PKG_SIG_CERT_OK.toString());
     }
