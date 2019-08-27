@@ -103,6 +103,7 @@ function packAll {
 	   ${DIR}/crypto_cli/*.bat \
 	   ${DIR}/crypto_utils/target/crypto_utils-1.0-jar-with-dependencies.jar \
 	   ${DIR}/crypto_utils/target/crypto_utils-1.0.jar \
+	   ${DIR}/cacerts.forAisg \
 	   ${DIR}/build/dist/crypto_utils 
 
 	cp -R ${DIR}/data  \
