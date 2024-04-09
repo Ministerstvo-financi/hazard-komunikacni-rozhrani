@@ -21,8 +21,8 @@ public class FileCryptorTest {
 
     private final String inputEncryptPath = "src/test/resources/testFiles/myDoc.txt";
     private String outputEncryptPath = "encrypted-rsa.p7e";
-
-    private final String inputDecryptPath = "src/test/resources/testFiles/encrypted-rsa.p7e";
+    
+    private final String inputDecryptPath = "src/test/resources/testFiles/9999999-V-2019101508-01.zip.p7e";
     private String outputDecryptPath = "myDoc-rsa-dec.txt";
     private final String keyPath = "src/test/resources/testFiles/rsa.key";
 
@@ -80,8 +80,20 @@ public class FileCryptorTest {
         SignResult signResult =  decryptTest(inputDecryptPath, outputDecryptPath, keyPath + "FAIL", certificateFiles.get(0));
         assertThat(signResult.getResultCode(), samePropertyValuesAs(new SignResult(ResultCodes.NOOK, "DecryptFile - NOOK").getResultCode()));
     }
+    
+    @Test
+    public void testDecryptHSM() throws IOException, InterruptedException {
+        SignResult signResult =  decryptTestHSM(inputDecryptPath, outputDecryptPath, keyPath + "FAIL", certificateFiles.get(0));
+        assertThat(signResult.getResultCode(), samePropertyValuesAs(new SignResult(ResultCodes.NOOK, "DecryptFile - NOOK").getResultCode()));
+    }
 
+    
+    public SignResult decryptTestHSM(String inputPath, String outputPath, String keyPath, String certificateFile) throws IOException, InterruptedException {
+    	 FileCryptor fileCryptor = new FileCryptor();
+    	 return fileCryptor.decryptFileHsm(inputPath, outputPath, keyPath, certificateFile);
+    }
 
+    
     private SignResult encryptTest(String inputPath, String outputPath, List<String> certificateFiles) throws IOException, InterruptedException {
         FileCryptor fileCryptor = new FileCryptor();
         return fileCryptor.encryptFile(inputPath, outputPath, certificateFiles);
@@ -89,6 +101,6 @@ public class FileCryptorTest {
 
     private SignResult decryptTest(String inputPath, String outputPath, String keyPath, String certificateFile) throws IOException, InterruptedException {
         FileCryptor fileCryptor = new FileCryptor();
-        return fileCryptor.decryptFile(inputPath, outputPath, keyPath, certificateFile);
+        return fileCryptor.decryptFileLocal(inputPath, outputPath, keyPath, certificateFile);
     }
 }

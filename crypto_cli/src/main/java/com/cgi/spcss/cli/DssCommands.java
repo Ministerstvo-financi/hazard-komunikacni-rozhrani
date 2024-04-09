@@ -24,7 +24,9 @@ public class DssCommands {
     private static final Logger LOG = Logger.getLogger(DssCommands.class);
 
     private static final SignatureForm SIGNATURE_FORM = SignatureForm.CAdES;
-    private static final SignaturePackaging SIGNATURE_PACKAGING = SignaturePackaging.ENVELOPING;
+    private static final SignatureForm SIGNATURE_FORM_XML = SignatureForm.XAdES;
+    private static final SignaturePackaging SIGNATURE_PACKAGING_CADES = SignaturePackaging.ENVELOPING;
+    private static final SignaturePackaging SIGNATURE_PACKAGING_XADES = SignaturePackaging.ENVELOPING;
     private static final DigestAlgorithm DIGEST_ALGORITHM = DigestAlgorithm.SHA256;
 
     public SignResult validateCertificate(CommandLine cmd){
@@ -32,7 +34,7 @@ public class DssCommands {
         String certPath;
 
         try {
-            certPath = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("inputFile"));
+            certPath = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("inputFile"));
         }
         catch (IOException e){
             return new SignResult(ResultCodes.NOOK, "ValidateCertificate IOException - Invalid argument values " + e);
@@ -60,8 +62,8 @@ public class DssCommands {
         String[] certFiles;
 
         try {
-            inputFile = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("inputFile"));
-            outputFile = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("outputFile"));
+            inputFile = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("inputFile"));
+            outputFile = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("outputFile"));
             certFiles = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValues("certificate"));
         }
         catch (IOException e){
@@ -91,21 +93,34 @@ public class DssCommands {
         String signerPrivateKeySpecPass;
         String signerPrivateKeySpec;
         String timestampSourceSpec;
+        String format;
         try {
-            inputFile = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("inputFile"));
-            outputFile = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("outputFile"));
-            signerPrivateKeySpec = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("signerPrivateKeySpec"));
-            signerPrivateKeySpecPass = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("password"));
-            timestampSourceSpec = CryptoUtilities.getInputOrInputFromFile(cmd.getOptionValue("timestampSourceSpec"));
+            inputFile = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("inputFile"));
+            outputFile = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("outputFile"));
+            signerPrivateKeySpec = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("signerPrivateKeySpec"));
+            signerPrivateKeySpecPass = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("password"));
+            timestampSourceSpec = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("timestampSourceSpec"));
+            format = CryptoUtilities.getInputOrInputFromFileAndStrip(cmd.getOptionValue("format"));
+            if (format==null) {
+            	format=DssSignatureParameters.CADES;
+            }
+            LOG.info(String.format("Format: %s", format));
         }
         catch (IOException e){
+        	LOG.info("Exception while signing",e);
             return new SignResult(ResultCodes.NOOK, "SignFile IOException - Invalid argument values " + e);
         }
 
         if(StringUtils.isNotBlank(inputFile) && StringUtils.isNotBlank(outputFile) && StringUtils.isNotBlank(signerPrivateKeySpecPass) && StringUtils.isNotBlank(signerPrivateKeySpec)) {
             DssSigner dssSigner = new DssSigner();
             try {
-                DssSignatureParameters dssSignatureParameters = new DssSignatureParameters(signerPrivateKeySpec, signerPrivateKeySpecPass, timestampSourceSpec, SIGNATURE_FORM, SIGNATURE_PACKAGING, DIGEST_ALGORITHM, null);
+            	SignatureForm signatureFrom = SignatureForm.CAdES;
+            	SignaturePackaging signaturePackaging = SIGNATURE_PACKAGING_CADES;
+            	if (DssSignatureParameters.XADES.equals(format)) {
+            		signatureFrom=SignatureForm.XAdES;
+            		signaturePackaging=SIGNATURE_PACKAGING_XADES;
+            	}
+                DssSignatureParameters dssSignatureParameters = new DssSignatureParameters(signerPrivateKeySpec, signerPrivateKeySpecPass, timestampSourceSpec, signatureFrom, signaturePackaging, DIGEST_ALGORITHM, null);
                 return dssSigner.signFile(inputFile, outputFile, dssSignatureParameters);
             } catch (IOException e) {
                 return new SignResult(ResultCodes.NOOK, "SignFile IOException " + e);

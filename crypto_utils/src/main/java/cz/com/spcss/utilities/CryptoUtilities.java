@@ -27,6 +27,15 @@ public class CryptoUtilities {
         }
         return input;
     }
+    
+    public static String getInputOrInputFromFileAndStrip(String input) throws IOException {
+    	String raw = getInputOrInputFromFile(input);
+    	if (raw!=null) {
+    		return raw.strip();
+    	} else {
+    		return null;
+    	}
+    }
 
     public static String[] getInputOrInputFromFile(String[] inputs) throws IOException {
         List<String> finalInputs = new ArrayList<>();

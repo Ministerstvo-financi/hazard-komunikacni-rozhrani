@@ -92,6 +92,11 @@
         </dependency>
         <dependency>
             <groupId>eu.europa.ec.joinup.sd-dss</groupId>
+            <artifactId>dss-xades</artifactId>
+            <version>${dss.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.europa.ec.joinup.sd-dss</groupId>
             <artifactId>dss-remote-services</artifactId>
             <version>${dss.framework.version}</version>
         </dependency>

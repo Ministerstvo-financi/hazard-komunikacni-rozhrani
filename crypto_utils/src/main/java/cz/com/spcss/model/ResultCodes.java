@@ -3,6 +3,7 @@ package cz.com.spcss.model;
 public enum ResultCodes {
     OK,
     NOOK,
+    NOOK_HSM,
 
     ERR_PKG_ENC_INVALID_DER,
     //ERR_PKG_SIG_INVALID_DER – pokud není možné přečíst ASN.1 DER struktury balíčku
@@ -22,6 +23,6 @@ public enum ResultCodes {
     ERR_CERT_EUTL_INVALID,
     ERR_CERT_EUTL_INVALID_OTH,
     ERR_CERT_NOT_CA,
-    ERR_VALID_CERT_NOT_FOR_QSEAL
-    
+    ERR_VALID_CERT_NOT_FOR_QSEAL;
+
 }

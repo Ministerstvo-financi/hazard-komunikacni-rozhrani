@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Version>0.1.0.0</Version>
     <Authors>Programmers</Authors>
     <Company>SPCSS</Company>
@@ -57,7 +57,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="12.1.1" />
+    <PackageReference Include="CsvHelper" Version="15.0.5" />
+    <PackageReference Include="Microsoft.NETCore.Targets" Version="3.0.0" PrivateAssets="all" />
+    <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
 
   <ItemGroup>

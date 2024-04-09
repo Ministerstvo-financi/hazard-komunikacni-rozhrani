@@ -290,7 +290,14 @@ public class DssValidator {
             job.setOjUrl(properties.getProperty("OjUrl"));
             job.setOjContentKeyStore(keyStoreCertificateSource);
             job.setRepository(tslRepository);
-            job.refresh();
+            try {
+                job.refresh();
+            } catch (DSSException e) {
+                // Conversion from DSSException to IOException when validator is unable to load LOTL. IOException
+                // indicates that the exception is not caused by signature verification (i.e. defective input package),
+                // but due to an I/O operation that can be repeated.
+                throw new IOException(e);
+            }
 
             CertificatePool newCertPool=new CertificatePool();
             newCertPool.importCerts(keyStoreCertificateSource);

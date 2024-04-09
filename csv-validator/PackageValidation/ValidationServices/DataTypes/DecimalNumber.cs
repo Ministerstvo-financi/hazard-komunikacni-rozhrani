@@ -7,7 +7,7 @@ namespace ValidationPilotServices.DataTypes
     {
         public DecimalNumber()
         {
-            this.pattern = new Regex(@"^(\-)?\d{1,13}(,\d{0,13})?$", RegexOptions.Compiled);
+            this.pattern = new Regex(@"^(\-)?\d{1,}(,\d{0,})?$", RegexOptions.Compiled);
         }
 
         public DecimalNumber(string DomainType):this()
@@ -27,7 +27,10 @@ namespace ValidationPilotServices.DataTypes
                     this.pattern = new Regex(@"^(\-)?\d{1,13}(,\d{0,2})?$", RegexOptions.Compiled);
                     break;
                 case "D_COURSE":
-                    this.pattern = new Regex(@"^(\-)?\d{1,13}(,\d{0,3})?$", RegexOptions.Compiled);
+                    this.pattern = new Regex(@"^(\-)?\d{1,18}(,\d{0,3})?$", RegexOptions.Compiled);
+                    break;
+                case "D_COURSE_EXTENDED":
+                    this.pattern = new Regex(@"^(\-)?\d{1,}(,\d{0,})?$", RegexOptions.Compiled);
                     break;
             }
         }
@@ -36,11 +39,11 @@ namespace ValidationPilotServices.DataTypes
         {
             bool flag = base.Validate(fieldValue);
 
-            if (flag && !string.IsNullOrEmpty(fieldValue) && !float.TryParse(fieldValue, out float data))
-            {
-                this.ErrorMessage = $"The value {fieldValue} can't be convert to DecimalNumber format.";
-                return false;
-            }
+            // if (flag && !string.IsNullOrEmpty(fieldValue) && !float.TryParse(fieldValue, out float data))
+            // {
+            //     this.ErrorMessage = $"The value {fieldValue} can't be convert to DecimalNumber format.";
+            //     return false;
+            // }
 
             return flag;
         }

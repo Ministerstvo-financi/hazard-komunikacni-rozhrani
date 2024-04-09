@@ -2,6 +2,8 @@ package com.cgi.spcss;
 
 import com.cgi.spcss.cli.DssCommands;
 import com.cgi.spcss.cli.OpenSSLCommands;
+
+import cz.com.spcss.model.ResultCodes;
 import cz.com.spcss.model.SignResult;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
@@ -48,6 +50,10 @@ public class Main {
         signerPrivateKeySpecPass.setRequired(false);
         options.addOption(signerPrivateKeySpecPass);
 
+        Option formatOption = new Option("m", "format", true, "Format (XADES/CADES)");
+        formatOption.setRequired(false);
+        options.addOption(formatOption);
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -63,7 +69,7 @@ public class Main {
 
         DssCommands dssCommands = new DssCommands();
         OpenSSLCommands openSSLCommands = new OpenSSLCommands();
-        SignResult signResult;
+        SignResult signResult=null;
         switch (cmd.getOptionValue("functionName")) {
             case "validateCertificate":
                 signResult = dssCommands.validateCertificate(cmd);
@@ -89,6 +95,10 @@ public class Main {
                 LOG.info("Unsupported function "  + cmd.getOptionValue("functionOption"));
                 System.exit(1);
                 break;
+        }
+        if (signResult.getResultCode()!=ResultCodes.OK) {
+        	LOG.info(String.format("Failed to sign %s %s",signResult.getResultCode(),signResult.getResultMessage()));
+        	System.exit(2);
         }
         System.exit(0);
     }

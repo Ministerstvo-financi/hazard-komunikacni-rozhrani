@@ -44,7 +44,7 @@ namespace ValidationPilotTests
 
             using (TextReader fileReader = File.OpenText(fi.FullName))
             {
-                var csv = new CsvReader(fileReader);
+                var csv = new CsvReader(fileReader,System.Globalization.CultureInfo.InvariantCulture);
                 csv.Configuration.HasHeaderRecord = true;
 
                 while (csv.Read())
@@ -80,7 +80,7 @@ namespace ValidationPilotTests
 
             using (StreamReader reader = new StreamReader(fi.FullName, false))
             {
-                using (var csv = new CsvReader(reader))
+                using (var csv = new CsvReader(reader,System.Globalization.CultureInfo.InvariantCulture))
                 {
                     csv.Configuration.Delimiter = ";";
                     int lineCounter = 0;

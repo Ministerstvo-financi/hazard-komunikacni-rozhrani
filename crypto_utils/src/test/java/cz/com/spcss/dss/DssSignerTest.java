@@ -19,10 +19,14 @@ import static org.junit.Assert.assertThat;
 public class DssSignerTest {
 
     private final String inputPath = "src/test/resources/test.txt";
+    private final String inputPathXml = "src/test/resources/test.xml";
     private final String outputPath = "target/dss-test-signed-cades-baseline-b.pkcs7";
+    private final String outputPathXml = "target/dss-test-signed-xades-baseline-b.xml";
     private final String timestampSourceSpec = null;
     private SignatureForm signatureForm = SignatureForm.CAdES;
+    private SignatureForm signatureFormXades = SignatureForm.XAdES;
     private SignaturePackaging signaturePackaging = SignaturePackaging.ENVELOPING;
+    private SignaturePackaging signaturePackagingXades = SignaturePackaging.ENVELOPING;
     private DigestAlgorithm digestAlgorithm = DigestAlgorithm.SHA256;
 
     private String signerPrivateKeySpec;
@@ -41,6 +45,13 @@ public class DssSignerTest {
     public void testIsSigned() throws IOException, URISyntaxException {
         DssSignatureParameters dssSignatureParameters = new DssSignatureParameters(signerPrivateKeySpec, signerPrivateKeySpecPass, timestampSourceSpec, signatureForm, signaturePackaging, digestAlgorithm, null);
         SignResult signResult = singTest(inputPath, outputPath, dssSignatureParameters);
+        assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, "Sign file result code - OK")));
+    }
+
+    @Test
+    public void testIsSignedXades() throws IOException, URISyntaxException {
+        DssSignatureParameters dssSignatureParameters = new DssSignatureParameters(signerPrivateKeySpec, signerPrivateKeySpecPass, timestampSourceSpec, signatureFormXades, signaturePackaging, digestAlgorithm, null);
+        SignResult signResult = singTest(inputPathXml, outputPathXml, dssSignatureParameters);
         assertThat(signResult, samePropertyValuesAs(new SignResult(ResultCodes.OK, "Sign file result code - OK")));
     }
 

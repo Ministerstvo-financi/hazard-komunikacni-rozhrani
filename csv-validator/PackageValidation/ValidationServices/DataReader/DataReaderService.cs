@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 using System.Security.Cryptography;
 using ValidationPilotServices.DataTypes;
 using ValidationPilotServices.Infrastructure;
@@ -202,6 +203,21 @@ namespace ValidationPilotServices.DataReader
                     // }
                     break;
             }
+        }
+
+        private bool ValidateItemValidChars(FieldItem item, string value, int rowId)
+        {
+            var position = 0;
+            foreach (Char c in value){
+                if (Char.IsControl(c)){
+                    this.ValidationErrorMessage(EnumValidationResult.ERR_FIELD_BAD_FORMAT_RE, item.FieldName,
+                        rowId,
+                        $"invalid char in field at position {position}");
+                    return false;
+                }
+                position++;
+            }
+            return true;
         }
 
         /// <summary>
@@ -416,7 +432,7 @@ namespace ValidationPilotServices.DataReader
 
 
             using (StreamReader reader = new VerifyingStreamReader(fileInfo.FullName,enc))
-            using (CsvReader csv = new CsvReader(reader))
+            using (CsvReader csv = new CsvReader(reader,CultureInfo.InvariantCulture))
             {
                 
                 csv.Configuration.Delimiter = this.FieldsSeparator;
@@ -514,6 +530,12 @@ namespace ValidationPilotServices.DataReader
                                 {
                                     //set nullable property to validate
                                     this.NullableFieldItemDefinition(fieldItem, row, linesNumber);
+
+                                    //validate valid chars
+                                    if (!this.ValidateItemValidChars(fieldItem, key.Value.ToString(), linesNumber))
+                                    {
+                                        continue;
+                                    }
 
                                     //validate value
                                     if (!this.ValidateItemByValue(fieldItem, key.Value.ToString(), linesNumber))
@@ -843,7 +865,7 @@ namespace ValidationPilotServices.DataReader
                 }
 
                 using (StreamReader reader = new StreamReader(fileInfo.FullName))
-                using (var csv = new CsvReader(reader))
+                using (var csv = new CsvReader(reader,CultureInfo.InvariantCulture))
                 {
                     int lineCounter = 0;
                     csv.Configuration.Delimiter = this.FieldsSeparator;

@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 using ValidationPilotServices.Infrastructure.Enums;
 using ValidationPilotServices.Infrastructure.Extensions;
 
@@ -46,7 +47,7 @@ namespace ValidationPilotServices.Infrastructure
         public bool Write()
         {
             using (var writer = new StreamWriter(this._fullReportFileName))
-            using (var csv = new CsvWriter(writer))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.Delimiter=";";
                 csv.WriteRecords<ResultItem>(this.Items);

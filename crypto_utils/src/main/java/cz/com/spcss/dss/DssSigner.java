@@ -11,7 +11,10 @@ import eu.europa.esig.dss.*;
 import eu.europa.esig.dss.token.*;
 import eu.europa.esig.dss.utils.Utils;
 import eu.europa.esig.dss.validation.CommonCertificateVerifier;
+import eu.europa.esig.dss.xades.signature.XAdESService;
+
 import org.apache.commons.lang3.Validate;
+import org.apache.log4j.Logger;
 
 import eu.europa.esig.dss.AbstractSignatureParameters;
 import eu.europa.esig.dss.DSSDocument;
@@ -26,7 +29,8 @@ import java.security.KeyStore;
 import java.util.List;
 
 public class DssSigner {
-
+    private static final Logger LOG = Logger.getLogger(DssSigner.class);
+	
     private DSSDocument toSignDocument;
     private DSSDocument signedDocument;
     private SignatureTokenConnection signingToken;
@@ -41,7 +45,7 @@ public class DssSigner {
         toSignDocument = new InMemoryDocument(new FileInputStream(inputFile));
         signingToken = getToken(dssSignatureParameters.getSignerPrivateKeySpec());
         DSSPrivateKeyEntry signer = getSigner(signingToken.getKeys());
-        parameters = dssSignatureParameters.getParameters(signer);
+        parameters = dssSignatureParameters.getParameters(signer, toSignDocument);
 
         try {
             DocumentSignatureService service = getSignatureService(dssSignatureParameters.getSignatureForm());
@@ -51,6 +55,7 @@ public class DssSigner {
             signedDocument = (DSSDocument) service.signDocument(toSignDocument, parameters, signatureValue);
             signedDocument.save(outputFile);
         } catch (DSSException e) {
+        	LOG.error("Exception wjhile signing",e);
             return new SignResult(ResultCodes.NOOK, "Error when signing file " + e);
         }
 
@@ -72,6 +77,8 @@ public class DssSigner {
         switch (signatureForm) {
             case CAdES:
                 return new CAdESService(new CommonCertificateVerifier());
+            case XAdES:
+                return new XAdESService(new CommonCertificateVerifier());            	
             default:
                 throw new IllegalArgumentException("Unsupported signatureForm " + signatureForm);
         }

@@ -32,6 +32,7 @@ HraKategorie,h,Technical game.,technická hra
 HraKategorie,i,"Online live game, in which the game of chance participants or foreign participants play against each other and which is not operated in the form of a tournament","internetová živá hra, ve které účastníci hazardní hry a případně cizí účastníci hrají jeden proti druhému a která není provozována formou turnaje"
 HraKategorie,j,Online live game operated in the form of a tournament (hereinafter referred to as an ‘online live game tournament’).,internetová živá hra provozovaná formou turnaje (dále jen „turnaj internetové živé hry“)
 HraKategorie,k,"Online live game, in which the game of chance participants play against a software gaming system.","internetová živá hra, ve které účastníci hazardní hry hrají proti softwarovému hracímu systému"
+HraKategorie,m,"Online live game, in which the game of chance participants play against a software gaming system.","internetová živá hra, ve které účastníci hazardní hry hrají proti softwarovému hracímu systému"
 HraDruh,L,Lottery,loterie
 HraDruh,K,Fix-odds betting,kursová sázka
 HraDruh,R,Totalisator game,totalizátorová hra
